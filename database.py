@@ -22,6 +22,39 @@ def init_db() -> None:
                 PRIMARY KEY (user_id)
             )
         """)
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS text_messages (
+                chat_id    INTEGER NOT NULL,
+                message_id INTEGER NOT NULL,
+                PRIMARY KEY (chat_id, message_id)
+            )
+        """)
+        conn.commit()
+
+
+def track_text_message(chat_id: int, message_id: int) -> None:
+    """Store a text message ID so it can be deleted later."""
+    with get_connection() as conn:
+        conn.execute(
+            "INSERT OR IGNORE INTO text_messages (chat_id, message_id) VALUES (?, ?)",
+            (chat_id, message_id),
+        )
+        conn.commit()
+
+
+def get_text_message_ids(chat_id: int) -> list[int]:
+    """Return all tracked text message IDs for a chat."""
+    with get_connection() as conn:
+        rows = conn.execute(
+            "SELECT message_id FROM text_messages WHERE chat_id = ?", (chat_id,)
+        ).fetchall()
+        return [r["message_id"] for r in rows]
+
+
+def clear_text_messages(chat_id: int) -> None:
+    """Remove all tracked text message IDs for a chat."""
+    with get_connection() as conn:
+        conn.execute("DELETE FROM text_messages WHERE chat_id = ?", (chat_id,))
         conn.commit()
 
 

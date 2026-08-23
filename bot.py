@@ -100,6 +100,45 @@ async def reset(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     )
 
 
+async def track_text(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Track every text message ID so /clean can delete them later."""
+    if update.message:
+        database.track_text_message(update.effective_chat.id, update.message.message_id)
+
+
+async def clean(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Delete all tracked text messages in this chat. Admin only."""
+    chat = update.effective_chat
+    user = update.effective_user
+
+    # Check the caller is an admin
+    member = await chat.get_member(user.id)
+    if member.status not in ("administrator", "creator"):
+        await update.message.reply_text("⛔ Only group admins can use /clean\\.", parse_mode="MarkdownV2")
+        return
+
+    message_ids = database.get_text_message_ids(chat.id)
+    if not message_ids:
+        await update.message.reply_text("No text messages to delete\\.", parse_mode="MarkdownV2")
+        return
+
+    deleted = 0
+    failed = 0
+    for msg_id in message_ids:
+        try:
+            await context.bot.delete_message(chat_id=chat.id, message_id=msg_id)
+            deleted += 1
+        except Exception:
+            failed += 1  # message already deleted or too old
+
+    database.clear_text_messages(chat.id)
+
+    summary = f"🗑 Deleted *{deleted}* text message{'s' if deleted != 1 else ''}\\."
+    if failed:
+        summary += f" \\({failed} already gone or too old\\)"
+    await context.bot.send_message(chat.id, summary, parse_mode="MarkdownV2")
+
+
 def main() -> None:
     token = os.environ.get("TELEGRAM_BOT_TOKEN")
     if not token:
@@ -112,9 +151,13 @@ def main() -> None:
     app.add_handler(CommandHandler("count", count))
     app.add_handler(CommandHandler("leaderboard", leaderboard))
     app.add_handler(CommandHandler("reset", reset))
+    app.add_handler(CommandHandler("clean", clean))
 
-    # Count every video message sent in the group (requires privacy mode OFF in BotFather)
-    app.add_handler(MessageHandler(filters.VIDEO, handle_video))
+    # Count only round (circle) video messages
+    app.add_handler(MessageHandler(filters.VIDEO_NOTE, handle_video))
+
+    # Track all text messages for /clean
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, track_text))
 
     logger.info("Bot is running…")
     app.run_polling(allowed_updates=Update.ALL_TYPES)
