@@ -1,0 +1,9 @@
+services:
+  bot:
+    build: .
+    image: beers-counter
+    container_name: beers-counter
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ./data:/app/data
