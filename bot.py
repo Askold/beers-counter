@@ -158,6 +158,17 @@ async def track_text(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None
         database.track_text_message(update.effective_chat.id, update.message.message_id)
 
 
+async def track_member_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Track every user who sends any message so they appear in the risk zone."""
+    user = update.effective_user
+    if user and not user.is_bot:
+        database.track_member(
+            user_id=user.id,
+            username=user.username,
+            full_name=_display_name(user),
+        )
+
+
 # ── Daily report ────────────────────────────────────────────────────────────
 
 async def report_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -194,12 +205,12 @@ async def daily_report(context: ContextTypes.DEFAULT_TYPE, chat_id: int | None =
     now = datetime.datetime.now(MOSCOW)
     for row in inactive:
         name = _escape_md(row["full_name"])
-        if row["last_video_at"]:
+        if row["count"] == 0:
+            risk_lines.append(f"😴 {name} \\(никогда не пил\\)")
+        elif row["last_video_at"]:
             last = datetime.datetime.fromisoformat(row["last_video_at"])
             days_ago = (now - last).days
             risk_lines.append(f"😴 {name} \\({days_ago} дн\\. без пива\\)")
-        else:
-            risk_lines.append(f"😴 {name} \\(никогда не пил\\)")
 
     lines = [
         f"🎉 Поздравляю\\! Сегодня было выпито *{_fmt(today_count)}* пива",
@@ -242,6 +253,9 @@ def main() -> None:
 
     # Track text messages for /clean
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, track_text))
+
+    # Track all message senders (group=1 runs after group=0, never blocks)
+    app.add_handler(MessageHandler(filters.ALL, track_member_handler), group=1)
 
     # Daily report at 00:00 Moscow time
     app.job_queue.run_daily(

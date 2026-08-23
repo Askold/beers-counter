@@ -108,15 +108,36 @@ def get_leaderboard(limit: int = 10) -> list[sqlite3.Row]:
         """, (limit,)).fetchall()
 
 
+def track_member(user_id: int, username: str | None, full_name: str) -> None:
+    """Add a user to the DB if not already known (so they appear in risk zone)."""
+    with get_connection() as conn:
+        conn.execute("""
+            INSERT OR IGNORE INTO beers (user_id, username, full_name, count)
+            VALUES (?, ?, ?, 0)
+        """, (user_id, username, full_name))
+        conn.execute("""
+            UPDATE beers SET username = ?, full_name = ? WHERE user_id = ?
+        """, (username, full_name, user_id))
+        conn.commit()
+
+
 def get_inactive_users(days: int = 20) -> list[sqlite3.Row]:
-    """Users who have sent at least one video but not in the last `days` days."""
+    """
+    Users who:
+    - have never sent a circle video (count = 0), OR
+    - have a known last_video_at that is older than `days` days.
+    Users with count > 0 but NULL last_video_at are legacy records (videos sent
+    before timestamp tracking) — we exclude them to avoid false positives.
+    """
     cutoff = (datetime.now(MOSCOW) - timedelta(days=days)).isoformat()
     with get_connection() as conn:
         return conn.execute("""
-            SELECT full_name, username, last_video_at
+            SELECT full_name, username, count, last_video_at
             FROM beers
-            WHERE count > 0 AND (last_video_at IS NULL OR last_video_at < ?)
-            ORDER BY last_video_at ASC
+            WHERE
+                count = 0
+                OR (last_video_at IS NOT NULL AND last_video_at < ?)
+            ORDER BY last_video_at ASC NULLS FIRST
         """, (cutoff,)).fetchall()
 
 
