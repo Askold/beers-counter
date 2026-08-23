@@ -172,14 +172,25 @@ async def track_member_handler(update: Update, context: ContextTypes.DEFAULT_TYP
 # ── Daily report ────────────────────────────────────────────────────────────
 
 async def report_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Manual trigger of the daily report — admin only."""
+    """Manual trigger of the daily report — admin only (or any private chat)."""
     chat = update.effective_chat
     user = update.effective_user
-    member = await chat.get_member(user.id)
-    if member.status not in ("administrator", "creator"):
-        await update.message.reply_text("⛔ Только администраторы могут вызвать отчёт\\.", parse_mode="MarkdownV2")
-        return
-    await daily_report(context, chat_id=chat.id)
+
+    if chat.type == "private":
+        # In private chat: send report to the saved group (no admin check needed)
+        target_chat_id = database.get_chat_id()
+        if not target_chat_id:
+            await update.message.reply_text("Бот ещё не добавлен ни в одну группу\\.", parse_mode="MarkdownV2")
+            return
+        await daily_report(context, chat_id=target_chat_id)
+        await update.message.reply_text("✅ Отчёт отправлен в группу\\.", parse_mode="MarkdownV2")
+    else:
+        # In a group: admin only, send report to this group
+        member = await chat.get_member(user.id)
+        if member.status not in ("administrator", "creator"):
+            await update.message.reply_text("⛔ Только администраторы могут вызвать отчёт\\.", parse_mode="MarkdownV2")
+            return
+        await daily_report(context, chat_id=chat.id)
 
 
 async def daily_report(context: ContextTypes.DEFAULT_TYPE, chat_id: int | None = None) -> None:
@@ -189,7 +200,8 @@ async def daily_report(context: ContextTypes.DEFAULT_TYPE, chat_id: int | None =
         logger.warning("daily_report: no chat_id saved yet, skipping")
         return
 
-    today_count = database.get_today_count(chat_id)
+    yesterday = (datetime.datetime.now(MOSCOW) - datetime.timedelta(days=1)).date().isoformat()
+    today_count = database.get_date_count(chat_id, yesterday)
     total = database.get_total_count()
     remaining = max(0, GOAL - total)
     top3 = database.get_leaderboard(limit=3)
@@ -213,7 +225,7 @@ async def daily_report(context: ContextTypes.DEFAULT_TYPE, chat_id: int | None =
             risk_lines.append(f"😴 {name} \\({days_ago} дн\\. без пива\\)")
 
     lines = [
-        f"🎉 Поздравляю\\! Сегодня было выпито *{_fmt(today_count)}* пива",
+        f"🎉 Поздравляю\\! Вчера было выпито *{_fmt(today_count)}* пива",
         f"Осталось *{_fmt(remaining)}* до цели в 1\\,000\\,000 🍺",
         "",
         "*Кем гордится наша школа* 🏆",

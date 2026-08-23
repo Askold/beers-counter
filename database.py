@@ -100,6 +100,16 @@ def get_today_count(chat_id: int) -> int:
         return row["c"]
 
 
+def get_date_count(chat_id: int, date_str: str) -> int:
+    """Count circle videos for a specific date (YYYY-MM-DD) in this chat."""
+    with get_connection() as conn:
+        row = conn.execute("""
+            SELECT COUNT(*) AS c FROM video_log
+            WHERE chat_id = ? AND substr(sent_at, 1, 10) = ?
+        """, (chat_id, date_str)).fetchone()
+        return row["c"]
+
+
 def get_leaderboard(limit: int = 10) -> list[sqlite3.Row]:
     with get_connection() as conn:
         return conn.execute("""
