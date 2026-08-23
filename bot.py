@@ -160,8 +160,20 @@ async def track_text(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None
 
 # ── Daily report ────────────────────────────────────────────────────────────
 
-async def daily_report(context: ContextTypes.DEFAULT_TYPE) -> None:
-    chat_id = database.get_chat_id()
+async def report_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Manual trigger of the daily report — admin only."""
+    chat = update.effective_chat
+    user = update.effective_user
+    member = await chat.get_member(user.id)
+    if member.status not in ("administrator", "creator"):
+        await update.message.reply_text("⛔ Только администраторы могут вызвать отчёт\\.", parse_mode="MarkdownV2")
+        return
+    await daily_report(context, chat_id=chat.id)
+
+
+async def daily_report(context: ContextTypes.DEFAULT_TYPE, chat_id: int | None = None) -> None:
+    if chat_id is None:
+        chat_id = database.get_chat_id()
     if not chat_id:
         logger.warning("daily_report: no chat_id saved yet, skipping")
         return
@@ -223,6 +235,7 @@ def main() -> None:
     app.add_handler(CommandHandler("leaderboard", leaderboard))
     app.add_handler(CommandHandler("reset", reset))
     app.add_handler(CommandHandler("clean", clean))
+    app.add_handler(CommandHandler("report", report_command))
 
     # Count only circle (round) video messages
     app.add_handler(MessageHandler(filters.VIDEO_NOTE, handle_video))
