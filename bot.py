@@ -23,6 +23,12 @@ def _display_name(user) -> str:
     return user.full_name or user.username or str(user.id)
 
 
+def _escape_md(text: str) -> str:
+    """Escape all MarkdownV2 reserved characters."""
+    reserved = r"\_*[]()~`>#+-=|{}.!"
+    return "".join(f"\\{c}" if c in reserved else c for c in text)
+
+
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text(
         f"{BEER_EMOJI} *Beer Counter Bot* {BEER_EMOJI}\n\n"
@@ -44,8 +50,8 @@ async def beer(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         full_name=_display_name(user),
     )
     await update.message.reply_text(
-        f"{BEER_EMOJI} Cheers, {_display_name(user)}\\! "
-        f"That's beer **#{new_count}** for you today\\!",
+        f"{BEER_EMOJI} Cheers, {_escape_md(_display_name(user))}\\! "
+        f"That's beer *\\#{new_count}* for you today\\!",
         parse_mode="MarkdownV2",
     )
 
@@ -85,7 +91,7 @@ async def reset(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user = update.effective_user
     database.reset_count(user.id)
     await update.message.reply_text(
-        f"✅ Your beer count has been reset to zero\\, {_display_name(user)}\\.",
+        f"✅ Your beer count has been reset to zero\\, {_escape_md(_display_name(user))}\\.",
         parse_mode="MarkdownV2",
     )
 
