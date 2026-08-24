@@ -205,13 +205,20 @@ async def daily_report(context: ContextTypes.DEFAULT_TYPE, chat_id: int | None =
     total = database.get_total_count()
     remaining = max(0, GOAL - total)
     top3 = database.get_leaderboard(limit=3)
+    top3_day = database.get_top_drinkers_for_date(chat_id, yesterday, limit=3)
     inactive = database.get_inactive_users(days=20)
 
     medals = ["🥇", "🥈", "🥉"]
+
     top_lines = []
     for i, row in enumerate(top3):
         medal = medals[i] if i < 3 else f"{i+1}\\."
         top_lines.append(f"{medal} {_escape_md(row['full_name'])} — {_fmt(row['count'])} 🍺")
+
+    top_day_lines = []
+    for i, row in enumerate(top3_day):
+        medal = medals[i] if i < 3 else f"{i+1}\\."
+        top_day_lines.append(f"{medal} {_escape_md(row['full_name'])} — {_fmt(row['day_count'])} 🍺")
 
     risk_lines = []
     now = datetime.datetime.now(MOSCOW)
@@ -227,6 +234,9 @@ async def daily_report(context: ContextTypes.DEFAULT_TYPE, chat_id: int | None =
     lines = [
         f"🎉 Поздравляю\\! Вчера было выпито *{_fmt(today_count)}* пива",
         f"Осталось *{_fmt(remaining)}* до цели в 1\\,000\\,000 🍺",
+        "",
+        "*Герои вчерашнего дня* 🌟",
+    ] + (top_day_lines if top_day_lines else ["Вчера никто не пил\\."]) + [
         "",
         "*Кем гордится наша школа* 🏆",
     ] + (top_lines if top_lines else ["Пока никто не пил\\."]) + [

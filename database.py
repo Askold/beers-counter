@@ -110,6 +110,20 @@ def get_date_count(chat_id: int, date_str: str) -> int:
         return row["c"]
 
 
+def get_top_drinkers_for_date(chat_id: int, date_str: str, limit: int = 3) -> list[sqlite3.Row]:
+    """Top drinkers for a specific date (YYYY-MM-DD), joined with full_name from beers."""
+    with get_connection() as conn:
+        return conn.execute("""
+            SELECT b.full_name, COUNT(*) AS day_count
+            FROM video_log v
+            JOIN beers b ON b.user_id = v.user_id
+            WHERE v.chat_id = ? AND substr(v.sent_at, 1, 10) = ?
+            GROUP BY v.user_id
+            ORDER BY day_count DESC
+            LIMIT ?
+        """, (chat_id, date_str, limit)).fetchall()
+
+
 def get_leaderboard(limit: int = 10) -> list[sqlite3.Row]:
     with get_connection() as conn:
         return conn.execute("""
