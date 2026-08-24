@@ -193,19 +193,32 @@ async def report_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         await daily_report(context, chat_id=chat.id)
 
 
-async def daily_report(context: ContextTypes.DEFAULT_TYPE, chat_id: int | None = None) -> None:
+async def daily_report(context: ContextTypes.DEFAULT_TYPE, chat_id: int | None = None, scheduled: bool = False) -> None:
     if chat_id is None:
         chat_id = database.get_chat_id()
     if not chat_id:
         logger.warning("daily_report: no chat_id saved yet, skipping")
         return
 
-    yesterday = (datetime.datetime.now(MOSCOW) - datetime.timedelta(days=1)).date().isoformat()
-    today_count = database.get_date_count(chat_id, yesterday)
+    now = datetime.datetime.now(MOSCOW)
+    # Scheduled (midnight) report → show the day that just ended (yesterday)
+    # Manual report → show today so far
+    if scheduled:
+        report_date = (now - datetime.timedelta(days=1)).date().isoformat()
+        period_label = "Вчера было выпито"
+        heroes_label = "Герои вчерашнего дня"
+        no_heroes = "Вчера никто не пил\\."
+    else:
+        report_date = now.date().isoformat()
+        period_label = "Сегодня выпито"
+        heroes_label = "Герои сегодняшнего дня"
+        no_heroes = "Сегодня ещё никто не пил\\."
+
+    today_count = database.get_date_count(chat_id, report_date)
     total = database.get_total_count()
     remaining = max(0, GOAL - total)
     top3 = database.get_leaderboard(limit=3)
-    top3_day = database.get_top_drinkers_for_date(chat_id, yesterday, limit=3)
+    top3_day = database.get_top_drinkers_for_date(chat_id, report_date, limit=3)
     inactive = database.get_inactive_users(days=20)
 
     medals = ["🥇", "🥈", "🥉"]
@@ -221,7 +234,6 @@ async def daily_report(context: ContextTypes.DEFAULT_TYPE, chat_id: int | None =
         top_day_lines.append(f"{medal} {_escape_md(row['full_name'])} — {_fmt(row['day_count'])} 🍺")
 
     risk_lines = []
-    now = datetime.datetime.now(MOSCOW)
     for row in inactive:
         name = _escape_md(row["full_name"])
         if row["count"] == 0:
@@ -232,11 +244,11 @@ async def daily_report(context: ContextTypes.DEFAULT_TYPE, chat_id: int | None =
             risk_lines.append(f"😴 {name} \\({days_ago} дн\\. без пива\\)")
 
     lines = [
-        f"🎉 Поздравляю\\! Вчера было выпито *{_fmt(today_count)}* пива",
+        f"🎉 Поздравляю\\! {_escape_md(period_label)} *{_fmt(today_count)}* пива",
         f"Осталось *{_fmt(remaining)}* до цели в 1\\,000\\,000 🍺",
         "",
-        "*Герои вчерашнего дня* 🌟",
-    ] + (top_day_lines if top_day_lines else ["Вчера никто не пил\\."]) + [
+        f"*{_escape_md(heroes_label)}* 🌟",
+    ] + (top_day_lines if top_day_lines else [no_heroes]) + [
         "",
         "*Кем гордится наша школа* 🏆",
     ] + (top_lines if top_lines else ["Пока никто не пил\\."]) + [
@@ -279,9 +291,9 @@ def main() -> None:
     # Track all message senders (group=1 runs after group=0, never blocks)
     app.add_handler(MessageHandler(filters.ALL, track_member_handler), group=1)
 
-    # Daily report at 00:00 Moscow time
+    # Daily report at 00:00 Moscow time (scheduled=True → counts yesterday)
     app.job_queue.run_daily(
-        daily_report,
+        lambda ctx: daily_report(ctx, scheduled=True),
         time=datetime.time(0, 0, 0, tzinfo=MOSCOW),
         name="daily_report",
     )
