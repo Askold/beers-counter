@@ -83,21 +83,18 @@ def main():
         d_count = d.get("count", 0)
         name = e.get("full_name") or d.get("full_name") or uid
 
-        if e_count != d_count:
-            diff = d_count - e_count
-            sign = f"+{diff}" if diff > 0 else str(diff)
-            issues.append((name, uid, e_count, d_count, sign))
-
-    if not issues:
-        print("✅ All counts match!")
-        return
+        diff = d_count - e_count
+        sign = f"+{diff}" if diff > 0 else str(diff) if diff != 0 else "="
+        issues.append((name, uid, e_count, d_count, sign, diff != 0))
 
     print(f"{'Name':<30} {'ID':<15} {'Export':>8} {'DB':>6} {'Diff':>6}")
     print("-" * 70)
-    for name, uid, e_count, d_count, sign in sorted(issues, key=lambda x: abs(int(x[4].replace("+", "")))):
-        print(f"{name:<30} {uid:<15} {e_count:>8} {d_count:>6} {sign:>6}")
+    for name, uid, e_count, d_count, sign, has_diff in sorted(issues, key=lambda x: -abs(x[3])):
+        marker = " ⚠️" if has_diff else ""
+        print(f"{name:<30} {uid:<15} {e_count:>8} {d_count:>6} {sign:>6}{marker}")
 
-    print(f"\n{len(issues)} user(s) have mismatched counts.")
+    mismatches = sum(1 for x in issues if x[5])
+    print(f"\nTotal: {len(issues)} users, {mismatches} with mismatched counts.")
 
 
 if __name__ == "__main__":
