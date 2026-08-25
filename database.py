@@ -110,6 +110,17 @@ def get_date_count(chat_id: int, date_str: str) -> int:
         return row["c"]
 
 
+def get_videos_last_n_days(n: int = 5) -> int:
+    """Total circle videos logged across all chats in the last n days."""
+    cutoff = (datetime.now(MOSCOW) - timedelta(days=n)).isoformat()
+    with get_connection() as conn:
+        row = conn.execute(
+            "SELECT COUNT(*) AS c FROM video_log WHERE sent_at >= ?",
+            (cutoff,)
+        ).fetchone()
+        return row["c"]
+
+
 def get_top_drinkers_for_date(chat_id: int, date_str: str, limit: int = 3) -> list[sqlite3.Row]:
     """Top drinkers for a specific date (YYYY-MM-DD), joined with full_name from beers."""
     with get_connection() as conn:

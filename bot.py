@@ -1,5 +1,6 @@
 import datetime
 import logging
+import math
 import os
 from zoneinfo import ZoneInfo
 
@@ -218,6 +219,17 @@ async def daily_report(context: ContextTypes.DEFAULT_TYPE, chat_id: int | None =
     today_count = database.get_date_count(chat_id, report_date)
     total = database.get_total_count()
     remaining = max(0, GOAL - total)
+
+    last5 = database.get_videos_last_n_days(5)
+    avg_per_day = last5 / 5
+    if avg_per_day > 0 and remaining > 0:
+        days_left = math.ceil(remaining / avg_per_day)
+        pace_line = f"При текущем темпе потребуется *{_fmt(days_left)}* дн\\. для выполнения плана 📅"
+    elif remaining == 0:
+        pace_line = "🎊 Цель достигнута\\!"
+    else:
+        pace_line = "Темп пока не определён"
+
     top3 = database.get_leaderboard(limit=3)
     top3_day = database.get_top_drinkers_for_date(chat_id, report_date, limit=3)
     inactive = database.get_inactive_users(days=20)
@@ -247,6 +259,7 @@ async def daily_report(context: ContextTypes.DEFAULT_TYPE, chat_id: int | None =
     lines = [
         f"🎉 Поздравляю\\! {_escape_md(period_label)} *{_fmt(today_count)}* пива",
         f"Осталось *{_fmt(remaining)}* до цели в 1\\,000\\,000 🍺",
+        pace_line,
         "",
         f"*{_escape_md(heroes_label)}* 🌟",
     ] + (top_day_lines if top_day_lines else [no_heroes]) + [
