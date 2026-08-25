@@ -52,6 +52,13 @@ def init_db() -> None:
                 PRIMARY KEY (chat_id, message_id)
             )
         """)
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS mvp_log (
+                date    TEXT PRIMARY KEY,
+                user_id INTEGER NOT NULL,
+                chat_id INTEGER NOT NULL
+            )
+        """)
         conn.commit()
 
 
@@ -125,7 +132,7 @@ def get_top_drinkers_for_date(chat_id: int, date_str: str, limit: int = 3) -> li
     """Top drinkers for a specific date (YYYY-MM-DD), joined with full_name from beers."""
     with get_connection() as conn:
         return conn.execute("""
-            SELECT b.full_name, COUNT(*) AS day_count
+            SELECT b.user_id, b.full_name, COUNT(*) AS day_count
             FROM video_log v
             JOIN beers b ON b.user_id = v.user_id
             WHERE v.chat_id = ? AND substr(v.sent_at, 1, 10) = ?
@@ -138,7 +145,7 @@ def get_top_drinkers_for_date(chat_id: int, date_str: str, limit: int = 3) -> li
 def get_leaderboard(limit: int = 10) -> list[sqlite3.Row]:
     with get_connection() as conn:
         return conn.execute("""
-            SELECT full_name, username, count
+            SELECT user_id, full_name, username, count
             FROM beers ORDER BY count DESC LIMIT ?
         """, (limit,)).fetchall()
 
@@ -188,6 +195,60 @@ def reset_count(user_id: int) -> None:
     with get_connection() as conn:
         conn.execute("UPDATE beers SET count = 0 WHERE user_id = ?", (user_id,))
         conn.commit()
+
+
+# ── MVP tracking ───────────────────────────────────────────────────────────
+
+def record_mvp(date_str: str, user_id: int, chat_id: int) -> None:
+    """Record the day's MVP (top drinker). Safe to call multiple times — overwrites."""
+    with get_connection() as conn:
+        conn.execute(
+            "INSERT OR REPLACE INTO mvp_log (date, user_id, chat_id) VALUES (?, ?, ?)",
+            (date_str, user_id, chat_id),
+        )
+        conn.commit()
+
+
+def get_mvp_counts() -> dict[int, int]:
+    """Return {user_id: total_mvp_wins} for all users who have won at least once."""
+    with get_connection() as conn:
+        rows = conn.execute(
+            "SELECT user_id, COUNT(*) AS wins FROM mvp_log GROUP BY user_id"
+        ).fetchall()
+    return {r["user_id"]: r["wins"] for r in rows}
+
+
+def get_mvp_streak() -> tuple[int | None, int]:
+    """
+    Return (user_id, streak_length) for the user holding the current winning streak.
+    streak_length=0 means no MVPs recorded yet.
+    """
+    with get_connection() as conn:
+        rows = conn.execute(
+            "SELECT date, user_id FROM mvp_log ORDER BY date DESC"
+        ).fetchall()
+    if not rows:
+        return None, 0
+    leader_id = rows[0]["user_id"]
+    streak = sum(1 for r in rows if r["user_id"] == leader_id and
+                 rows[:rows.index(r) + 1][-1]["user_id"] == leader_id)
+    # Simpler: count consecutive from the top
+    streak = 0
+    for r in rows:
+        if r["user_id"] == leader_id:
+            streak += 1
+        else:
+            break
+    return leader_id, streak
+
+
+def get_mvp_wins(user_id: int) -> int:
+    """Return total MVP wins for a single user."""
+    with get_connection() as conn:
+        row = conn.execute(
+            "SELECT COUNT(*) AS wins FROM mvp_log WHERE user_id = ?", (user_id,)
+        ).fetchone()
+    return row["wins"]
 
 
 # ── Settings (stores group chat_id for daily report) ───────────────────────

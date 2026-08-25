@@ -59,15 +59,19 @@ async def count(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     n = database.get_count(user.id)
     total = database.get_total_count()
     remaining = max(0, GOAL - total)
+    mvp_wins = database.get_mvp_wins(user.id)
+    stars = "⭐" * mvp_wins
     if n == 0:
         await update.message.reply_text(
             "Ты ещё не выпил ни одного пива\\. Отправь кружочек\\! 🍺",
             parse_mode="MarkdownV2",
         )
     else:
+        mvp_line = f"\nПобед MVP: {stars} *{mvp_wins}*" if mvp_wins else ""
         await update.message.reply_text(
             f"Ты выпил *{_fmt(n)}* пива 🍺\n"
-            f"До цели осталось: *{_fmt(remaining)}*",
+            f"До цели осталось: *{_fmt(remaining)}*"
+            f"{mvp_line}",
             parse_mode="MarkdownV2",
         )
 
@@ -80,12 +84,14 @@ async def leaderboard(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
         await update.message.reply_text("Пока никто не выпил пива\\. Начни первым\\! 🍺", parse_mode="MarkdownV2")
         return
 
+    mvp_counts = database.get_mvp_counts()
     medals = ["🥇", "🥈", "🥉"]
     lines = ["*🍺 Таблица лидеров 🍺*\n"]
     for i, row in enumerate(rows):
         medal = medals[i] if i < 3 else f"{i + 1}\\."
         name = _escape_md(row["full_name"])
-        lines.append(f"{medal} {name} — *{_fmt(row['count'])}* 🍺")
+        stars = "⭐" * mvp_counts.get(row["user_id"], 0)
+        lines.append(f"{medal} {name} {stars}— *{_fmt(row['count'])}* 🍺")
     lines.append(f"\nДо цели осталось: *{_fmt(remaining)}*")
     await update.message.reply_text("\n".join(lines), parse_mode="MarkdownV2")
 
@@ -234,12 +240,20 @@ async def daily_report(context: ContextTypes.DEFAULT_TYPE, chat_id: int | None =
     top3_day = database.get_top_drinkers_for_date(chat_id, report_date, limit=3)
     inactive = database.get_inactive_users(days=20)
 
+    # Record MVP for scheduled (midnight) runs
+    if scheduled and top3_day:
+        database.record_mvp(report_date, top3_day[0]["user_id"], chat_id)
+
+    mvp_counts = database.get_mvp_counts()
+    mvp_streak_uid, mvp_streak = database.get_mvp_streak()
+
     medals = ["🥇", "🥈", "🥉"]
 
     top_lines = []
     for i, row in enumerate(top3):
         medal = medals[i] if i < 3 else f"{i+1}\\."
-        top_lines.append(f"{medal} {_escape_md(row['full_name'])} — {_fmt(row['count'])} 🍺")
+        stars = "⭐" * mvp_counts.get(row["user_id"], 0)
+        top_lines.append(f"{medal} {_escape_md(row['full_name'])} {stars}— {_fmt(row['count'])} 🍺")
 
     top_day_lines = []
     for i, row in enumerate(top3_day):
@@ -256,13 +270,23 @@ async def daily_report(context: ContextTypes.DEFAULT_TYPE, chat_id: int | None =
             days_ago = (now - last).days
             risk_lines.append(f"😴 {name} \\({days_ago} дн\\. без пива\\)")
 
+    # Build streak line
+    streak_line = ""
+    if mvp_streak >= 2 and mvp_streak_uid is not None:
+        streak_user = next((r for r in top3 if r["user_id"] == mvp_streak_uid), None)
+        if streak_user:
+            streak_name = _escape_md(streak_user["full_name"])
+            streak_line = f"🔥 {streak_name} — MVP уже *{mvp_streak}* дня подряд\\!"
+
     lines = [
         f"🎉 Поздравляю\\! {_escape_md(period_label)} *{_fmt(today_count)}* пива",
         f"Осталось *{_fmt(remaining)}* до цели в 1\\,000\\,000 🍺",
         pace_line,
         "",
         f"*{_escape_md(heroes_label)}* 🌟",
-    ] + (top_day_lines if top_day_lines else [no_heroes]) + [
+    ] + (top_day_lines if top_day_lines else [no_heroes]) + (
+        ["", streak_line] if streak_line else []
+    ) + [
         "",
         "*Кем гордится наша школа* 🏆",
     ] + (top_lines if top_lines else ["Пока никто не пил\\."]) + [
