@@ -72,7 +72,7 @@ async def count(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 
 async def leaderboard(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    rows = database.get_leaderboard()
+    rows = database.get_leaderboard(limit=100)
     total = database.get_total_count()
     remaining = max(0, GOAL - total)
     if not rows:
@@ -185,12 +185,13 @@ async def report_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         await daily_report(context, chat_id=target_chat_id)
         await update.message.reply_text("✅ Отчёт отправлен в группу\\.", parse_mode="MarkdownV2")
     else:
-        # In a group: admin only, send report to this group
+        # In a group: admin only, always use the stored chat_id for consistency
         member = await chat.get_member(user.id)
         if member.status not in ("administrator", "creator"):
             await update.message.reply_text("⛔ Только администраторы могут вызвать отчёт\\.", parse_mode="MarkdownV2")
             return
-        await daily_report(context, chat_id=chat.id)
+        target_chat_id = database.get_chat_id() or chat.id
+        await daily_report(context, chat_id=target_chat_id)
 
 
 async def daily_report(context: ContextTypes.DEFAULT_TYPE, chat_id: int | None = None, scheduled: bool = False) -> None:
