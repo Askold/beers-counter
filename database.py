@@ -49,9 +49,14 @@ def init_db() -> None:
             CREATE TABLE IF NOT EXISTS text_messages (
                 chat_id    INTEGER NOT NULL,
                 message_id INTEGER NOT NULL,
+                sent_at    TEXT,
                 PRIMARY KEY (chat_id, message_id)
             )
         """)
+        # migrate: add sent_at if missing
+        tm_cols = [r[1] for r in conn.execute("PRAGMA table_info(text_messages)").fetchall()]
+        if "sent_at" not in tm_cols:
+            conn.execute("ALTER TABLE text_messages ADD COLUMN sent_at TEXT")
         conn.execute("""
             CREATE TABLE IF NOT EXISTS mvp_log (
                 date    TEXT PRIMARY KEY,
@@ -273,10 +278,11 @@ def get_chat_id() -> int | None:
 # ── Text message tracking (for /clean) ────────────────────────────────────
 
 def track_text_message(chat_id: int, message_id: int) -> None:
+    now = datetime.now(MOSCOW).isoformat()
     with get_connection() as conn:
         conn.execute(
-            "INSERT OR IGNORE INTO text_messages (chat_id, message_id) VALUES (?, ?)",
-            (chat_id, message_id),
+            "INSERT OR IGNORE INTO text_messages (chat_id, message_id, sent_at) VALUES (?, ?, ?)",
+            (chat_id, message_id, now),
         )
         conn.commit()
 
@@ -289,7 +295,26 @@ def get_text_message_ids(chat_id: int) -> list[int]:
         return [r["message_id"] for r in rows]
 
 
+def get_text_message_ids_for_date(chat_id: int, date_str: str) -> list[int]:
+    """Return message_ids for a specific date (YYYY-MM-DD)."""
+    with get_connection() as conn:
+        rows = conn.execute(
+            "SELECT message_id FROM text_messages WHERE chat_id = ? AND substr(sent_at,1,10) = ?",
+            (chat_id, date_str),
+        ).fetchall()
+        return [r["message_id"] for r in rows]
+
+
 def clear_text_messages(chat_id: int) -> None:
     with get_connection() as conn:
         conn.execute("DELETE FROM text_messages WHERE chat_id = ?", (chat_id,))
+        conn.commit()
+
+
+def clear_text_messages_for_date(chat_id: int, date_str: str) -> None:
+    with get_connection() as conn:
+        conn.execute(
+            "DELETE FROM text_messages WHERE chat_id = ? AND substr(sent_at,1,10) = ?",
+            (chat_id, date_str),
+        )
         conn.commit()

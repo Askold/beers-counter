@@ -300,6 +300,20 @@ async def daily_report(context: ContextTypes.DEFAULT_TYPE, chat_id: int | None =
         parse_mode="MarkdownV2",
     )
 
+    # Auto-clean yesterday's text messages after the scheduled report
+    if scheduled:
+        message_ids = database.get_text_message_ids_for_date(chat_id, report_date)
+        deleted = 0
+        for msg_id in message_ids:
+            try:
+                await context.bot.delete_message(chat_id=chat_id, message_id=msg_id)
+                deleted += 1
+            except Exception:
+                pass
+        if deleted:
+            database.clear_text_messages_for_date(chat_id, report_date)
+            logger.info(f"Auto-clean: deleted {deleted} text messages from {report_date}")
+
 
 # ── Main ────────────────────────────────────────────────────────────────────
 
