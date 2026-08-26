@@ -108,14 +108,22 @@ async def reset(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 async def clean(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     chat = update.effective_chat
     user = update.effective_user
+    main_chat_id = database.get_chat_id()
+
+    # /clean only works in the main group
+    if main_chat_id and chat.id != main_chat_id:
+        await update.message.reply_text("⛔ /clean работает только в основной группе\\.", parse_mode="MarkdownV2")
+        return
+
     member = await chat.get_member(user.id)
     if member.status not in ("administrator", "creator"):
         await update.message.reply_text("⛔ Только администраторы могут использовать /clean\\.", parse_mode="MarkdownV2")
         return
 
-    message_ids = database.get_text_message_ids(chat.id)
+    yesterday = (datetime.datetime.now(MOSCOW) - datetime.timedelta(days=1)).date().isoformat()
+    message_ids = database.get_text_message_ids_for_date(chat.id, yesterday)
     if not message_ids:
-        await update.message.reply_text("Нет текстовых сообщений для удаления\\.", parse_mode="MarkdownV2")
+        await update.message.reply_text("Нет сообщений за вчера для удаления\\.", parse_mode="MarkdownV2")
         return
 
     deleted = 0
@@ -126,10 +134,10 @@ async def clean(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         except Exception:
             pass
 
-    database.clear_text_messages(chat.id)
+    database.clear_text_messages_for_date(chat.id, yesterday)
     await context.bot.send_message(
         chat.id,
-        f"🗑 Удалено *{deleted}* текстовых сообщений\\.",
+        f"🗑 Удалено *{deleted}* сообщений за вчера\\.",
         parse_mode="MarkdownV2",
     )
 
@@ -179,38 +187,47 @@ async def track_member_handler(update: Update, context: ContextTypes.DEFAULT_TYP
 # ── Daily report ────────────────────────────────────────────────────────────
 
 async def report_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Manual trigger of the daily report — admin only (or any private chat)."""
+    """Manual trigger of the daily report — admin only (or any private chat).
+    Report is sent to the chat where the command was called,
+    but data always comes from the main group (stored chat_id).
+    """
     chat = update.effective_chat
     user = update.effective_user
 
     if chat.type == "private":
-        # In private chat: send report to the saved group (no admin check needed)
-        target_chat_id = database.get_chat_id()
-        if not target_chat_id:
+        main_chat_id = database.get_chat_id()
+        if not main_chat_id:
             await update.message.reply_text("Бот ещё не добавлен ни в одну группу\\.", parse_mode="MarkdownV2")
             return
-        await daily_report(context, chat_id=target_chat_id)
+        await daily_report(context, send_to=main_chat_id)
         await update.message.reply_text("✅ Отчёт отправлен в группу\\.", parse_mode="MarkdownV2")
     else:
-        # In a group: admin only, always use the stored chat_id for consistency
         member = await chat.get_member(user.id)
         if member.status not in ("administrator", "creator"):
             await update.message.reply_text("⛔ Только администраторы могут вызвать отчёт\\.", parse_mode="MarkdownV2")
             return
-        target_chat_id = database.get_chat_id() or chat.id
-        await daily_report(context, chat_id=target_chat_id)
+        # Send to this group, but data from main group
+        await daily_report(context, send_to=chat.id)
 
 
-async def daily_report(context: ContextTypes.DEFAULT_TYPE, chat_id: int | None = None, scheduled: bool = False) -> None:
-    if chat_id is None:
-        chat_id = database.get_chat_id()
-    if not chat_id:
+async def daily_report(
+    context: ContextTypes.DEFAULT_TYPE,
+    send_to: int | None = None,
+    scheduled: bool = False,
+) -> None:
+    """
+    send_to   — which chat receives the report message (defaults to main group).
+    Data (video counts, leaderboard, MVP) always comes from the main stored chat_id.
+    Auto-clean runs only on the main group, regardless of where the report is sent.
+    """
+    main_chat_id = database.get_chat_id()
+    if not main_chat_id:
         logger.warning("daily_report: no chat_id saved yet, skipping")
         return
+    if send_to is None:
+        send_to = main_chat_id
 
     now = datetime.datetime.now(MOSCOW)
-    # Scheduled (midnight) report → show the day that just ended (yesterday)
-    # Manual report → show today so far
     if scheduled:
         report_date = (now - datetime.timedelta(days=1)).date().isoformat()
         period_label = "Вчера было выпито"
@@ -222,7 +239,8 @@ async def daily_report(context: ContextTypes.DEFAULT_TYPE, chat_id: int | None =
         heroes_label = "Герои сегодняшнего дня"
         no_heroes = "Сегодня ещё никто не пил\\."
 
-    today_count = database.get_date_count(chat_id, report_date)
+    # All data queries use main_chat_id
+    today_count = database.get_date_count(main_chat_id, report_date)
     total = database.get_total_count()
     remaining = max(0, GOAL - total)
 
@@ -237,12 +255,12 @@ async def daily_report(context: ContextTypes.DEFAULT_TYPE, chat_id: int | None =
         pace_line = "Темп пока не определён"
 
     top3 = database.get_leaderboard(limit=3)
-    top3_day = database.get_top_drinkers_for_date(chat_id, report_date, limit=3)
+    top3_day = database.get_top_drinkers_for_date(main_chat_id, report_date, limit=3)
     inactive = database.get_inactive_users(days=20)
 
     # Record MVP for scheduled (midnight) runs
     if scheduled and top3_day:
-        database.record_mvp(report_date, top3_day[0]["user_id"], chat_id)
+        database.record_mvp(report_date, top3_day[0]["user_id"], main_chat_id)
 
     mvp_counts = database.get_mvp_counts()
     mvp_streak_uid, mvp_streak = database.get_mvp_streak()
@@ -270,7 +288,6 @@ async def daily_report(context: ContextTypes.DEFAULT_TYPE, chat_id: int | None =
             days_ago = (now - last).days
             risk_lines.append(f"😴 {name} \\({days_ago} дн\\. без пива\\)")
 
-    # Build streak line
     streak_line = ""
     if mvp_streak >= 2 and mvp_streak_uid is not None:
         streak_user = next((r for r in top3 if r["user_id"] == mvp_streak_uid), None)
@@ -295,23 +312,23 @@ async def daily_report(context: ContextTypes.DEFAULT_TYPE, chat_id: int | None =
     ] + (risk_lines if risk_lines else ["Все молодцы, никто не отстаёт\\! 💪"])
 
     await context.bot.send_message(
-        chat_id=chat_id,
+        chat_id=send_to,
         text="\n".join(lines),
         parse_mode="MarkdownV2",
     )
 
-    # Auto-clean yesterday's text messages after the scheduled report
+    # Auto-clean: only wipe main group's messages from yesterday
     if scheduled:
-        message_ids = database.get_text_message_ids_for_date(chat_id, report_date)
+        message_ids = database.get_text_message_ids_for_date(main_chat_id, report_date)
         deleted = 0
         for msg_id in message_ids:
             try:
-                await context.bot.delete_message(chat_id=chat_id, message_id=msg_id)
+                await context.bot.delete_message(chat_id=main_chat_id, message_id=msg_id)
                 deleted += 1
             except Exception:
                 pass
         if deleted:
-            database.clear_text_messages_for_date(chat_id, report_date)
+            database.clear_text_messages_for_date(main_chat_id, report_date)
             logger.info(f"Auto-clean: deleted {deleted} text messages from {report_date}")
 
 
@@ -345,7 +362,7 @@ def main() -> None:
 
     # Daily report at 00:00 Moscow time (scheduled=True → counts yesterday)
     app.job_queue.run_daily(
-        lambda ctx: daily_report(ctx, scheduled=True),
+        lambda ctx: daily_report(ctx, send_to=None, scheduled=True),
         time=datetime.time(0, 0, 0, tzinfo=MOSCOW),
         name="daily_report",
     )
