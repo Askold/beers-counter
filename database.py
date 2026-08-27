@@ -312,6 +312,58 @@ def get_mvp_streak() -> tuple[int | None, int]:
     return leader_id, streak
 
 
+def get_user_rank(user_id: int) -> int:
+    """Return the user's all-time rank by count (1 = best). 0 if not found."""
+    with get_connection() as conn:
+        row = conn.execute("""
+            SELECT COUNT(*) + 1 AS rank
+            FROM beers
+            WHERE count > (SELECT count FROM beers WHERE user_id = ?)
+        """, (user_id,)).fetchone()
+    return row["rank"] if row else 0
+
+
+def get_pivot_score() -> float:
+    """
+    Composite score for each user = count + mvp_wins*50 + longest_streak*10.
+    Returns the average of that score across all users with count > 0.
+    Returns 0 if no users.
+    """
+    with get_connection() as conn:
+        rows = conn.execute("""
+            SELECT b.user_id,
+                   b.count,
+                   b.longest_streak,
+                   COALESCE(m.wins, 0) AS mvp_wins
+            FROM beers b
+            LEFT JOIN (
+                SELECT user_id, COUNT(*) AS wins FROM mvp_log GROUP BY user_id
+            ) m ON m.user_id = b.user_id
+            WHERE b.count > 0
+        """).fetchall()
+    if not rows:
+        return 0.0
+    scores = [r["count"] + r["mvp_wins"] * 50 + r["longest_streak"] * 10 for r in rows]
+    return sum(scores) / len(scores)
+
+
+def get_user_composite_score(user_id: int) -> float:
+    """Composite score for a single user."""
+    with get_connection() as conn:
+        row = conn.execute("""
+            SELECT b.count, b.longest_streak,
+                   COALESCE(m.wins, 0) AS mvp_wins
+            FROM beers b
+            LEFT JOIN (
+                SELECT user_id, COUNT(*) AS wins FROM mvp_log GROUP BY user_id
+            ) m ON m.user_id = b.user_id
+            WHERE b.user_id = ?
+        """, (user_id,)).fetchone()
+    if not row:
+        return 0.0
+    return row["count"] + row["mvp_wins"] * 50 + row["longest_streak"] * 10
+
+
 def get_streak(user_id: int) -> tuple[int, int]:
     """Return (current_streak, longest_streak) for a user."""
     with get_connection() as conn:

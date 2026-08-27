@@ -47,40 +47,52 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         "Цель: выпить *1\\,000\\,000* пива вместе\\!\n\n"
         "Отправь кружочек — и пиво засчитается автоматически\\.\n\n"
         "Команды:\n"
-        "/count — твой личный счёт\n"
+        "/stats — твоя статистика\n"
         "/leaderboard — таблица лидеров\n"
         "/reset — сбросить свой счёт",
         parse_mode="MarkdownV2",
     )
 
 
-async def count(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+async def stats(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user = update.effective_user
     n = database.get_count(user.id)
     total = database.get_total_count()
     remaining = max(0, GOAL - total)
-    mvp_wins = database.get_mvp_wins(user.id)
-    current_streak, longest_streak = database.get_streak(user.id)
-    stars = "⭐" * mvp_wins
+
     if n == 0:
         await update.message.reply_text(
             "Ты ещё не выпил ни одного пива\\. Отправь кружочек\\! 🍺",
             parse_mode="MarkdownV2",
         )
+        return
+
+    mvp_wins = database.get_mvp_wins(user.id)
+    current_streak, longest_streak = database.get_streak(user.id)
+    rank = database.get_user_rank(user.id)
+    user_score = database.get_user_composite_score(user.id)
+    pivot = database.get_pivot_score()
+
+    if rank <= 10:
+        special = "Ты в числе лучших пивопивов, красавчик\\! 🏆"
+    elif user_score >= pivot:
+        special = "Выше среднего\\! Так держать\\! 💪"
     else:
-        mvp_line = f"\nПобед MVP: {stars} *{mvp_wins}*" if mvp_wins else ""
-        streak_line = ""
-        if current_streak >= 2:
-            streak_line = f"\n🔥 Стрик: *{current_streak}* дн\\. подряд"
-        if longest_streak > current_streak:
-            streak_line += f" \\(рекорд: *{longest_streak}*\\)"
-        await update.message.reply_text(
-            f"Ты выпил *{_fmt(n)}* пива 🍺\n"
-            f"До цели осталось: *{_fmt(remaining)}*"
-            f"{mvp_line}"
-            f"{streak_line}",
-            parse_mode="MarkdownV2",
-        )
+        special = "Дружище, надо поднажать\\! 😅"
+
+    streak_val = f"*{current_streak}*" if current_streak >= 1 else "0"
+    mvp_val = f"*{mvp_wins}*" if mvp_wins else "0"
+
+    await update.message.reply_text(
+        f"Выпито пив 🍺 : *{_fmt(n)}*\n"
+        f"MVP ⭐ : {mvp_val}\n"
+        f"Дней с пивом подряд 🔥 : {streak_val}\n"
+        f"\n"
+        f"{special}\n"
+        f"\n"
+        f"До общей цели осталось: *{_fmt(remaining)}*",
+        parse_mode="MarkdownV2",
+    )
 
 
 async def leaderboard(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -391,7 +403,7 @@ def main() -> None:
 
     # Commands
     app.add_handler(CommandHandler("start", start))
-    app.add_handler(CommandHandler("count", count))
+    app.add_handler(CommandHandler("stats", stats))
     app.add_handler(CommandHandler("leaderboard", leaderboard))
     app.add_handler(CommandHandler("reset", reset))
     app.add_handler(CommandHandler("clean", clean))
