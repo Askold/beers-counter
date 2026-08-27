@@ -60,6 +60,7 @@ async def count(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     total = database.get_total_count()
     remaining = max(0, GOAL - total)
     mvp_wins = database.get_mvp_wins(user.id)
+    current_streak, longest_streak = database.get_streak(user.id)
     stars = "⭐" * mvp_wins
     if n == 0:
         await update.message.reply_text(
@@ -68,10 +69,16 @@ async def count(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         )
     else:
         mvp_line = f"\nПобед MVP: {stars} *{mvp_wins}*" if mvp_wins else ""
+        streak_line = ""
+        if current_streak >= 2:
+            streak_line = f"\n🔥 Стрик: *{current_streak}* дн\\. подряд"
+        if longest_streak > current_streak:
+            streak_line += f" \\(рекорд: *{longest_streak}*\\)"
         await update.message.reply_text(
             f"Ты выпил *{_fmt(n)}* пива 🍺\n"
             f"До цели осталось: *{_fmt(remaining)}*"
-            f"{mvp_line}",
+            f"{mvp_line}"
+            f"{streak_line}",
             parse_mode="MarkdownV2",
         )
 
@@ -185,10 +192,12 @@ async def handle_video(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 
     remaining = max(0, GOAL - total)
     name = _escape_md(_display_name(user))
+    current_streak, _ = database.get_streak(user.id)
+    streak_suffix = f" 🔥 {current_streak}" if current_streak >= 2 else ""
 
     if msg:
         await msg.reply_text(
-            f"{name} выпил пиво, осталось {_fmt(remaining)} 🍺",
+            f"{name} выпил пиво, осталось {_fmt(remaining)} 🍺{streak_suffix}",
             parse_mode="MarkdownV2",
         )
 
@@ -283,6 +292,7 @@ async def daily_report(
     top3 = database.get_leaderboard(limit=3)
     top3_day = database.get_top_drinkers_for_date(main_chat_id, report_date, limit=3)
     inactive = database.get_inactive_users(days=20)
+    on_fire = database.get_users_on_streak(min_days=3)
 
     # Record MVP for scheduled (midnight) runs
     if scheduled and top3_day:
@@ -321,6 +331,11 @@ async def daily_report(
             streak_name = _escape_md(streak_user["full_name"])
             streak_line = f"🔥 {streak_name} — MVP уже *{mvp_streak}* дня подряд\\!"
 
+    fire_lines = [
+        f"🔥 {_escape_md(row['full_name'])} — {row['current_streak']} дн\\. подряд"
+        for row in on_fire
+    ]
+
     lines = [
         f"🎉 Поздравляю\\! {_escape_md(period_label)} *{_fmt(today_count)}* пива",
         f"Осталось *{_fmt(remaining)}* до цели в 1\\,000\\,000 🍺",
@@ -332,7 +347,9 @@ async def daily_report(
     ) + [
         "",
         "*Кем гордится наша школа* 🏆",
-    ] + (top_lines if top_lines else ["Пока никто не пил\\."]) + [
+    ] + (top_lines if top_lines else ["Пока никто не пил\\."]) + (
+        ["", "*В огне* 🔥"] + fire_lines if fire_lines else []
+    ) + [
         "",
         "*В зоне риска* ⚠️",
     ] + (risk_lines if risk_lines else ["Все молодцы, никто не отстаёт\\! 💪"])
