@@ -48,8 +48,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         "Отправь кружочек — и пиво засчитается автоматически\\.\n\n"
         "Команды:\n"
         "/stats — твоя статистика\n"
-        "/leaderboard — таблица лидеров\n"
-        "/reset — сбросить свой счёт",
+        "/leaderboard — таблица лидеров",
         parse_mode="MarkdownV2",
     )
 
@@ -81,12 +80,14 @@ async def stats(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         special = "Дружище, надо поднажать\\! 😅"
 
     streak_val = f"*{current_streak}*" if current_streak >= 1 else "0"
+    longest_val = f"*{longest_streak}*" if longest_streak >= 1 else "0"
     mvp_val = f"*{mvp_wins}*" if mvp_wins else "0"
 
     await update.message.reply_text(
         f"Выпито пив 🍺 : *{_fmt(n)}*\n"
         f"MVP ⭐ : {mvp_val}\n"
-        f"Дней с пивом подряд 🔥 : {streak_val}\n"
+        f"Стрик 🔥 : {streak_val} дн\\. \\(рекорд: {longest_val}\\)\n"
+        f"Место в таблице: *#{rank}*\n"
         f"\n"
         f"{special}\n"
         f"\n"
@@ -109,19 +110,57 @@ async def leaderboard(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
     for i, row in enumerate(rows):
         medal = medals[i] if i < 3 else f"{i + 1}\\."
         name = _escape_md(row["full_name"])
-        stars = "⭐" * mvp_counts.get(row["user_id"], 0)
-        lines.append(f"{medal} {name} {stars}— *{_fmt(row['count'])}* 🍺")
+        username = f" \\(@{_escape_md(row['username'])}\\)" if row["username"] else ""
+        mvps = mvp_counts.get(row["user_id"], 0)
+        mvp_part = f"⭐{mvps}" if mvps else ""
+        streak = row["current_streak"]
+        streak_part = f"🔥{streak}" if streak >= 2 else ""
+        # format: medal. name (username) ⭐N — 🍺 count — 🔥streak
+        parts = [p for p in [mvp_part, streak_part] if p]
+        extras = f"  {' '.join(parts)}" if parts else ""
+        lines.append(f"{medal} {name}{username}{extras} — *{_fmt(row['count'])}* 🍺")
     lines.append(f"\nДо цели осталось: *{_fmt(remaining)}*")
     await update.message.reply_text("\n".join(lines), parse_mode="MarkdownV2")
 
 
-async def reset(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+
+async def remove_records(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Admin-only: /remove <id1> <id2> ... — cascade-delete video_log rows and fix counts."""
+    chat = update.effective_chat
     user = update.effective_user
-    database.reset_count(user.id)
-    await update.message.reply_text(
-        f"✅ Счёт сброшен для {_escape_md(_display_name(user))}\\.",
-        parse_mode="MarkdownV2",
-    )
+
+    # Allow in private chat or by group admins only
+    if chat.type != "private":
+        member = await chat.get_member(user.id)
+        if member.status not in ("administrator", "creator"):
+            await update.message.reply_text("⛔ Только администраторы могут использовать /remove\\.", parse_mode="MarkdownV2")
+            return
+
+    if not context.args:
+        await update.message.reply_text(
+            "Использование: `/remove <id1> <id2> \\.\\.\\.`\n"
+            "Пример: `/remove 269 270 271`",
+            parse_mode="MarkdownV2",
+        )
+        return
+
+    # Parse IDs
+    try:
+        ids = [int(x) for x in context.args]
+    except ValueError:
+        await update.message.reply_text("⛔ Все аргументы должны быть числами\\.", parse_mode="MarkdownV2")
+        return
+
+    removed, affected = database.remove_video_log_cascade(ids)
+
+    if not removed:
+        await update.message.reply_text("Записи не найдены\\.", parse_mode="MarkdownV2")
+        return
+
+    lines = [f"🗑 Удалено *{len(removed)}* записей из video\\_log\\."]
+    for uid, name, delta in affected:
+        lines.append(f"  {_escape_md(name)}: счёт −{delta}")
+    await update.message.reply_text("\n".join(lines), parse_mode="MarkdownV2")
 
 
 async def _pinned_message_ids(bot, chat_id: int) -> set[int]:
@@ -405,7 +444,7 @@ def main() -> None:
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("stats", stats))
     app.add_handler(CommandHandler("leaderboard", leaderboard))
-    app.add_handler(CommandHandler("reset", reset))
+    app.add_handler(CommandHandler("remove", remove_records))
     app.add_handler(CommandHandler("clean", clean))
     app.add_handler(CommandHandler("report", report_command))
 

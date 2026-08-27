@@ -84,6 +84,30 @@ def init_db() -> None:
         """)
         conn.commit()
 
+    _validate_video_log_integrity()
+
+
+def _validate_video_log_integrity() -> None:
+    """Warn at startup if video_log contains duplicate (chat_id, message_id) pairs."""
+    with get_connection() as conn:
+        dups = conn.execute("""
+            SELECT chat_id, message_id, COUNT(*) AS cnt
+            FROM video_log
+            WHERE message_id IS NOT NULL
+            GROUP BY chat_id, message_id
+            HAVING cnt > 1
+        """).fetchall()
+    if dups:
+        import logging
+        log = logging.getLogger(__name__)
+        log.warning(
+            "video_log integrity issue: %d duplicate (chat_id, message_id) pair(s) found. "
+            "Use /remove to clean them up.",
+            len(dups),
+        )
+        for d in dups:
+            log.warning("  chat_id=%s message_id=%s count=%s", d["chat_id"], d["message_id"], d["cnt"])
+
 
 # ── Video counting ──────────────────────────────────────────────────────────
 
@@ -159,6 +183,46 @@ def add_beer(
         return user_count, total, True
 
 
+def remove_video_log_cascade(ids: list[int]) -> tuple[list[int], list[tuple[int, str, int]]]:
+    """
+    Delete video_log rows by id and subtract from each user's count in beers.
+
+    Returns:
+        removed  — list of ids actually deleted
+        affected — list of (user_id, full_name, delta) for each user whose count changed
+    """
+    if not ids:
+        return [], []
+    placeholders = ",".join("?" * len(ids))
+    with get_connection() as conn:
+        # Find rows that exist
+        rows = conn.execute(
+            f"SELECT id, user_id FROM video_log WHERE id IN ({placeholders})", ids
+        ).fetchall()
+        if not rows:
+            return [], []
+
+        # Count how many to subtract per user
+        from collections import Counter
+        delta_by_user: Counter = Counter(r["user_id"] for r in rows)
+        removed_ids = [r["id"] for r in rows]
+
+        conn.execute(f"DELETE FROM video_log WHERE id IN ({placeholders})", ids)
+
+        affected = []
+        for user_id, delta in delta_by_user.items():
+            conn.execute(
+                "UPDATE beers SET count = MAX(0, count - ?) WHERE user_id = ?",
+                (delta, user_id),
+            )
+            name_row = conn.execute("SELECT full_name FROM beers WHERE user_id = ?", (user_id,)).fetchone()
+            name = name_row["full_name"] if name_row else str(user_id)
+            affected.append((user_id, name, delta))
+
+        conn.commit()
+    return removed_ids, affected
+
+
 def get_total_count() -> int:
     with get_connection() as conn:
         return conn.execute(
@@ -215,7 +279,7 @@ def get_top_drinkers_for_date(chat_id: int, date_str: str, limit: int = 3) -> li
 def get_leaderboard(limit: int = 10) -> list[sqlite3.Row]:
     with get_connection() as conn:
         return conn.execute("""
-            SELECT user_id, full_name, username, count
+            SELECT user_id, full_name, username, count, current_streak, longest_streak
             FROM beers ORDER BY count DESC LIMIT ?
         """, (limit,)).fetchall()
 
