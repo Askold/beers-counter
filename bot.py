@@ -105,6 +105,17 @@ async def reset(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     )
 
 
+async def _pinned_message_ids(bot, chat_id: int) -> set[int]:
+    """Return the set of currently-pinned message IDs in the chat (best-effort)."""
+    try:
+        chat = await bot.get_chat(chat_id)
+        if chat.pinned_message:
+            return {chat.pinned_message.message_id}
+    except Exception:
+        pass
+    return set()
+
+
 async def clean(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     chat = update.effective_chat
     user = update.effective_user
@@ -126,8 +137,11 @@ async def clean(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         await update.message.reply_text("Нет сообщений за вчера для удаления\\.", parse_mode="MarkdownV2")
         return
 
+    pinned = await _pinned_message_ids(context.bot, chat.id)
     deleted = 0
     for msg_id in message_ids:
+        if msg_id in pinned:
+            continue
         try:
             await context.bot.delete_message(chat_id=chat.id, message_id=msg_id)
             deleted += 1
@@ -153,22 +167,34 @@ async def handle_video(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     # remember this chat for the daily report
     database.save_chat_id(chat_id)
 
-    _user_count, total = database.add_beer(
+    msg = update.effective_message
+    message_id = msg.message_id if msg else None
+
+    _user_count, total, added = database.add_beer(
         user_id=user.id,
         username=user.username,
         full_name=_display_name(user),
         chat_id=chat_id,
+        message_id=message_id,
     )
+
+    if not added:
+        # Duplicate delivery (bot restart replay) — silently skip.
+        logger.info("Skipped duplicate message_id=%s from user %s", message_id, user.id)
+        return
+
     remaining = max(0, GOAL - total)
     name = _escape_md(_display_name(user))
 
-    await update.message.reply_text(
-        f"{name} выпил пиво, осталось {_fmt(remaining)} 🍺",
-        parse_mode="MarkdownV2",
-    )
+    if msg:
+        await msg.reply_text(
+            f"{name} выпил пиво, осталось {_fmt(remaining)} 🍺",
+            parse_mode="MarkdownV2",
+        )
 
 
-async def track_text(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+async def track_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Track every non-circle, non-command message so /clean can delete it later."""
     if update.message:
         database.track_text_message(update.effective_chat.id, update.message.message_id)
 
@@ -320,8 +346,11 @@ async def daily_report(
     # Auto-clean: only wipe main group's messages from yesterday
     if scheduled:
         message_ids = database.get_text_message_ids_for_date(main_chat_id, report_date)
+        pinned = await _pinned_message_ids(context.bot, main_chat_id)
         deleted = 0
         for msg_id in message_ids:
+            if msg_id in pinned:
+                continue
             try:
                 await context.bot.delete_message(chat_id=main_chat_id, message_id=msg_id)
                 deleted += 1
@@ -354,8 +383,11 @@ def main() -> None:
     # Count only circle (round) video messages
     app.add_handler(MessageHandler(filters.VIDEO_NOTE, handle_video))
 
-    # Track text messages for /clean
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, track_text))
+    # Track all non-circle, non-command, non-pinned-notification messages for /clean
+    app.add_handler(MessageHandler(
+        ~filters.COMMAND & ~filters.VIDEO_NOTE & ~filters.StatusUpdate.PINNED_MESSAGE,
+        track_message,
+    ))
 
     # Track all message senders (group=1 runs after group=0, never blocks)
     app.add_handler(MessageHandler(filters.ALL, track_member_handler), group=1)

@@ -33,12 +33,24 @@ def init_db() -> None:
 
         conn.execute("""
             CREATE TABLE IF NOT EXISTS video_log (
-                id       INTEGER PRIMARY KEY AUTOINCREMENT,
-                user_id  INTEGER NOT NULL,
-                chat_id  INTEGER NOT NULL,
-                sent_at  TEXT NOT NULL
+                id         INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id    INTEGER NOT NULL,
+                chat_id    INTEGER NOT NULL,
+                sent_at    TEXT NOT NULL,
+                message_id INTEGER
             )
         """)
+        # migrate: add message_id to video_log if missing
+        vl_cols = [r[1] for r in conn.execute("PRAGMA table_info(video_log)").fetchall()]
+        if "message_id" not in vl_cols:
+            conn.execute("ALTER TABLE video_log ADD COLUMN message_id INTEGER")
+        # partial unique index: prevents duplicate message processing on bot restart
+        conn.execute("""
+            CREATE UNIQUE INDEX IF NOT EXISTS uq_video_log_msg
+            ON video_log(chat_id, message_id)
+            WHERE message_id IS NOT NULL
+        """)
+
         conn.execute("""
             CREATE TABLE IF NOT EXISTS settings (
                 key   TEXT PRIMARY KEY,
@@ -69,10 +81,34 @@ def init_db() -> None:
 
 # ── Video counting ──────────────────────────────────────────────────────────
 
-def add_beer(user_id: int, username: str | None, full_name: str, chat_id: int) -> tuple[int, int]:
-    """Increment count, log the video, return (user_count, total_count)."""
+def add_beer(
+    user_id: int,
+    username: str | None,
+    full_name: str,
+    chat_id: int,
+    message_id: int | None = None,
+) -> tuple[int, int, bool]:
+    """Increment count, log the video, return (user_count, total_count, added).
+
+    added=False when message_id is already in video_log (duplicate delivery on restart).
+    In that case beers.count is NOT changed.
+    """
     now = datetime.now(MOSCOW).isoformat()
     with get_connection() as conn:
+        # Try to record the video first; OR IGNORE silently skips known message_ids.
+        conn.execute(
+            "INSERT OR IGNORE INTO video_log (user_id, chat_id, sent_at, message_id) VALUES (?, ?, ?, ?)",
+            (user_id, chat_id, now, message_id),
+        )
+        added = conn.execute("SELECT changes()").fetchone()[0] == 1
+
+        if not added:
+            # Duplicate — return current counts unchanged.
+            row = conn.execute("SELECT count FROM beers WHERE user_id = ?", (user_id,)).fetchone()
+            user_count = row["count"] if row else 0
+            total = conn.execute("SELECT COALESCE(SUM(count), 0) AS t FROM beers").fetchone()["t"]
+            return user_count, total, False
+
         conn.execute("""
             INSERT INTO beers (user_id, username, full_name, count, last_video_at)
             VALUES (?, ?, ?, 1, ?)
@@ -82,16 +118,12 @@ def add_beer(user_id: int, username: str | None, full_name: str, chat_id: int) -
                 count         = count + 1,
                 last_video_at = excluded.last_video_at
         """, (user_id, username, full_name, now))
-        conn.execute(
-            "INSERT INTO video_log (user_id, chat_id, sent_at) VALUES (?, ?, ?)",
-            (user_id, chat_id, now),
-        )
         conn.commit()
         user_count = conn.execute(
             "SELECT count FROM beers WHERE user_id = ?", (user_id,)
         ).fetchone()["count"]
         total = conn.execute("SELECT COALESCE(SUM(count), 0) AS t FROM beers").fetchone()["t"]
-        return user_count, total
+        return user_count, total, True
 
 
 def get_total_count() -> int:
