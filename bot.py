@@ -87,7 +87,7 @@ async def stats(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         f"Выпито пив 🍺 : *{_fmt(n)}*\n"
         f"MVP ⭐ : {mvp_val}\n"
         f"Стрик 🔥 : {streak_val} дн\\. \\(рекорд: {longest_val}\\)\n"
-        f"Место в таблице: *#{rank}*\n"
+        f"Место в таблице: *\\#{rank}*\n"
         f"\n"
         f"{special}\n"
         f"\n"
