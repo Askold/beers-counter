@@ -111,12 +111,13 @@ async def leaderboard(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
         medal = medals[i] if i < 3 else f"{i + 1}\\."
         name = _escape_md(row["full_name"])
         mvps = mvp_counts.get(row["user_id"], 0)
-        mvp_part = f"⭐{mvps}" if mvps else ""
-        streak = row["current_streak"]
-        streak_part = f"🔥{streak}" if streak >= 2 else ""
-        parts = [p for p in [mvp_part, streak_part] if p]
-        extras = f"  {' '.join(parts)}" if parts else ""
-        lines.append(f"{medal} {name}{extras} — *{_fmt(row['count'])}* 🍺")
+        if mvps == 0:
+            stars = ""
+        elif mvps <= 5:
+            stars = " " + "⭐" * mvps
+        else:
+            stars = " " + "⭐" * 5 + f" {mvps}"
+        lines.append(f"{medal} {name}{stars} — *{_fmt(row['count'])}* 🍺")
     lines.append(f"\nДо цели осталось: *{_fmt(remaining)}*")
     await update.message.reply_text("\n".join(lines), parse_mode="MarkdownV2")
 
