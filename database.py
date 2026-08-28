@@ -519,3 +519,20 @@ def clear_text_messages_for_date(chat_id: int, date_str: str) -> None:
             (chat_id, date_str),
         )
         conn.commit()
+
+
+# ── Weekly chart data ──────────────────────────────────────────────────────
+
+def get_daily_counts(chat_id: int, days: int = 7) -> list[tuple[str, int]]:
+    """Return [(date_str, count), ...] for the last `days` days, sorted ascending."""
+    today = datetime.now(MOSCOW).date()
+    result = []
+    with get_connection() as conn:
+        for i in range(days - 1, -1, -1):
+            d = (today - timedelta(days=i)).isoformat()
+            row = conn.execute("""
+                SELECT COUNT(*) AS c FROM video_log
+                WHERE chat_id = ? AND substr(sent_at, 1, 10) = ?
+            """, (chat_id, d)).fetchone()
+            result.append((d, row["c"]))
+    return result
