@@ -112,7 +112,10 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         "Отправь кружочек — и пиво засчитается автоматически\\.\n\n"
         "Команды:\n"
         "/stats — твоя статистика\n"
-        "/leaderboard — таблица лидеров",
+        "/leaderboard — таблица лидеров\n"
+        "/day — лидеры за сегодня\n"
+        "/week — лидеры за неделю\n"
+        "/month — лидеры за месяц",
         parse_mode="MarkdownV2",
     )
 
@@ -136,7 +139,9 @@ async def stats(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user_score = database.get_user_composite_score(user.id)
     pivot = database.get_pivot_score()
 
-    if rank <= 10:
+    if rank <= 3:
+        special = "ТЫ ЛУЧШИЙ ПИВОПИВ 🏆👑"
+    elif rank <= 10:
         special = "Ты в числе лучших пивопивов, красавчик\\! 🏆"
     elif user_score >= pivot:
         special = "Выше среднего\\! Так держать\\! 💪"
@@ -185,6 +190,40 @@ async def leaderboard(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
     lines.append(f"\nДо цели осталось: *{_fmt(remaining)}*")
     await update.message.reply_text("\n".join(lines), parse_mode="MarkdownV2")
 
+
+
+async def _period_leaderboard(update, label: str, since: datetime.date) -> None:
+    """Shared renderer for /day, /week, /month leaderboards."""
+    chat_id = database.get_chat_id()
+    if not chat_id:
+        await update.message.reply_text("Бот ещё не добавлен в группу\\.", parse_mode="MarkdownV2")
+        return
+    rows = database.get_leaderboard_for_period(chat_id, since.isoformat(), limit=20)
+    if not rows:
+        await update.message.reply_text(f"*{label}*\n\nНикто не пил 😴", parse_mode="MarkdownV2")
+        return
+    medals = ["🥇", "🥈", "🥉"]
+    lines = [f"*{label}*\n"]
+    for i, row in enumerate(rows):
+        medal = medals[i] if i < 3 else f"{i + 1}\\."
+        name = _escape_md(row["full_name"])
+        lines.append(f"{medal} {name} — *{_fmt(row['period_count'])}* 🍺")
+    await update.message.reply_text("\n".join(lines), parse_mode="MarkdownV2")
+
+
+async def day(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    today = datetime.datetime.now(MOSCOW).date()
+    await _period_leaderboard(update, "Пиво сегодня 📅", today)
+
+
+async def week(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    since = (datetime.datetime.now(MOSCOW) - datetime.timedelta(days=6)).date()
+    await _period_leaderboard(update, "Пиво за неделю 📅", since)
+
+
+async def month(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    since = (datetime.datetime.now(MOSCOW) - datetime.timedelta(days=29)).date()
+    await _period_leaderboard(update, "Пиво за месяц 📅", since)
 
 
 async def chart(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -361,10 +400,21 @@ async def handle_video(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     if not user:
         return
 
+    msg = update.effective_message
+
+    # Skip forwarded circle videos — they were already counted when originally sent.
+    if msg and msg.forward_origin is not None:
+        logger.info("Skipped forwarded circle from user %s (forward_origin set)", user.id)
+        return
+
+    # Skip if the message sender doesn't match the update user (extra safety net).
+    if msg and msg.from_user and msg.from_user.id != user.id:
+        logger.info("Skipped circle: from_user mismatch (%s vs %s)", msg.from_user.id, user.id)
+        return
+
     # remember this chat for the daily report
     database.save_chat_id(chat_id)
 
-    msg = update.effective_message
     message_id = msg.message_id if msg else None
 
     _user_count, total, added = database.add_beer(
@@ -583,6 +633,9 @@ def main() -> None:
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("stats", stats))
     app.add_handler(CommandHandler("leaderboard", leaderboard))
+    app.add_handler(CommandHandler("day", day))
+    app.add_handler(CommandHandler("week", week))
+    app.add_handler(CommandHandler("month", month))
     app.add_handler(CommandHandler("chart", chart))
     app.add_handler(CommandHandler("remove", remove_records))
     app.add_handler(CommandHandler("removelast", remove_last))

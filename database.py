@@ -521,6 +521,26 @@ def clear_text_messages_for_date(chat_id: int, date_str: str) -> None:
         conn.commit()
 
 
+# ── Period leaderboards ────────────────────────────────────────────────────
+
+def get_leaderboard_for_period(chat_id: int, since: str, limit: int = 20) -> list[sqlite3.Row]:
+    """
+    Top drinkers since `since` (ISO date string, inclusive) in the given chat.
+    Only users with at least 1 circle in the period are returned.
+    """
+    with get_connection() as conn:
+        return conn.execute("""
+            SELECT b.user_id, b.full_name, COUNT(*) AS period_count
+            FROM video_log v
+            JOIN beers b ON b.user_id = v.user_id
+            WHERE v.chat_id = ?
+              AND substr(v.sent_at, 1, 10) >= ?
+            GROUP BY v.user_id
+            ORDER BY period_count DESC
+            LIMIT ?
+        """, (chat_id, since, limit)).fetchall()
+
+
 # ── Removal helpers ───────────────────────────────────────────────────────
 
 def find_user_by_username(username: str) -> sqlite3.Row | None:
