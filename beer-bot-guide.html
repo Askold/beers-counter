@@ -1,0 +1,370 @@
+<title>Счётчик пива</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@500&display=swap');
+
+  :root {
+    --bg:        #150f07;
+    --surface:   #211608;
+    --border:    #3a2510;
+    --accent:    #f5a020;
+    --accent2:   #e07840;
+    --text:      #f0dcb8;
+    --muted:     #8a6840;
+    --cmd-bg:    #1c1108;
+    --cmd-text:  #f5c060;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    min-height: 100vh;
+    padding: 48px 20px 80px;
+  }
+
+  .wrap {
+    max-width: 660px;
+    margin: 0 auto;
+  }
+
+  /* ── Header ── */
+  .header {
+    text-align: center;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+
+  .header-emoji {
+    font-size: 52px;
+    line-height: 1;
+    margin-bottom: 16px;
+    display: block;
+    filter: drop-shadow(0 0 18px rgba(245,160,32,0.35));
+  }
+
+  h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2rem, 6vw, 2.8rem);
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    line-height: 1.15;
+    margin-bottom: 14px;
+  }
+
+  .tagline {
+    color: var(--muted);
+    font-size: 0.95rem;
+    max-width: 420px;
+    margin: 0 auto;
+    text-wrap: balance;
+  }
+
+  .goal-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 6px 16px;
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    font-size: 0.875rem;
+    color: var(--accent);
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+  }
+
+  /* ── Section titles ── */
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  /* ── How-to block ── */
+  .how-to {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 28px;
+    margin-bottom: 48px;
+  }
+
+  .how-to-step {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .how-to-step + .how-to-step {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+
+  .step-icon {
+    font-size: 1.5rem;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .step-text strong {
+    display: block;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+
+  .step-text p {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  /* ── Commands ── */
+  .commands-group {
+    margin-bottom: 48px;
+  }
+
+  .cmd-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 22px;
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+  }
+
+  .cmd-card + .cmd-card {
+    margin-top: 8px;
+  }
+
+  .cmd-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--cmd-text);
+    background: var(--cmd-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 4px 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    line-height: 1.5;
+    margin-top: 1px;
+  }
+
+  .cmd-desc {
+    font-size: 0.92rem;
+    color: var(--text);
+    line-height: 1.55;
+  }
+
+  .cmd-desc .note {
+    color: var(--muted);
+    font-size: 0.84rem;
+    margin-top: 3px;
+  }
+
+  /* ── MVP block ── */
+  .mvp-block {
+    background: linear-gradient(135deg, #1e1205 0%, #2a1a08 100%);
+    border: 1px solid #6b3d10;
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 48px;
+  }
+
+  .mvp-block h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.15rem;
+    color: var(--accent);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .mvp-block p {
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .mvp-block p strong {
+    color: var(--text);
+  }
+
+  /* ── Tips ── */
+  .tips {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 48px;
+  }
+
+  .tip {
+    display: flex;
+    gap: 12px;
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  .tip + .tip {
+    margin-top: 14px;
+  }
+
+  .tip-icon { flex-shrink: 0; }
+  .tip strong { color: var(--text); }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+    border-top: 1px solid var(--border);
+    padding-top: 32px;
+  }
+
+  .footer span {
+    color: var(--accent);
+  }
+
+  @media (max-width: 480px) {
+    .how-to { padding: 20px; }
+    .cmd-card { flex-direction: column; gap: 10px; }
+    .cmd-name { align-self: flex-start; }
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="header">
+    <span class="header-emoji">🍺</span>
+    <h1>Счётчик пива — 1&thinsp;000&thinsp;000 пив</h1>
+    <p class="tagline">Групповой счётчик кружочков. Каждый кружочек — одно пиво. Цель одна на всех.</p>
+  </header>
+
+  <!-- How to participate -->
+  <section class="commands-group">
+    <p class="section-label">Как участвовать</p>
+    <div class="how-to">
+      <div class="how-to-step">
+        <span class="step-icon">⭕</span>
+        <div class="step-text">
+          <strong>Отправь кружочек в чат</strong>
+          <p>Любой кружок видеоролик — это одно пиво, надеемся на твою честность. Бот автоматически его засчитает и ответит, сколько осталось до цели.</p>
+        </div>
+      </div>
+      <div class="how-to-step">
+        <span class="step-icon">🔥</span>
+        <div class="step-text">
+          <strong>Держи стрик</strong>
+          <p>Выпивай хотя бы одно пиво каждый день — и твой стрик растёт. Если пропустишь день, счётчик сбросится.</p>
+        </div>
+      </div>
+      <div class="how-to-step">
+        <span class="step-icon">📌</span>
+        <div class="step-text">
+          <strong>Следи за закреплённым отчётом</strong>
+          <p>Каждую ночь в 00:00 бот публикует итоги дня и закрепляет сообщение в чате.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats commands -->
+  <section class="commands-group">
+    <p class="section-label">Моя статистика</p>
+
+    <div class="cmd-card">
+      <span class="cmd-name">/stats</span>
+      <div class="cmd-desc">
+        Твоя личная карточка: количество пива, MVP-победы, стрик и рекорд, место в таблице и сколько осталось до общей цели.
+      </div>
+    </div>
+  </section>
+
+  <!-- Leaderboard commands -->
+  <section class="commands-group">
+    <p class="section-label">Таблицы лидеров</p>
+
+    <div class="cmd-card">
+      <span class="cmd-name">/leaderboard</span>
+      <div class="cmd-desc">
+        Все игроки по убыванию пива за всё время. Рядом с именем — звёздочки ⭐ за победы в MVP.
+      </div>
+    </div>
+    <div class="cmd-card">
+      <span class="cmd-name">/day</span>
+      <div class="cmd-desc">
+        Кто выпил больше всех сегодня.
+      </div>
+    </div>
+    <div class="cmd-card">
+      <span class="cmd-name">/week</span>
+      <div class="cmd-desc">
+        Лидеры за последние 7 дней.
+      </div>
+    </div>
+    <div class="cmd-card">
+      <span class="cmd-name">/month</span>
+      <div class="cmd-desc">
+        Лидеры за последние 30 дней.
+      </div>
+    </div>
+    <div class="cmd-card">
+      <span class="cmd-name">/chart</span>
+      <div class="cmd-desc">
+        График пива по дням за последнюю неделю в виде картинки. Каждое воскресенье бот отправляет его автоматически.
+      </div>
+    </div>
+  </section>
+
+  <!-- MVP block -->
+  <div class="mvp-block">
+    <h3>⭐ MVP</h3>
+    <p>
+      Каждую ночь бот определяет <strong>MVP дня</strong> — игрока, который выпил больше всего пива за сутки.
+      Победа фиксируется навсегда: в <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em;color:var(--accent2)">/leaderboard</code>
+      рядом с именем появляется ⭐ за каждую победу. В ежедневном отчёте видно, кто держит серию побед подряд 🔥
+    </p>
+  </div>
+
+  <!-- Tips -->
+  <section class="commands-group">
+    <p class="section-label">Полезно знать</p>
+    <div class="tips">
+      <div class="tip">
+        <span class="tip-icon">📊</span>
+        <span><strong>Закреплённый отчёт обновляется каждую ночь.</strong> Старый открепляется автоматически.</span>
+      </div>
+      <div class="tip">
+        <span class="tip-icon">😴</span>
+        <span><strong>Зона риска.</strong> С самыми пассивными участниками мы будем вынуждены попрощаться.</span>
+      </div>
+      <div class="tip">
+        <span class="tip-icon">🏆</span>
+        <span><strong>Топ-3 получают особый статус</strong> в <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em;color:var(--accent2)">/stats</code>. Попасть туда непросто.</span>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    Пей пиво. Держи стрик. Помоги группе достичь <span>1&thinsp;000&thinsp;000</span> 🍺
+  </footer>
+
+</div>
