@@ -263,6 +263,56 @@ async def _pinned_message_ids(bot, chat_id: int) -> set[int]:
     return set()
 
 
+async def remove_last(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Admin-only: /removelast @username N — delete the N most recent circles for a user."""
+    chat = update.effective_chat
+    user = update.effective_user
+
+    if chat.type != "private":
+        member = await chat.get_member(user.id)
+        if member.status not in ("administrator", "creator"):
+            await update.message.reply_text("⛔ Только администраторы могут использовать /removelast\\.", parse_mode="MarkdownV2")
+            return
+
+    if len(context.args) != 2:
+        await update.message.reply_text(
+            "Использование: `/removelast @username N`\n"
+            "Пример: `/removelast @vasya 3`",
+            parse_mode="MarkdownV2",
+        )
+        return
+
+    username_arg, n_arg = context.args
+    try:
+        n = int(n_arg)
+        if n <= 0:
+            raise ValueError
+    except ValueError:
+        await update.message.reply_text("⛔ N должно быть положительным числом\\.", parse_mode="MarkdownV2")
+        return
+
+    target = database.find_user_by_username(username_arg)
+    if not target:
+        await update.message.reply_text(
+            f"⛔ Пользователь `{_escape_md(username_arg)}` не найден\\.",
+            parse_mode="MarkdownV2",
+        )
+        return
+
+    ids = database.get_last_n_video_ids(target["user_id"], n)
+    if not ids:
+        await update.message.reply_text("У пользователя нет записей в видеожурнале\\.", parse_mode="MarkdownV2")
+        return
+
+    removed, affected = database.remove_video_log_cascade(ids)
+    name = _escape_md(target["full_name"])
+    await update.message.reply_text(
+        f"✅ Удалено *{len(removed)}* записей для {name}\\.\n"
+        f"IDs: {_escape_md(', '.join(map(str, removed)))}",
+        parse_mode="MarkdownV2",
+    )
+
+
 async def clean(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     chat = update.effective_chat
     user = update.effective_user
@@ -535,6 +585,7 @@ def main() -> None:
     app.add_handler(CommandHandler("leaderboard", leaderboard))
     app.add_handler(CommandHandler("chart", chart))
     app.add_handler(CommandHandler("remove", remove_records))
+    app.add_handler(CommandHandler("removelast", remove_last))
     app.add_handler(CommandHandler("clean", clean))
     app.add_handler(CommandHandler("report", report_command))
 

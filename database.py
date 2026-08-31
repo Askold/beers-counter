@@ -521,6 +521,28 @@ def clear_text_messages_for_date(chat_id: int, date_str: str) -> None:
         conn.commit()
 
 
+# ── Removal helpers ───────────────────────────────────────────────────────
+
+def find_user_by_username(username: str) -> sqlite3.Row | None:
+    """Look up a user by @username (with or without the @). Case-insensitive."""
+    username = username.lstrip("@")
+    with get_connection() as conn:
+        return conn.execute(
+            "SELECT user_id, full_name, username FROM beers WHERE LOWER(username) = LOWER(?)",
+            (username,),
+        ).fetchone()
+
+
+def get_last_n_video_ids(user_id: int, n: int) -> list[int]:
+    """Return the IDs of the N most recent video_log rows for a user."""
+    with get_connection() as conn:
+        rows = conn.execute(
+            "SELECT id FROM video_log WHERE user_id = ? ORDER BY id DESC LIMIT ?",
+            (user_id, n),
+        ).fetchall()
+    return [r["id"] for r in rows]
+
+
 # ── Weekly chart data ──────────────────────────────────────────────────────
 
 def get_daily_counts(chat_id: int, days: int = 7) -> list[tuple[str, int]]:
