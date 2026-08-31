@@ -283,12 +283,13 @@ def get_top_drinkers_for_date(chat_id: int, date_str: str, limit: int = 3) -> li
     next_day = (_date.fromisoformat(date_str) + timedelta(days=1)).isoformat()
     with get_connection() as conn:
         return conn.execute("""
-            SELECT b.user_id, b.full_name, COUNT(*) AS day_count
+            SELECT b.user_id, b.full_name, COUNT(*) AS day_count,
+                   (SELECT COUNT(*) FROM mvp_log m WHERE m.user_id = v.user_id) AS mvp_count
             FROM video_log v
             JOIN beers b ON b.user_id = v.user_id
             WHERE v.chat_id = ? AND v.sent_at >= ? AND v.sent_at < ?
             GROUP BY v.user_id
-            ORDER BY day_count DESC
+            ORDER BY day_count DESC, mvp_count DESC
             LIMIT ?
         """, (chat_id, date_str, next_day, limit)).fetchall()
 
@@ -296,8 +297,13 @@ def get_top_drinkers_for_date(chat_id: int, date_str: str, limit: int = 3) -> li
 def get_leaderboard(limit: int = 10) -> list[sqlite3.Row]:
     with get_connection() as conn:
         return conn.execute("""
-            SELECT user_id, full_name, username, count, current_streak, longest_streak
-            FROM beers ORDER BY count DESC LIMIT ?
+            SELECT b.user_id, b.full_name, b.username, b.count, b.current_streak, b.longest_streak,
+                   COUNT(m.id) AS mvp_count
+            FROM beers b
+            LEFT JOIN mvp_log m ON m.user_id = b.user_id
+            GROUP BY b.user_id
+            ORDER BY b.count DESC, mvp_count DESC
+            LIMIT ?
         """, (limit,)).fetchall()
 
 
@@ -564,13 +570,14 @@ def get_leaderboard_for_period(chat_id: int, since: str, limit: int = 20) -> lis
     """
     with get_connection() as conn:
         return conn.execute("""
-            SELECT b.user_id, b.full_name, COUNT(*) AS period_count
+            SELECT b.user_id, b.full_name, COUNT(*) AS period_count,
+                   (SELECT COUNT(*) FROM mvp_log m WHERE m.user_id = v.user_id) AS mvp_count
             FROM video_log v
             JOIN beers b ON b.user_id = v.user_id
             WHERE v.chat_id = ?
               AND v.sent_at >= ?
             GROUP BY v.user_id
-            ORDER BY period_count DESC
+            ORDER BY period_count DESC, mvp_count DESC
             LIMIT ?
         """, (chat_id, since, limit)).fetchall()
 
