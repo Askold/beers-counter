@@ -56,6 +56,16 @@ def init_db() -> None:
             ON video_log(chat_id, message_id)
             WHERE message_id IS NOT NULL
         """)
+        # composite index for fast date-range queries per chat
+        conn.execute("""
+            CREATE INDEX IF NOT EXISTS idx_video_log_chat_sent
+            ON video_log(chat_id, sent_at)
+        """)
+        # index for cross-chat sent_at range (get_videos_last_n_days)
+        conn.execute("""
+            CREATE INDEX IF NOT EXISTS idx_video_log_sent
+            ON video_log(sent_at)
+        """)
 
         conn.execute("""
             CREATE TABLE IF NOT EXISTS settings (
@@ -117,8 +127,8 @@ def add_beer(
     full_name: str,
     chat_id: int,
     message_id: int | None = None,
-) -> tuple[int, int, bool]:
-    """Increment count, log the video, return (user_count, total_count, added).
+) -> tuple[int, int, bool, int]:
+    """Increment count, log the video, return (user_count, total_count, added, current_streak).
 
     added=False when message_id is already in video_log (duplicate delivery on restart).
     In that case beers.count is NOT changed.
@@ -134,10 +144,13 @@ def add_beer(
 
         if not added:
             # Duplicate — return current counts unchanged.
-            row = conn.execute("SELECT count FROM beers WHERE user_id = ?", (user_id,)).fetchone()
+            row = conn.execute(
+                "SELECT count, current_streak FROM beers WHERE user_id = ?", (user_id,)
+            ).fetchone()
             user_count = row["count"] if row else 0
+            streak = row["current_streak"] if row else 0
             total = conn.execute("SELECT COALESCE(SUM(count), 0) AS t FROM beers").fetchone()["t"]
-            return user_count, total, False
+            return user_count, total, False, streak
 
         # Calculate streak before upserting
         today = datetime.now(MOSCOW).date()
@@ -180,7 +193,7 @@ def add_beer(
             "SELECT count FROM beers WHERE user_id = ?", (user_id,)
         ).fetchone()["count"]
         total = conn.execute("SELECT COALESCE(SUM(count), 0) AS t FROM beers").fetchone()["t"]
-        return user_count, total, True
+        return user_count, total, True, new_streak
 
 
 def remove_video_log_cascade(ids: list[int]) -> tuple[list[int], list[tuple[int, str, int]]]:
@@ -243,11 +256,13 @@ def get_today_count(chat_id: int) -> int:
 
 def get_date_count(chat_id: int, date_str: str) -> int:
     """Count circle videos for a specific date (YYYY-MM-DD) in this chat."""
+    from datetime import date as _date
+    next_day = (_date.fromisoformat(date_str) + timedelta(days=1)).isoformat()
     with get_connection() as conn:
         row = conn.execute("""
             SELECT COUNT(*) AS c FROM video_log
-            WHERE chat_id = ? AND substr(sent_at, 1, 10) = ?
-        """, (chat_id, date_str)).fetchone()
+            WHERE chat_id = ? AND sent_at >= ? AND sent_at < ?
+        """, (chat_id, date_str, next_day)).fetchone()
         return row["c"]
 
 
@@ -264,16 +279,18 @@ def get_videos_last_n_days(n: int = 5) -> int:
 
 def get_top_drinkers_for_date(chat_id: int, date_str: str, limit: int = 3) -> list[sqlite3.Row]:
     """Top drinkers for a specific date (YYYY-MM-DD), joined with full_name from beers."""
+    from datetime import date as _date
+    next_day = (_date.fromisoformat(date_str) + timedelta(days=1)).isoformat()
     with get_connection() as conn:
         return conn.execute("""
             SELECT b.user_id, b.full_name, COUNT(*) AS day_count
             FROM video_log v
             JOIN beers b ON b.user_id = v.user_id
-            WHERE v.chat_id = ? AND substr(v.sent_at, 1, 10) = ?
+            WHERE v.chat_id = ? AND v.sent_at >= ? AND v.sent_at < ?
             GROUP BY v.user_id
             ORDER BY day_count DESC
             LIMIT ?
-        """, (chat_id, date_str, limit)).fetchall()
+        """, (chat_id, date_str, next_day, limit)).fetchall()
 
 
 def get_leaderboard(limit: int = 10) -> list[sqlite3.Row]:
@@ -476,6 +493,23 @@ def get_chat_id() -> int | None:
         return int(row["value"]) if row else None
 
 
+def save_setting(key: str, value: str) -> None:
+    with get_connection() as conn:
+        conn.execute(
+            "INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)",
+            (key, value),
+        )
+        conn.commit()
+
+
+def get_setting(key: str) -> str | None:
+    with get_connection() as conn:
+        row = conn.execute(
+            "SELECT value FROM settings WHERE key = ?", (key,)
+        ).fetchone()
+        return row["value"] if row else None
+
+
 # ── Text message tracking (for /clean) ────────────────────────────────────
 
 def track_text_message(chat_id: int, message_id: int) -> None:
@@ -534,7 +568,7 @@ def get_leaderboard_for_period(chat_id: int, since: str, limit: int = 20) -> lis
             FROM video_log v
             JOIN beers b ON b.user_id = v.user_id
             WHERE v.chat_id = ?
-              AND substr(v.sent_at, 1, 10) >= ?
+              AND v.sent_at >= ?
             GROUP BY v.user_id
             ORDER BY period_count DESC
             LIMIT ?
@@ -568,13 +602,19 @@ def get_last_n_video_ids(user_id: int, n: int) -> list[int]:
 def get_daily_counts(chat_id: int, days: int = 7) -> list[tuple[str, int]]:
     """Return [(date_str, count), ...] for the last `days` days, sorted ascending."""
     today = datetime.now(MOSCOW).date()
-    result = []
+    since = (today - timedelta(days=days - 1)).isoformat()
     with get_connection() as conn:
-        for i in range(days - 1, -1, -1):
-            d = (today - timedelta(days=i)).isoformat()
-            row = conn.execute("""
-                SELECT COUNT(*) AS c FROM video_log
-                WHERE chat_id = ? AND substr(sent_at, 1, 10) = ?
-            """, (chat_id, d)).fetchone()
-            result.append((d, row["c"]))
-    return result
+        rows = conn.execute("""
+            SELECT substr(sent_at, 1, 10) AS day, COUNT(*) AS c
+            FROM video_log
+            WHERE chat_id = ? AND sent_at >= ?
+            GROUP BY day
+            ORDER BY day
+        """, (chat_id, since)).fetchall()
+    counts = {r["day"]: r["c"] for r in rows}
+    # Ensure every day in the window is present, filling gaps with 0
+    return [
+        ((today - timedelta(days=i)).isoformat(),
+         counts.get((today - timedelta(days=i)).isoformat(), 0))
+        for i in range(days - 1, -1, -1)
+    ]
