@@ -105,19 +105,34 @@ def _build_weekly_chart(rows: list[tuple[str, int]]) -> io.BytesIO:
 
 # ── Commands ────────────────────────────────────────────────────────────────
 
+HELP_TEXT = (
+    "🍺 *Счётчик пива — 1\\,000\\,000 пив*\n\n"
+    "Отправь кружок видеоролик в чат — бот засчитает одно пиво и ответит, сколько осталось до цели\\. "
+    "Выпивай хотя бы одно пиво каждый день, чтобы держать стрик 🔥\n\n"
+    "*Моя статистика*\n"
+    "/stats — пиво, MVP\\-победы, стрик, место в таблице\n\n"
+    "*Таблицы лидеров*\n"
+    "/leaderboard — все за всё время\n"
+    "/day — лидеры за сегодня\n"
+    "/week — лидеры за 7 дней\n"
+    "/month — лидеры за 30 дней\n"
+    "/chart — график по дням за неделю\n\n"
+    "*⭐ MVP*\n"
+    "Каждую ночь бот определяет MVP дня — кто выпил больше всего\\. "
+    "Победа фиксируется навсегда: в /leaderboard рядом с именем ⭐ за каждую победу\\.\n\n"
+    "*Полезно знать*\n"
+    "📊 Закреплённый отчёт обновляется каждую ночь\n"
+    "🏆 Топ\\-3 получают особый статус в /stats\n"
+    "😴 С самыми пассивными участниками мы будем вынуждены попрощаться"
+)
+
+
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    await update.message.reply_text(
-        "🍺 *Счётчик пива* 🍺\n\n"
-        "Цель: выпить *1\\,000\\,000* пива вместе\\!\n\n"
-        "Отправь кружочек — и пиво засчитается автоматически\\.\n\n"
-        "Команды:\n"
-        "/stats — твоя статистика\n"
-        "/leaderboard — таблица лидеров\n"
-        "/day — лидеры за сегодня\n"
-        "/week — лидеры за неделю\n"
-        "/month — лидеры за месяц",
-        parse_mode="MarkdownV2",
-    )
+    await update.message.reply_text(HELP_TEXT, parse_mode="MarkdownV2")
+
+
+async def help_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    await update.message.reply_text(HELP_TEXT, parse_mode="MarkdownV2")
 
 
 async def stats(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -417,7 +432,7 @@ async def handle_video(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 
     message_id = msg.message_id if msg else None
 
-    _user_count, total, added = database.add_beer(
+    _user_count, total, added, current_streak = database.add_beer(
         user_id=user.id,
         username=user.username,
         full_name=_display_name(user),
@@ -432,7 +447,6 @@ async def handle_video(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 
     remaining = max(0, GOAL - total)
     name = _escape_md(_display_name(user))
-    current_streak, _ = database.get_streak(user.id)
     streak_suffix = f" 🔥 {current_streak}" if current_streak >= 2 else ""
 
     if msg:
@@ -531,7 +545,7 @@ async def daily_report(
 
     top3 = database.get_leaderboard(limit=3)
     top3_day = database.get_top_drinkers_for_date(main_chat_id, report_date, limit=3)
-    inactive = database.get_inactive_users(days=20)
+    inactive = database.get_inactive_users(days=10)
     on_fire = database.get_users_on_streak(min_days=3)
 
     # Record MVP for scheduled (midnight) runs
@@ -594,11 +608,32 @@ async def daily_report(
         "*В зоне риска* ⚠️",
     ] + (risk_lines if risk_lines else ["Все молодцы, никто не отстаёт\\! 💪"])
 
-    await context.bot.send_message(
+    sent = await context.bot.send_message(
         chat_id=send_to,
         text="\n".join(lines),
         parse_mode="MarkdownV2",
     )
+
+    # Pin the daily report in the main group (scheduled runs only)
+    if scheduled and send_to == main_chat_id:
+        try:
+            # Unpin the previous report if we have one stored
+            old_pin_id = database.get_setting("pinned_report_message_id")
+            if old_pin_id:
+                await context.bot.unpin_chat_message(
+                    chat_id=main_chat_id,
+                    message_id=int(old_pin_id),
+                )
+            # Pin the new report (silent — no push, service msg cleaned up overnight)
+            await context.bot.pin_chat_message(
+                chat_id=main_chat_id,
+                message_id=sent.message_id,
+                disable_notification=True,
+            )
+            database.save_setting("pinned_report_message_id", str(sent.message_id))
+            logger.info("Pinned daily report message_id=%s", sent.message_id)
+        except Exception as e:
+            logger.warning("Could not pin daily report: %s", e)
 
     # Auto-clean: only wipe main group's messages from yesterday
     if scheduled:
@@ -631,6 +666,7 @@ def main() -> None:
 
     # Commands
     app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("help", help_cmd))
     app.add_handler(CommandHandler("stats", stats))
     app.add_handler(CommandHandler("leaderboard", leaderboard))
     app.add_handler(CommandHandler("day", day))
