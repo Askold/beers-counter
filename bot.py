@@ -218,12 +218,9 @@ async def remove_records(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     chat = update.effective_chat
     user = update.effective_user
 
-    # Allow in private chat or by group admins only
     if chat.type != "private":
-        member = await chat.get_member(user.id)
-        if member.status not in ("administrator", "creator"):
-            await update.message.reply_text("⛔ Только администраторы могут использовать /remove\\.", parse_mode="MarkdownV2")
-            return
+        await update.message.reply_text("⛔ Команда доступна только в личном чате с ботом\\.", parse_mode="MarkdownV2")
+        return
 
     if not context.args:
         await update.message.reply_text(
@@ -269,10 +266,8 @@ async def remove_last(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
     user = update.effective_user
 
     if chat.type != "private":
-        member = await chat.get_member(user.id)
-        if member.status not in ("administrator", "creator"):
-            await update.message.reply_text("⛔ Только администраторы могут использовать /removelast\\.", parse_mode="MarkdownV2")
-            return
+        await update.message.reply_text("⛔ Команда доступна только в личном чате с ботом\\.", parse_mode="MarkdownV2")
+        return
 
     if len(context.args) != 2:
         await update.message.reply_text(
