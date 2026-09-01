@@ -20,6 +20,21 @@ At **midnight Moscow time** the bot automatically:
 
 ---
 
+## Module layout
+
+| File | Responsibility |
+|---|---|
+| `bot.py` | Entry point — builds the `Application`, wires handlers and jobs, starts polling |
+| `common.py` | Shared constants (`GOAL`, `MOSCOW`) and helpers (`escape_md`, `fmt`, `medal`, `reply_chunked`, bulk message deletion) |
+| `commands.py` | User commands: `/start` `/help` `/stats` `/leaderboard` `/day` `/week` `/month` `/inactive` `/chart` |
+| `admin.py` | Admin commands: `/remove` `/removelast` `/clean` |
+| `video.py` | Circle-video counting + message/member tracking handlers |
+| `report.py` | Daily report — `/report` command, the midnight job, and its batched data collector |
+| `charts.py` | Weekly bar chart (matplotlib) + the Sunday chart job |
+| `database.py` | All SQLite access (WAL mode; connection-per-call) |
+
+---
+
 ## Commands
 
 | Command | Who can use | What it does |

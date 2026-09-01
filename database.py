@@ -9,8 +9,14 @@ MOSCOW = timezone(timedelta(hours=3))
 
 def get_connection() -> sqlite3.Connection:
     DB_PATH.parent.mkdir(parents=True, exist_ok=True)
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(DB_PATH, timeout=30)
     conn.row_factory = sqlite3.Row
+    # WAL lets readers run while a writer holds the lock; NORMAL trades a tiny
+    # durability window for far fewer fsyncs; busy_timeout waits out brief locks
+    # instead of raising "database is locked" under burst load.
+    conn.execute("PRAGMA journal_mode=WAL")
+    conn.execute("PRAGMA synchronous=NORMAL")
+    conn.execute("PRAGMA busy_timeout=30000")
     return conn
 
 
@@ -298,9 +304,10 @@ def get_leaderboard(limit: int = 10) -> list[sqlite3.Row]:
     with get_connection() as conn:
         return conn.execute("""
             SELECT b.user_id, b.full_name, b.username, b.count, b.current_streak, b.longest_streak,
-                   COUNT(m.id) AS mvp_count
+                   COUNT(m.date) AS mvp_count
             FROM beers b
             LEFT JOIN mvp_log m ON m.user_id = b.user_id
+            WHERE b.count > 0
             GROUP BY b.user_id
             ORDER BY b.count DESC, mvp_count DESC
             LIMIT ?
@@ -387,9 +394,7 @@ def get_mvp_streak() -> tuple[int | None, int]:
     if not rows:
         return None, 0
     leader_id = rows[0]["user_id"]
-    streak = sum(1 for r in rows if r["user_id"] == leader_id and
-                 rows[:rows.index(r) + 1][-1]["user_id"] == leader_id)
-    # Simpler: count consecutive from the top
+    # Count consecutive MVP days from the most recent, held by the same user.
     streak = 0
     for r in rows:
         if r["user_id"] == leader_id:
@@ -482,21 +487,34 @@ def get_mvp_wins(user_id: int) -> int:
 
 # ── Settings (stores group chat_id for daily report) ───────────────────────
 
+_chat_id_cache: int | None = None
+
+
 def save_chat_id(chat_id: int) -> None:
+    """Persist the main group's chat_id. No-op once it's already stored, so this
+    can be called on every circle without a write per message."""
+    global _chat_id_cache
+    if _chat_id_cache == chat_id:
+        return
     with get_connection() as conn:
         conn.execute(
             "INSERT OR REPLACE INTO settings (key, value) VALUES ('chat_id', ?)",
             (str(chat_id),),
         )
         conn.commit()
+    _chat_id_cache = chat_id
 
 
 def get_chat_id() -> int | None:
+    global _chat_id_cache
+    if _chat_id_cache is not None:
+        return _chat_id_cache
     with get_connection() as conn:
         row = conn.execute(
             "SELECT value FROM settings WHERE key = 'chat_id'"
         ).fetchone()
-        return int(row["value"]) if row else None
+    _chat_id_cache = int(row["value"]) if row else None
+    return _chat_id_cache
 
 
 def save_setting(key: str, value: str) -> None:

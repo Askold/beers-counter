@@ -5,7 +5,7 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY bot.py database.py ./
+COPY *.py ./
 
 # SQLite database lives in a volume-mounted directory
 VOLUME ["/app/data"]
