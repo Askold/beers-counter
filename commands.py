@@ -1,4 +1,4 @@
-"""User-facing command handlers: /start /help /stats /leaderboard /day /week /month /inactive /chart."""
+"""User-facing command handlers: /start /help /stats /leaderboard /none /day /week /month /inactive /chart."""
 import datetime
 import logging
 
@@ -7,7 +7,7 @@ from telegram.ext import ContextTypes
 
 import database
 from charts import render_weekly_chart
-from common import GOAL, INACTIVE_DAYS, MOSCOW, escape_md, fmt, medal, reply_chunked
+from common import GOAL, INACTIVE_DAYS, MOSCOW, escape_md, fmt, medal, plural_ru, reply_chunked
 
 logger = logging.getLogger(__name__)
 
@@ -19,6 +19,7 @@ HELP_TEXT = (
     "/stats — пиво, MVP\\-победы, стрик, место в таблице\n\n"
     "*Таблицы лидеров*\n"
     "/leaderboard — все за всё время\n"
+    "/none — насколько лидер оторвался от хвоста таблицы\n"
     "/day — лидеры за сегодня\n"
     "/week — лидеры за 7 дней\n"
     "/month — лидеры за 30 дней\n"
@@ -109,6 +110,49 @@ async def leaderboard(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
         lines.append(f"{medal(i)} {name}{stars} — *{fmt(row['count'])}* 🍺")
     lines.append(f"\nДо цели осталось: *{fmt(remaining)}*")
     await update.message.reply_text("\n".join(lines), parse_mode="MarkdownV2")
+
+
+async def none_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """/none — show how many people from the bottom of the all-time leaderboard,
+    summed together, it takes for their beers to reach (or first exceed) the #1 drinker."""
+    rows = database.get_leaderboard(limit=None)
+    if not rows:
+        await update.message.reply_text("Пока никто не выпил пива\\. Начни первым\\! 🍺", parse_mode="MarkdownV2")
+        return
+    if len(rows) < 2:
+        await update.message.reply_text(
+            "В таблице пока только один пивопив — сравнивать не с кем\\. 🍺",
+            parse_mode="MarkdownV2",
+        )
+        return
+
+    leader = rows[0]
+    leader_count = leader["count"]
+    name = escape_md(leader["full_name"])
+
+    # Walk up from the last place, adding counts until the tail catches the leader.
+    acc = tail = 0
+    for row in reversed(rows[1:]):
+        acc += row["count"]
+        tail += 1
+        if acc >= leader_count:
+            break
+
+    head = f"🥇 {name} — *{fmt(leader_count)}* 🍺"
+    if acc < leader_count:
+        body = (
+            f"В одиночку это больше, чем все остальные вместе взятые "
+            f"\\(*{fmt(acc)}* 🍺\\)\\. 👑"
+        )
+    else:
+        people = plural_ru(tail, "человека", "человек", "человек")
+        prefix = "Ровно столько же" if acc == leader_count else "Столько же"
+        body = (
+            f"{prefix} выпил хвост таблицы из *{fmt(tail)}* {people} "
+            f"\\(*{fmt(acc)}* 🍺\\)\\."
+        )
+
+    await update.message.reply_text(f"{head}\n\n{body}", parse_mode="MarkdownV2")
 
 
 async def _period_leaderboard(update, label: str, since: datetime.date) -> None:

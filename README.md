@@ -25,8 +25,8 @@ At **midnight Moscow time** the bot automatically:
 | File | Responsibility |
 |---|---|
 | `bot.py` | Entry point — builds the `Application`, wires handlers and jobs, starts polling |
-| `common.py` | Shared constants (`GOAL`, `MOSCOW`) and helpers (`escape_md`, `fmt`, `medal`, `reply_chunked`, bulk message deletion) |
-| `commands.py` | User commands: `/start` `/help` `/stats` `/leaderboard` `/day` `/week` `/month` `/inactive` `/chart` |
+| `common.py` | Shared constants (`GOAL`, `MOSCOW`) and helpers (`escape_md`, `fmt`, `medal`, `plural_ru`, `reply_chunked`, bulk message deletion) |
+| `commands.py` | User commands: `/start` `/help` `/stats` `/leaderboard` `/none` `/day` `/week` `/month` `/inactive` `/chart` |
 | `admin.py` | Admin commands: `/remove` `/removelast` `/clean` |
 | `video.py` | Circle-video counting + message/member tracking handlers |
 | `report.py` | Daily report — `/report` command, the midnight job, and its batched data collector |
@@ -42,6 +42,7 @@ At **midnight Moscow time** the bot automatically:
 | `/start` | Anyone | Welcome message and command list |
 | `/count` | Anyone | Your personal beer count + MVP wins |
 | `/leaderboard` | Anyone | Top 100 all-time, with ⭐ per MVP win |
+| `/none` | Anyone | How many people from the bottom of the leaderboard, combined, equal the #1 drinker |
 | `/report` | Admins (group) / Anyone (private) | Trigger the daily report manually |
 | `/clean` | Admins, main group only | Delete yesterday's text messages |
 | `/reset` | Anyone | Reset your own count to 0 |

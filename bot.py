@@ -22,6 +22,7 @@ from commands import (
     inactive_cmd,
     leaderboard,
     month,
+    none_cmd,
     start,
     stats,
     week,
@@ -61,6 +62,7 @@ def main() -> None:
     app.add_handler(CommandHandler("help", help_cmd))
     app.add_handler(CommandHandler("stats", stats))
     app.add_handler(CommandHandler("leaderboard", leaderboard))
+    app.add_handler(CommandHandler("none", none_cmd))
     app.add_handler(CommandHandler("day", day))
     app.add_handler(CommandHandler("week", week))
     app.add_handler(CommandHandler("month", month))

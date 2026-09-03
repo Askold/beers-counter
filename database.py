@@ -300,18 +300,22 @@ def get_top_drinkers_for_date(chat_id: int, date_str: str, limit: int = 3) -> li
         """, (chat_id, date_str, next_day, limit)).fetchall()
 
 
-def get_leaderboard(limit: int = 10) -> list[sqlite3.Row]:
+def get_leaderboard(limit: int | None = 10) -> list[sqlite3.Row]:
+    """Users with count > 0, ranked by count then MVP wins.
+    limit=None returns the whole table (used by /none)."""
+    query = """
+        SELECT b.user_id, b.full_name, b.username, b.count, b.current_streak, b.longest_streak,
+               COUNT(m.date) AS mvp_count
+        FROM beers b
+        LEFT JOIN mvp_log m ON m.user_id = b.user_id
+        WHERE b.count > 0
+        GROUP BY b.user_id
+        ORDER BY b.count DESC, mvp_count DESC
+    """
     with get_connection() as conn:
-        return conn.execute("""
-            SELECT b.user_id, b.full_name, b.username, b.count, b.current_streak, b.longest_streak,
-                   COUNT(m.date) AS mvp_count
-            FROM beers b
-            LEFT JOIN mvp_log m ON m.user_id = b.user_id
-            WHERE b.count > 0
-            GROUP BY b.user_id
-            ORDER BY b.count DESC, mvp_count DESC
-            LIMIT ?
-        """, (limit,)).fetchall()
+        if limit is None:
+            return conn.execute(query).fetchall()
+        return conn.execute(query + " LIMIT ?", (limit,)).fetchall()
 
 
 def track_member(user_id: int, username: str | None, full_name: str) -> None:

@@ -26,6 +26,20 @@ def fmt(n: int) -> str:
     return f"{n:,}".replace(",", " ")
 
 
+def plural_ru(n: int, one: str, few: str, many: str) -> str:
+    """Pick the Russian plural form for `n` — e.g.
+    plural_ru(n, "человека", "человек", "человек") → "1 человека" / "3 человек"."""
+    tens = abs(n) % 100
+    if 11 <= tens <= 14:
+        return many
+    ones = tens % 10
+    if ones == 1:
+        return one
+    if 2 <= ones <= 4:
+        return few
+    return many
+
+
 def medal(i: int) -> str:
     """Rank marker for leaderboard row `i` (0-based): 🥇🥈🥉 for the top 3,
     else a MarkdownV2-escaped '<n>.'."""
