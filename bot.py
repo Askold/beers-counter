@@ -25,6 +25,7 @@ from commands import (
     none_cmd,
     start,
     stats,
+    topchart,
     week,
 )
 from common import MOSCOW
@@ -68,6 +69,7 @@ def main() -> None:
     app.add_handler(CommandHandler("month", month))
     app.add_handler(CommandHandler("inactive", inactive_cmd))
     app.add_handler(CommandHandler("chart", chart))
+    app.add_handler(CommandHandler("topchart", topchart))
     app.add_handler(CommandHandler("remove", remove_records))
     app.add_handler(CommandHandler("removelast", remove_last))
     app.add_handler(CommandHandler("clean", clean))

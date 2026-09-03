@@ -1,12 +1,14 @@
-"""User-facing command handlers: /start /help /stats /leaderboard /none /day /week /month /inactive /chart."""
+"""User-facing command handlers: /start /help /stats /leaderboard /none /day /week /month /inactive /chart /topchart."""
 import datetime
 import logging
+import math
+import statistics
 
 from telegram import Update
 from telegram.ext import ContextTypes
 
 import database
-from charts import render_weekly_chart
+from charts import render_chart, render_leaderboard_chart
 from common import GOAL, INACTIVE_DAYS, MOSCOW, escape_md, fmt, medal, plural_ru, reply_chunked
 
 logger = logging.getLogger(__name__)
@@ -24,7 +26,9 @@ HELP_TEXT = (
     "/week — лидеры за 7 дней\n"
     "/month — лидеры за 30 дней\n"
     "/inactive — кто в зоне риска 😴\n"
-    "/chart — график по дням за неделю\n\n"
+    "/chart — график по дням за неделю\n"
+    "/chart m — то же за месяц\n"
+    "/topchart — график лидеров выше среднего\n\n"
     "*⭐ MVP*\n"
     "Каждую ночь бот определяет MVP дня — кто выпил больше всего\\. "
     "Победа фиксируется навсегда: в /leaderboard рядом с именем ⭐ за каждую победу\\.\n\n"
@@ -212,10 +216,36 @@ async def inactive_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 
 
 async def chart(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Send a bar chart of daily beer counts for the last 7 days. Works in any chat."""
+    """Bar chart of daily beer counts — /chart for the last 7 days, /chart m for
+    the last 30. Works in any chat."""
     chat_id = database.get_chat_id()
     if not chat_id:
         await update.message.reply_text("Бот ещё не добавлен ни в одну группу\\.", parse_mode="MarkdownV2")
         return
-    buf = await render_weekly_chart(chat_id)
-    await update.message.reply_photo(photo=buf, caption="📊 Пиво за последние 7 дней")
+    monthly = bool(context.args) and context.args[0].lower() in ("m", "month", "м", "месяц")
+    buf = await render_chart(chat_id, 30 if monthly else 7)
+    caption = "📊 Пиво за последние 30 дней" if monthly else "📊 Пиво за последние 7 дней"
+    await update.message.reply_photo(photo=buf, caption=caption)
+
+
+async def topchart(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Horizontal bar chart of the all-time leaderboard, keeping only users whose
+    count is above the median ("the middle")."""
+    rows = database.get_leaderboard(limit=None)
+    if len(rows) < 3:
+        await update.message.reply_text("Маловато данных для графика\\. 🍺", parse_mode="MarkdownV2")
+        return
+
+    counts = [r["count"] for r in rows]
+    mid = statistics.median(counts)
+    entries = [(r["full_name"], r["count"]) for r in rows if r["count"] > mid]
+    if len(entries) < 2:
+        # Everyone clusters at/below the median — fall back to the top half by rank.
+        half = math.ceil(len(rows) / 2)
+        entries = [(r["full_name"], r["count"]) for r in rows[:half]]
+
+    buf = await render_leaderboard_chart(entries)
+    await update.message.reply_photo(
+        photo=buf,
+        caption=f"📊 Лидеры выше среднего ({len(entries)} из {len(rows)})",
+    )
