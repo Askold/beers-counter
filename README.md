@@ -30,7 +30,7 @@ At **midnight Moscow time** the bot automatically:
 | `admin.py` | Admin commands: `/remove` `/removelast` `/clean` |
 | `video.py` | Circle-video counting + message/member tracking handlers |
 | `report.py` | Daily report — `/report` command, the midnight job, and its batched data collector |
-| `charts.py` | Daily bar charts — weekly / monthly (`/chart`, `/chart m`) and the above-median leaderboard chart (`/topchart`) — plus the Sunday chart job |
+| `charts.py` | "Beer glass" charts drawn with Pillow — daily beers weekly / monthly (`/chart`, `/chart m`) and the above-median leaderboard (`/topchart`) — plus the Sunday chart job. Fonts live in `assets/fonts/`. |
 | `database.py` | All SQLite access (WAL mode; connection-per-call) |
 
 ---

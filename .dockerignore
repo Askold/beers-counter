@@ -1,0 +1,11 @@
+.env
+data/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.git/
+.idea/
+.DS_Store
+*.md
+beer-bot-guide.html
