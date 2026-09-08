@@ -26,11 +26,11 @@ At **midnight Moscow time** the bot automatically:
 |---|---|
 | `bot.py` | Entry point — builds the `Application`, wires handlers and jobs, starts polling |
 | `common.py` | Shared constants (`GOAL`, `MOSCOW`) and helpers (`escape_md`, `fmt`, `medal`, `plural_ru`, `reply_chunked`, bulk message deletion) |
-| `commands.py` | User commands: `/start` `/help` `/stats` `/leaderboard` `/none` `/day` `/week` `/month` `/inactive` `/chart` `/topchart` |
+| `commands.py` | User commands: `/start` `/help` `/stats` `/leaderboard` `/none` `/day` `/week` `/month` `/inactive` `/chart` |
 | `admin.py` | Admin commands: `/remove` `/removelast` `/clean` |
 | `video.py` | Circle-video counting + message/member tracking handlers |
 | `report.py` | Daily report — `/report` command, the midnight job, and its batched data collector |
-| `charts.py` | "Beer glass" charts drawn with Pillow — daily beers weekly / monthly (`/chart`, `/chart m`) and the above-median leaderboard (`/topchart`) — plus the Sunday chart job. Fonts live in `assets/fonts/`. |
+| `charts.py` | "Beer glass" daily-beers chart drawn with Pillow — weekly / monthly (`/chart`, `/chart m`) — plus the Sunday chart job. Fonts live in `assets/fonts/`. |
 | `database.py` | All SQLite access (WAL mode; connection-per-call) |
 
 ---
@@ -44,7 +44,6 @@ At **midnight Moscow time** the bot automatically:
 | `/leaderboard` | Anyone | Top 100 all-time, with ⭐ per MVP win |
 | `/none` | Anyone | How many people from the bottom of the leaderboard, combined, equal the #1 drinker |
 | `/chart` `/chart m` | Anyone | Bar chart of daily beers for the last 7 days (`m` → last 30) |
-| `/topchart` | Anyone | Horizontal bar chart of the leaderboard, users above the median count only |
 | `/report` | Admins (group) / Anyone (private) | Trigger the daily report manually |
 | `/clean` | Admins, main group only | Delete yesterday's text messages |
 | `/reset` | Anyone | Reset your own count to 0 |

@@ -3,7 +3,7 @@ import datetime
 import logging
 import os
 
-from telegram import Update
+from telegram import BotCommand, BotCommandScopeAllChatAdministrators, Update
 from telegram.ext import (
     AIORateLimiter,
     Application,
@@ -25,7 +25,6 @@ from commands import (
     none_cmd,
     start,
     stats,
-    topchart,
     week,
 )
 from common import MOSCOW
@@ -37,6 +36,35 @@ logging.basicConfig(
     level=logging.INFO,
 )
 logger = logging.getLogger(__name__)
+
+# Populates the "/" command menu in Telegram clients. Everyone sees PUBLIC_COMMANDS;
+# group admins additionally see the maintenance ones.
+PUBLIC_COMMANDS = [
+    BotCommand("stats", "моя статистика: пиво, MVP, стрик, место"),
+    BotCommand("leaderboard", "таблица лидеров за всё время"),
+    BotCommand("none", "насколько лидер оторвался от хвоста таблицы"),
+    BotCommand("day", "лидеры за сегодня"),
+    BotCommand("week", "лидеры за 7 дней"),
+    BotCommand("month", "лидеры за 30 дней"),
+    BotCommand("inactive", "кто в зоне риска 😴"),
+    BotCommand("chart", "график по дням за неделю (/chart m — за месяц)"),
+    BotCommand("help", "справка по боту"),
+]
+
+ADMIN_COMMANDS = PUBLIC_COMMANDS + [
+    BotCommand("remove", "удалить записи video_log по id"),
+    BotCommand("removelast", "снять последние N пив у пользователя"),
+    BotCommand("clean", "почистить чат от текстовых сообщений"),
+    BotCommand("report", "отправить дневной отчёт сейчас"),
+]
+
+
+async def _set_commands(app: Application) -> None:
+    """post_init hook — register the "/" menu (default scope + an admin overlay)."""
+    await app.bot.set_my_commands(PUBLIC_COMMANDS)
+    await app.bot.set_my_commands(
+        ADMIN_COMMANDS, scope=BotCommandScopeAllChatAdministrators()
+    )
 
 
 def main() -> None:
@@ -55,6 +83,8 @@ def main() -> None:
         # Process updates concurrently so one rate-limited reply doesn't stall
         # the whole queue behind it.
         .concurrent_updates(True)
+        # Register the "/" command menu once the bot is initialised.
+        .post_init(_set_commands)
         .build()
     )
 
@@ -69,7 +99,6 @@ def main() -> None:
     app.add_handler(CommandHandler("month", month))
     app.add_handler(CommandHandler("inactive", inactive_cmd))
     app.add_handler(CommandHandler("chart", chart))
-    app.add_handler(CommandHandler("topchart", topchart))
     app.add_handler(CommandHandler("remove", remove_records))
     app.add_handler(CommandHandler("removelast", remove_last))
     app.add_handler(CommandHandler("clean", clean))

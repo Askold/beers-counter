@@ -284,33 +284,34 @@ def get_videos_last_n_days(n: int = 5) -> int:
 
 
 def get_top_drinkers_for_date(chat_id: int, date_str: str, limit: int = 3) -> list[sqlite3.Row]:
-    """Top drinkers for a specific date (YYYY-MM-DD), joined with full_name from beers."""
+    """Top drinkers for a specific date (YYYY-MM-DD), joined with full_name from beers.
+
+    Ties on day_count go to whoever reached that count first — the earliest
+    final circle of the day. That's who the daily MVP is awarded to."""
     from datetime import date as _date
     next_day = (_date.fromisoformat(date_str) + timedelta(days=1)).isoformat()
     with get_connection() as conn:
         return conn.execute("""
             SELECT b.user_id, b.full_name, COUNT(*) AS day_count,
-                   (SELECT COUNT(*) FROM mvp_log m WHERE m.user_id = v.user_id) AS mvp_count
+                   MAX(v.sent_at) AS last_beer_at
             FROM video_log v
             JOIN beers b ON b.user_id = v.user_id
             WHERE v.chat_id = ? AND v.sent_at >= ? AND v.sent_at < ?
             GROUP BY v.user_id
-            ORDER BY day_count DESC, mvp_count DESC
+            ORDER BY day_count DESC, last_beer_at ASC, b.user_id ASC
             LIMIT ?
         """, (chat_id, date_str, next_day, limit)).fetchall()
 
 
 def get_leaderboard(limit: int | None = 10) -> list[sqlite3.Row]:
-    """Users with count > 0, ranked by count then MVP wins.
+    """Users with count > 0, ranked by count then — on a tie — by whoever
+    reached that count first (earliest last circle).
     limit=None returns the whole table (used by /none)."""
     query = """
-        SELECT b.user_id, b.full_name, b.username, b.count, b.current_streak, b.longest_streak,
-               COUNT(m.date) AS mvp_count
-        FROM beers b
-        LEFT JOIN mvp_log m ON m.user_id = b.user_id
-        WHERE b.count > 0
-        GROUP BY b.user_id
-        ORDER BY b.count DESC, mvp_count DESC
+        SELECT user_id, full_name, username, count, current_streak, longest_streak
+        FROM beers
+        WHERE count > 0
+        ORDER BY count DESC, last_video_at IS NULL, last_video_at ASC
     """
     with get_connection() as conn:
         if limit is None:
@@ -588,20 +589,31 @@ def clear_text_messages_for_date(chat_id: int, date_str: str) -> None:
 def get_leaderboard_for_period(chat_id: int, since: str, limit: int = 20) -> list[sqlite3.Row]:
     """
     Top drinkers since `since` (ISO date string, inclusive) in the given chat.
-    Only users with at least 1 circle in the period are returned.
+    Ties on the period count go to whoever reached it first — the earliest
+    final circle in the window. Only users with at least 1 circle are returned.
     """
     with get_connection() as conn:
         return conn.execute("""
             SELECT b.user_id, b.full_name, COUNT(*) AS period_count,
-                   (SELECT COUNT(*) FROM mvp_log m WHERE m.user_id = v.user_id) AS mvp_count
+                   MAX(v.sent_at) AS last_beer_at
             FROM video_log v
             JOIN beers b ON b.user_id = v.user_id
             WHERE v.chat_id = ?
               AND v.sent_at >= ?
             GROUP BY v.user_id
-            ORDER BY period_count DESC, mvp_count DESC
+            ORDER BY period_count DESC, last_beer_at ASC
             LIMIT ?
         """, (chat_id, since, limit)).fetchall()
+
+
+def get_period_count(chat_id: int, since: str) -> int:
+    """Total circle videos since `since` (ISO date string, inclusive) in the given chat."""
+    with get_connection() as conn:
+        row = conn.execute(
+            "SELECT COUNT(*) AS c FROM video_log WHERE chat_id = ? AND sent_at >= ?",
+            (chat_id, since),
+        ).fetchone()
+        return row["c"]
 
 
 # ── Removal helpers ───────────────────────────────────────────────────────

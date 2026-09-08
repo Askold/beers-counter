@@ -1,13 +1,11 @@
 """Chart rendering in the "beer glass" theme (Pillow).
 
-Three charts share one visual system — a warm radial background, a dark card,
-and bars drawn as gradient-filled glasses of beer with a foamy head:
+The daily-beers chart — weekly (``/chart``) and monthly (``/chart m``) — uses
+one visual system: a warm radial background, a dark card, and bars drawn as
+gradient-filled glasses of beer with a foamy head.
 
-* daily beers, weekly (``/chart``) and monthly (``/chart m``)
-* the above-median leaderboard (``/topchart``)
-
-Each chart is drawn on a supersampled canvas and downscaled once for
-anti-aliasing. The public async wrappers push the CPU work onto a worker
+The chart is drawn on a supersampled canvas and downscaled once for
+anti-aliasing. The public async wrapper pushes the CPU work onto a worker
 thread so the bot's event loop keeps serving updates.
 """
 import asyncio
@@ -383,61 +381,7 @@ def build_daily_chart(rows, days):
     return _finish(img, width // S)
 
 
-# ── leaderboard chart (above the median) ─────────────────────────────────
-
-def _shorten(name, limit=22):
-    return name if len(name) <= limit else name[: limit - 1] + "…"
-
-
-def build_leaderboard_chart(entries):
-    """entries: [(full_name, count), ...] filtered/sorted, highest first.
-    Each glass lies on its side, foam pointing right toward the count."""
-    names = [_shorten(nm) for nm, _ in entries]
-    counts = [c for _, c in entries]
-    peak = max(counts) if counts else 0
-    n = len(entries)
-
-    width = 1160 * S
-    height = round((150 + n * 64) * S)
-    img, d, card = _frame(width, height, "Лидеры выше среднего",
-                          f"Всего у них: {sum(counts)}")
-
-    pad = 26 * S
-    name_w, val_w = 292 * S, 96 * S
-    x0 = card[0] + pad + name_w
-    x1 = card[2] - pad - val_w
-    span = x1 - x0
-    top = peak * 1.04 or 1
-    y0 = card[1] + pad
-    band = (card[3] - pad - y0) / n
-
-    nf = _font(_NUNITO, 17, "Bold")
-    vf = _font(_BITTER, 20, "Bold")
-    vf_peak = _font(_BITTER, 23, "ExtraBold")
-
-    for i, (nm, cnt) in enumerate(zip(names, counts)):
-        cy = y0 + band * (i + 0.5)
-        bl = max(16 * S, span * cnt / top)
-        thick = round(min(44 * S, band * 0.60))
-        is_peak = cnt == peak and peak > 0
-        foam = min(40 * S, max(12 * S, bl * 0.14))
-        glass = _beer_glass(thick, round(bl), round(foam), peak=is_peak,
-                            seed=i + 7, streak=False)
-        glass = glass.rotate(-90, expand=True, resample=Image.BICUBIC)
-        gx, gy = round(x0), round(cy - glass.height / 2)
-        if is_peak:
-            _paste_glow(img, glass, (gx, gy), 18 * S, _GLOW)
-        img.alpha_composite(glass, (gx, gy))
-        d.text((x0 - 18 * S, cy), nm, font=nf,
-               fill=_CREAM_HI if is_peak else _CREAM, anchor="rm")
-        _draw_value(img, (card[2] - pad, cy), str(cnt),
-                    vf_peak if is_peak else vf,
-                    _CREAM_HI if is_peak else _CREAM, anchor="rm", glow=is_peak)
-
-    return _finish(img, width // S)
-
-
-# ── async wrappers ───────────────────────────────────────────────────────
+# ── async wrapper ───────────────────────────────────────────────────────
 
 # Pillow's font objects aren't safe to render from several threads at once;
 # chart requests are rare, so just serialise the (off-loop) drawing.
@@ -449,12 +393,6 @@ async def render_chart(chat_id: int, days: int = 7) -> io.BytesIO:
     rows = await asyncio.to_thread(database.get_daily_counts, chat_id, days)
     async with _render_lock:
         return await asyncio.to_thread(build_daily_chart, rows, days)
-
-
-async def render_leaderboard_chart(entries: list[tuple[str, int]]) -> io.BytesIO:
-    """Above-median leaderboard chart from pre-filtered entries (highest first)."""
-    async with _render_lock:
-        return await asyncio.to_thread(build_leaderboard_chart, entries)
 
 
 async def weekly_chart_job(context: ContextTypes.DEFAULT_TYPE) -> None:
