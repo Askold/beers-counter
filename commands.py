@@ -23,7 +23,6 @@ HELP_TEXT = (
     "/day — лидеры за сегодня\n"
     "/week — лидеры за 7 дней\n"
     "/month — лидеры за 30 дней\n"
-    "/inactive — кто в зоне риска 😴\n"
     "/chart — график по дням за неделю\n"
     "/chart m — то же за месяц\n\n"
     "*⭐ MVP*\n"
@@ -192,7 +191,18 @@ async def month(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 
 async def inactive_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """List every user in the risk zone: never drank, or no circle for INACTIVE_DAYS+ days."""
+    """List every user in the risk zone: never drank, or no circle for INACTIVE_DAYS+ days.
+    Admin-only (or any private chat)."""
+    chat = update.effective_chat
+    user = update.effective_user
+    if chat.type != "private":
+        member = await chat.get_member(user.id)
+        if member.status not in ("administrator", "creator"):
+            await update.message.reply_text(
+                "⛔ Только администраторы могут использовать /inactive\\.", parse_mode="MarkdownV2"
+            )
+            return
+
     now = datetime.datetime.now(MOSCOW)
     rows = database.get_inactive_users(days=INACTIVE_DAYS)
     if not rows:

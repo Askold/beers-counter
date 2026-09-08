@@ -38,7 +38,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Populates the "/" command menu in Telegram clients. Everyone sees PUBLIC_COMMANDS;
-# group admins additionally see the maintenance ones.
+# group admins additionally see the admin-only ones (/inactive + maintenance).
 PUBLIC_COMMANDS = [
     BotCommand("stats", "моя статистика: пиво, MVP, стрик, место"),
     BotCommand("leaderboard", "таблица лидеров за всё время"),
@@ -46,12 +46,12 @@ PUBLIC_COMMANDS = [
     BotCommand("day", "лидеры за сегодня"),
     BotCommand("week", "лидеры за 7 дней"),
     BotCommand("month", "лидеры за 30 дней"),
-    BotCommand("inactive", "кто в зоне риска 😴"),
     BotCommand("chart", "график по дням за неделю (/chart m — за месяц)"),
     BotCommand("help", "справка по боту"),
 ]
 
 ADMIN_COMMANDS = PUBLIC_COMMANDS + [
+    BotCommand("inactive", "кто в зоне риска 😴"),
     BotCommand("remove", "удалить записи video_log по id"),
     BotCommand("removelast", "снять последние N пив у пользователя"),
     BotCommand("clean", "почистить чат от текстовых сообщений"),
