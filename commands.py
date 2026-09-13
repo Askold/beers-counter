@@ -1,4 +1,4 @@
-"""User-facing command handlers: /start /help /stats /leaderboard /none /day /week /month /inactive /chart."""
+"""User-facing command handlers: /start /help /stats /leaderboard /streak /none /day /week /month /inactive /chart."""
 import datetime
 import logging
 
@@ -19,6 +19,8 @@ HELP_TEXT = (
     "/stats — пиво, MVP\\-победы, стрик, место в таблице\n\n"
     "*Таблицы лидеров*\n"
     "/leaderboard — все за всё время\n"
+    "/streak — рекорды стрика за всё время\n"
+    "/streak current — у кого сейчас самый длинный стрик\n"
     "/none — насколько лидер оторвался от хвоста таблицы\n"
     "/day — лидеры за сегодня\n"
     "/week — лидеры за 7 дней\n"
@@ -109,6 +111,32 @@ async def leaderboard(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
             stars = " " + "⭐" * 5 + f" {mvps}"
         lines.append(f"{medal(i)} {name}{stars} — *{fmt(row['count'])}* 🍺")
     lines.append(f"\nДо цели осталось: *{fmt(remaining)}*")
+    await update.message.reply_text("\n".join(lines), parse_mode="MarkdownV2")
+
+
+async def streak(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """/streak — leaderboard by all-time record streak. /streak current — by active streak."""
+    show_current = bool(context.args) and context.args[0].lower() in ("current", "c", "текущий", "т")
+    if show_current:
+        rows = database.get_current_streak_leaderboard(limit=20)
+        header = "*🔥 Стрик прямо сейчас 🔥*\n"
+        empty_text = "Сейчас ни у кого нет активного стрика\\. Начни первым\\! 🍺"
+        field = "current_streak"
+    else:
+        rows = database.get_longest_streak_leaderboard(limit=20)
+        header = "*🔥 Рекорды стрика 🔥*\n"
+        empty_text = "Пока никто не набирал стрик\\. Отправь кружочек\\! 🍺"
+        field = "longest_streak"
+
+    if not rows:
+        await update.message.reply_text(empty_text, parse_mode="MarkdownV2")
+        return
+
+    lines = [header]
+    for i, row in enumerate(rows):
+        name = escape_md(row["full_name"])
+        days = row[field]
+        lines.append(f"{medal(i)} {name} — *{fmt(days)}* дн\\.")
     await update.message.reply_text("\n".join(lines), parse_mode="MarkdownV2")
 
 

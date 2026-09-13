@@ -14,6 +14,7 @@ Every time a member of the group sends a **circle video** (video note), the bot:
 
 At **midnight Moscow time** the bot automatically:
 
+- Expires any streak that wasn't extended the day before (see [Streak mechanic](#streak-mechanic)).
 - Sends a daily report to the main group with stats for the previous day.
 - Records the day's **MVP** (the person who sent the most circles that day).
 - Deletes all tracked text messages from the previous day (auto-clean).
@@ -42,6 +43,7 @@ At **midnight Moscow time** the bot automatically:
 | `/start` | Anyone | Welcome message and command list |
 | `/count` | Anyone | Your personal beer count + MVP wins |
 | `/leaderboard` | Anyone | Top 100 all-time, with ⭐ per MVP win |
+| `/streak` `/streak current` | Anyone | Leaderboard by all-time record streak (`current` → active streaks) |
 | `/none` | Anyone | How many people from the bottom of the leaderboard, combined, equal the #1 drinker |
 | `/chart` `/chart m` | Anyone | Bar chart of daily beers for the last 7 days (`m` → last 30) |
 | `/report` | Admins (group) / Anyone (private) | Trigger the daily report manually |
@@ -67,6 +69,14 @@ At **midnight Moscow time** the bot automatically:
 - Every midnight the top drinker of the previous day is recorded as **MVP** in `mvp_log`.
 - Each MVP win adds a ⭐ next to the user's name in `/leaderboard` and `/count`.
 - If the same person wins multiple days in a row, the report shows a 🔥 streak line.
+
+---
+
+## Streak mechanic
+
+- `beers.current_streak` counts consecutive Moscow-calendar days with at least one circle; `beers.longest_streak` is that user's all-time record.
+- Sending a circle extends the streak by comparing today's date to `last_video_at`'s date: same day keeps it, the next day extends it by one, any bigger gap resets it to 1.
+- A broken streak isn't caught the moment it breaks — nobody sends a video on a day they don't drink. So every midnight (00:00 Moscow, right before the daily report), a job zeroes `current_streak` for anyone who didn't send a circle the day before. This keeps `/stats`, `/streak`, and `/leaderboard` accurate from the first read of the new day instead of showing a dead streak until that user's next video quietly resets it.
 
 ---
 

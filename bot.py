@@ -1,4 +1,5 @@
 """Entry point: application wiring and startup."""
+import asyncio
 import datetime
 import logging
 import os
@@ -25,6 +26,7 @@ from commands import (
     none_cmd,
     start,
     stats,
+    streak,
     week,
 )
 from common import MOSCOW
@@ -42,6 +44,7 @@ logger = logging.getLogger(__name__)
 PUBLIC_COMMANDS = [
     BotCommand("stats", "моя статистика: пиво, MVP, стрик, место"),
     BotCommand("leaderboard", "таблица лидеров за всё время"),
+    BotCommand("streak", "рекорды стрика (/streak current — активные стрики)"),
     BotCommand("none", "насколько лидер оторвался от хвоста таблицы"),
     BotCommand("day", "лидеры за сегодня"),
     BotCommand("week", "лидеры за 7 дней"),
@@ -93,6 +96,7 @@ def main() -> None:
     app.add_handler(CommandHandler("help", help_cmd))
     app.add_handler(CommandHandler("stats", stats))
     app.add_handler(CommandHandler("leaderboard", leaderboard))
+    app.add_handler(CommandHandler("streak", streak))
     app.add_handler(CommandHandler("none", none_cmd))
     app.add_handler(CommandHandler("day", day))
     app.add_handler(CommandHandler("week", week))
@@ -116,9 +120,15 @@ def main() -> None:
     # Track all message senders (group=1 runs after group=0, never blocks)
     app.add_handler(MessageHandler(filters.ALL, track_member_handler), group=1)
 
-    # Daily report at 00:00 Moscow time (scheduled=True → counts yesterday)
+    # Daily report at 00:00 Moscow time (scheduled=True → counts yesterday).
+    # Streaks are expired first so anyone who missed yesterday shows 0, not a
+    # stale value left over from their last video.
+    async def _midnight_job(ctx):
+        await asyncio.to_thread(database.expire_stale_streaks)
+        await daily_report(ctx, send_to=None, scheduled=True)
+
     app.job_queue.run_daily(
-        lambda ctx: daily_report(ctx, send_to=None, scheduled=True),
+        _midnight_job,
         time=datetime.time(0, 0, 0, tzinfo=MOSCOW),
         name="daily_report",
     )

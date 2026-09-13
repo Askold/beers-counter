@@ -481,6 +481,52 @@ def get_users_on_streak(min_days: int = 3) -> list[sqlite3.Row]:
         """, (min_days,)).fetchall()
 
 
+def get_current_streak_leaderboard(limit: int = 20) -> list[sqlite3.Row]:
+    """Users with an active streak, ranked by current_streak desc.
+    Ties go to whoever has been on the streak longer (earlier last circle)."""
+    with get_connection() as conn:
+        return conn.execute("""
+            SELECT user_id, full_name, current_streak, longest_streak
+            FROM beers
+            WHERE current_streak > 0
+            ORDER BY current_streak DESC, last_video_at ASC
+            LIMIT ?
+        """, (limit,)).fetchall()
+
+
+def get_longest_streak_leaderboard(limit: int = 20) -> list[sqlite3.Row]:
+    """All-time record streaks, ranked by longest_streak desc."""
+    with get_connection() as conn:
+        return conn.execute("""
+            SELECT user_id, full_name, current_streak, longest_streak
+            FROM beers
+            WHERE longest_streak > 0
+            ORDER BY longest_streak DESC, full_name ASC
+            LIMIT ?
+        """, (limit,)).fetchall()
+
+
+def expire_stale_streaks() -> int:
+    """Zero out current_streak for anyone who didn't send a circle "yesterday"
+    (the day that just ended). Without this, a broken streak just sits in the
+    DB at its old value — unchanged since add_beer() only ever recalculates it
+    lazily, on that user's *next* video — so leaderboards and /stats would keep
+    showing a dead streak as still alive until the user happens to drink again.
+    Run once daily at 00:00 Moscow time, right after the day rolls over, so the
+    streak is exact from the first read of the new day.
+    Returns the number of users reset."""
+    yesterday = (datetime.now(MOSCOW).date() - timedelta(days=1)).isoformat()
+    with get_connection() as conn:
+        cur = conn.execute("""
+            UPDATE beers
+            SET current_streak = 0
+            WHERE current_streak > 0
+              AND (last_video_at IS NULL OR substr(last_video_at, 1, 10) < ?)
+        """, (yesterday,))
+        conn.commit()
+        return cur.rowcount
+
+
 def get_mvp_wins(user_id: int) -> int:
     """Return total MVP wins for a single user."""
     with get_connection() as conn:
