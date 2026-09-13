@@ -124,7 +124,7 @@ async def streak(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         field = "current_streak"
     else:
         rows = database.get_longest_streak_leaderboard(limit=20)
-        header = "*🔥 Рекорды стрика 🔥*\n"
+        header = "*🔥 пивопивы без тормозов 🔥*\n"
         empty_text = "Пока никто не набирал стрик\\. Отправь кружочек\\! 🍺"
         field = "longest_streak"
 
