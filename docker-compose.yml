@@ -5,5 +5,23 @@ services:
     container_name: beers-counter
     restart: unless-stopped
     env_file: .env
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: beers-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     volumes:
-      - ./data:/app/data
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      # Exposed so the miniapp's separate host can reach it.
+      # Harden with a firewall rule restricting this to that host's IP — see README.
+      - "5432:5432"
+
+volumes:
+  pgdata:

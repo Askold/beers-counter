@@ -62,11 +62,11 @@ def main() -> None:
         return
 
     with database.get_connection() as conn:
-        conn.executemany(
-            "UPDATE mvp_log SET user_id = ? WHERE date = ? AND chat_id = ?",
-            [(new, date, chat) for date, chat, _old, new in changes],
-        )
-        conn.commit()
+        with conn.cursor() as cur:
+            cur.executemany(
+                "UPDATE mvp_log SET user_id = %s WHERE date = %s AND chat_id = %s",
+                [(new, date, chat) for date, chat, _old, new in changes],
+            )
     print(f"\nГотово: обновлено {len(changes)} записей в mvp_log.")
 
 

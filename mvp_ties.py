@@ -26,7 +26,7 @@ def find_mvp_ties(chat_id: int | None, min_beers: int) -> list[dict]:
     params: list = []
     chat_filter = ""
     if chat_id is not None:
-        chat_filter = "WHERE v.chat_id = ?"
+        chat_filter = "WHERE v.chat_id = %s"
         params.append(chat_id)
 
     with database.get_connection() as conn:
