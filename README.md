@@ -88,9 +88,9 @@ At **midnight Moscow time** the bot automatically:
 > **Status: being tested.** The nightly job (`daily_montage_job` in `montage.py`) is implemented but deliberately **not** wired into the midnight job in `bot.py` yet — it only runs when `/montage` is called by hand. Once testing looks good, uncomment the call marked in `bot.py`'s `_midnight_job`.
 
 - Every circle video's Telegram `file_id` is stored in `video_log` as it comes in.
-- The bot re-downloads **every** circle sent that day in the target chat, trims each to its first 3 seconds, normalizes them to a common square resolution/frame rate, burns a running counter (`#1`, `#2`, …) into the corner of each clip, and concatenates them with `ffmpeg` into one clip.
-- `/montage` builds today's montage so far, from the chat the command was called in, and sends the result back to that same chat — including a separate test group, not just the main one. From a private chat (no group circles of its own) it falls back to the stored main group. Admin-only in groups.
-- Once re-enabled, the midnight job builds the previous day's montage for the main group only, right after the daily report, and posts it there.
+- The circles that go into the montage always come from the **main group** (`settings.chat_id`) — the bot re-downloads **every** circle sent there that day, trims each to its first 3 seconds, normalizes them to a common square resolution/frame rate, burns a running counter (`#1`, `#2`, …) into the corner of each clip, and concatenates them with `ffmpeg` into one clip.
+- Where the result is *sent* is the only thing that varies: `/montage` builds today's montage so far and sends it to whichever chat the command was called from — a separate test group, a private DM, whatever — without touching the main group. Admin-only in groups.
+- Once re-enabled, the midnight job does the same for the previous day, sending the result to the main group itself.
 - Clips whose file failed to download (e.g. `file_id` no longer resolvable) are skipped rather than failing the whole montage; if every clip fails, or nobody sent a circle, it logs and skips silently — no message is sent.
 - Requires the `ffmpeg` and `ffprobe` binaries on the host running the bot (already installed in the `Dockerfile`), plus the existing `assets/fonts/Bitter.ttf` used for the counter overlay.
 
@@ -198,6 +198,19 @@ docker cp result.json             beers-counter:/app/result.json
 docker cp restore_video_log.py    beers-counter:/app/restore_video_log.py
 docker exec -it beers-counter python restore_video_log.py result.json
 ```
+
+### `backfill_video_file_ids.py`
+
+Backfills `video_log.file_id` for rows recorded before the montage feature existed, so those old circles can be included in a montage too. Bots can't fetch `file_id` for a message after the fact, so this matches each missing row (by sender + date, in time order) to the corresponding video in a **media-included** Telegram chat export, re-uploads that file to a chat you choose (to mint a fresh `file_id`), and stores it. Supports `--dry-run` to preview the match plan first.
+
+```bash
+docker cp result.json                     beers-counter:/app/result.json
+docker cp backfill_video_file_ids.py      beers-counter:/app/backfill_video_file_ids.py
+docker exec -it beers-counter python backfill_video_file_ids.py result.json <source_chat_id> <upload_chat_id> --dry-run
+docker exec -it beers-counter python backfill_video_file_ids.py result.json <source_chat_id> <upload_chat_id>
+```
+
+`source_chat_id` is the group the export was taken from; `upload_chat_id` is where the re-uploaded videos get sent to mint `file_id`s (e.g. your own DM with the bot — DM it once first so that chat exists).
 
 ### `backfill_mvp.py`
 

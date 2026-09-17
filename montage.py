@@ -95,15 +95,24 @@ def _build_montage(paths: list[str], output_path: str) -> None:
         raise RuntimeError(f"ffmpeg failed (exit {result.returncode}): {result.stderr[-2000:]}")
 
 
-async def _run_montage(context: ContextTypes.DEFAULT_TYPE, chat_id: int, report_date: str) -> bool:
-    """Builds a montage from every circle sent in chat_id on report_date and
-    sends it to that same chat_id. Returns True if a montage was sent, False
-    if there was nothing to send."""
+async def _run_montage(
+    context: ContextTypes.DEFAULT_TYPE,
+    source_chat_id: int,
+    dest_chat_id: int,
+    report_date: str,
+) -> bool:
+    """Builds a montage from every circle sent in source_chat_id on
+    report_date and sends it to dest_chat_id (the two differ when /montage is
+    tested from a separate chat — the circles always come from the main
+    group). Returns True if a montage was sent, False if there was nothing
+    to send."""
     file_ids = await asyncio.to_thread(
-        database.get_video_file_ids_for_date, chat_id, report_date
+        database.get_video_file_ids_for_date, source_chat_id, report_date
     )
     if not file_ids:
-        logger.info("montage: no circle videos for %s in chat %s, skipping", report_date, chat_id)
+        logger.info(
+            "montage: no circle videos for %s in chat %s, skipping", report_date, source_chat_id
+        )
         return False
 
     with tempfile.TemporaryDirectory(prefix="montage_") as tmpdir:
@@ -120,7 +129,9 @@ async def _run_montage(context: ContextTypes.DEFAULT_TYPE, chat_id: int, report_
                 )
 
         if not paths:
-            logger.warning("montage: all downloads failed for %s in chat %s", report_date, chat_id)
+            logger.warning(
+                "montage: all downloads failed for %s in chat %s", report_date, source_chat_id
+            )
             return False
 
         output_path = os.path.join(tmpdir, "montage.mp4")
@@ -128,46 +139,47 @@ async def _run_montage(context: ContextTypes.DEFAULT_TYPE, chat_id: int, report_
 
         with open(output_path, "rb") as f:
             await context.bot.send_video(
-                chat_id=chat_id,
+                chat_id=dest_chat_id,
                 video=f,
                 caption=f"🎬 Нарезка кружочков за {report_date} — {len(paths)} видео",
                 supports_streaming=True,
             )
-    logger.info("montage: sent montage for %s in chat %s (%d clips)", report_date, chat_id, len(paths))
+    logger.info(
+        "montage: sent montage for %s (source chat %s) to chat %s (%d clips)",
+        report_date, source_chat_id, dest_chat_id, len(paths),
+    )
     return True
 
 
 async def montage_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Manual trigger — builds a montage of today's circles so far and sends
-    it to the chat the command was called from (a group's own circles, not
-    necessarily the main group — handy for testing in a separate group).
-    Admin-only in groups. From a private chat there's no group of circles to
-    pull from, so it falls back to the stored main group instead."""
+    """Manual trigger — builds a montage of the main group's circles for today
+    so far, and sends it to whichever chat the command was called from (handy
+    for previewing in a separate test group without posting to the main one).
+    Admin-only in groups; unrestricted from a private chat."""
     chat = update.effective_chat
     user = update.effective_user
 
-    if chat.type == "private":
-        chat_id = database.get_chat_id()
-        if not chat_id:
-            await update.message.reply_text("Бот ещё не добавлен ни в одну группу\\.", parse_mode="MarkdownV2")
-            return
-    else:
+    if chat.type != "private":
         member = await chat.get_member(user.id)
         if member.status not in ("administrator", "creator"):
             await update.message.reply_text(
                 "⛔ Только администраторы могут вызвать нарезку\\.", parse_mode="MarkdownV2"
             )
             return
-        chat_id = chat.id
+
+    main_chat_id = database.get_chat_id()
+    if not main_chat_id:
+        await update.message.reply_text("Бот ещё не добавлен ни в одну группу\\.", parse_mode="MarkdownV2")
+        return
 
     report_date = datetime.datetime.now(MOSCOW).date().isoformat()
     await update.message.reply_text("🎬 Собираю нарезку…")
     try:
-        sent = await _run_montage(context, chat_id, report_date)
+        sent = await _run_montage(context, main_chat_id, chat.id, report_date)
         if not sent:
             await update.message.reply_text("Сегодня ещё нет ни одного кружочка\\.", parse_mode="MarkdownV2")
     except Exception:
-        logger.error("montage_command: failed for %s in chat %s", report_date, chat_id, exc_info=True)
+        logger.error("montage_command: failed for %s", report_date, exc_info=True)
         await update.message.reply_text("⚠️ Не получилось собрать нарезку\\.", parse_mode="MarkdownV2")
 
 
@@ -179,6 +191,6 @@ async def daily_montage_job(context: ContextTypes.DEFAULT_TYPE) -> None:
         return
     report_date = (datetime.datetime.now(MOSCOW) - datetime.timedelta(days=1)).date().isoformat()
     try:
-        await _run_montage(context, chat_id, report_date)
+        await _run_montage(context, chat_id, chat_id, report_date)
     except Exception:
         logger.error("daily_montage_job: failed for %s", report_date, exc_info=True)
