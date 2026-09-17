@@ -47,9 +47,12 @@ def init_db() -> None:
                 user_id    BIGINT NOT NULL,
                 chat_id    BIGINT NOT NULL,
                 sent_at    TEXT NOT NULL,
-                message_id BIGINT
+                message_id BIGINT,
+                file_id    TEXT
             )
         """)
+        # migration: older rows predate the montage feature and lack file_id
+        conn.execute("ALTER TABLE video_log ADD COLUMN IF NOT EXISTS file_id TEXT")
         # partial unique index: prevents duplicate message processing on bot restart
         conn.execute("""
             CREATE UNIQUE INDEX IF NOT EXISTS uq_video_log_msg
@@ -122,22 +125,26 @@ def add_beer(
     full_name: str,
     chat_id: int,
     message_id: int | None = None,
+    file_id: str | None = None,
 ) -> tuple[int, int, bool, int]:
     """Increment count, log the video, return (user_count, total_count, added, current_streak).
 
     added=False when message_id is already in video_log (duplicate delivery on restart).
     In that case beers.count is NOT changed.
+
+    file_id is the video_note's Telegram file_id, stored so the nightly montage
+    job can re-download the clip later.
     """
     now = datetime.now(MOSCOW).isoformat()
     with get_connection() as conn:
         # Try to record the video first; ON CONFLICT DO NOTHING silently skips known message_ids.
         cur = conn.execute(
             """
-            INSERT INTO video_log (user_id, chat_id, sent_at, message_id)
-            VALUES (%s, %s, %s, %s)
+            INSERT INTO video_log (user_id, chat_id, sent_at, message_id, file_id)
+            VALUES (%s, %s, %s, %s, %s)
             ON CONFLICT (chat_id, message_id) WHERE message_id IS NOT NULL DO NOTHING
             """,
-            (user_id, chat_id, now, message_id),
+            (user_id, chat_id, now, message_id, file_id),
         )
         added = cur.rowcount == 1
 
@@ -261,6 +268,21 @@ def get_date_count(chat_id: int, date_str: str) -> int:
             WHERE chat_id = %s AND sent_at >= %s AND sent_at < %s
         """, (chat_id, date_str, next_day)).fetchone()
         return row["c"]
+
+
+def get_video_file_ids_for_date(chat_id: int, date_str: str) -> list[str]:
+    """Return file_ids of circle videos sent on date_str (YYYY-MM-DD) in this chat,
+    oldest first. Rows without a stored file_id (legacy data, sent before the
+    montage feature, or restored from a chat export) are skipped."""
+    from datetime import date as _date
+    next_day = (_date.fromisoformat(date_str) + timedelta(days=1)).isoformat()
+    with get_connection() as conn:
+        rows = conn.execute("""
+            SELECT file_id FROM video_log
+            WHERE chat_id = %s AND sent_at >= %s AND sent_at < %s AND file_id IS NOT NULL
+            ORDER BY sent_at ASC
+        """, (chat_id, date_str, next_day)).fetchall()
+    return [r["file_id"] for r in rows]
 
 
 def get_videos_last_n_days(n: int = 5) -> int:

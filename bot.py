@@ -30,6 +30,7 @@ from commands import (
     week,
 )
 from common import MOSCOW
+from montage import daily_montage_job, montage_command
 from report import daily_report, report_command
 from video import handle_video, track_member_handler, track_message
 
@@ -59,6 +60,7 @@ ADMIN_COMMANDS = PUBLIC_COMMANDS + [
     BotCommand("removelast", "снять последние N пив у пользователя"),
     BotCommand("clean", "почистить чат от текстовых сообщений"),
     BotCommand("report", "отправить дневной отчёт сейчас"),
+    BotCommand("montage", "собрать нарезку кружочков за сегодня"),
 ]
 
 
@@ -107,6 +109,7 @@ def main() -> None:
     app.add_handler(CommandHandler("removelast", remove_last))
     app.add_handler(CommandHandler("clean", clean))
     app.add_handler(CommandHandler("report", report_command))
+    app.add_handler(CommandHandler("montage", montage_command))
 
     # Count only circle (round) video messages
     app.add_handler(MessageHandler(filters.VIDEO_NOTE, handle_video))
@@ -122,10 +125,12 @@ def main() -> None:
 
     # Daily report at 00:00 Moscow time (scheduled=True → counts yesterday).
     # Streaks are expired first so anyone who missed yesterday shows 0, not a
-    # stale value left over from their last video.
+    # stale value left over from their last video. The montage runs last since
+    # downloading/encoding yesterday's circles takes much longer than the report.
     async def _midnight_job(ctx):
         await asyncio.to_thread(database.expire_stale_streaks)
         await daily_report(ctx, send_to=None, scheduled=True)
+        await daily_montage_job(ctx)
 
     app.job_queue.run_daily(
         _midnight_job,

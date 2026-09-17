@@ -32,6 +32,7 @@ async def handle_video(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     database.save_chat_id(chat_id)
 
     message_id = msg.message_id if msg else None
+    file_id = msg.video_note.file_id if msg and msg.video_note else None
 
     _user_count, total, added, current_streak = database.add_beer(
         user_id=user.id,
@@ -39,6 +40,7 @@ async def handle_video(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
         full_name=display_name(user),
         chat_id=chat_id,
         message_id=message_id,
+        file_id=file_id,
     )
 
     if not added:

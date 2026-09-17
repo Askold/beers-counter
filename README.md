@@ -18,6 +18,7 @@ At **midnight Moscow time** the bot automatically:
 - Sends a daily report to the main group with stats for the previous day.
 - Records the day's **MVP** (the person who sent the most circles that day).
 - Deletes all tracked text messages from the previous day (auto-clean).
+- Builds and sends a **montage** — a highlight clip stitched from cuts of every circle video sent that day (see [Daily montage](#daily-montage)).
 
 ---
 
@@ -31,6 +32,7 @@ At **midnight Moscow time** the bot automatically:
 | `admin.py` | Admin commands: `/remove` `/removelast` `/clean` |
 | `video.py` | Circle-video counting + message/member tracking handlers |
 | `report.py` | Daily report — `/report` command, the midnight job, and its batched data collector |
+| `montage.py` | Daily montage — `/montage` command and the midnight job that stitches the day's circles into one clip with `ffmpeg` |
 | `charts.py` | "Beer glass" daily-beers chart drawn with Pillow — weekly / monthly (`/chart`, `/chart m`) — plus the Sunday chart job. Fonts live in `assets/fonts/`. |
 | `database.py` | All Postgres access (pooled connections via `psycopg`) |
 
@@ -47,6 +49,7 @@ At **midnight Moscow time** the bot automatically:
 | `/none` | Anyone | How many people from the bottom of the leaderboard, combined, equal the #1 drinker |
 | `/chart` `/chart m` | Anyone | Bar chart of daily beers for the last 7 days (`m` → last 30) |
 | `/report` | Admins (group) / Anyone (private) | Trigger the daily report manually |
+| `/montage` | Admins (group) / Anyone (private) | Build and send a montage of today's circles so far |
 | `/clean` | Admins, main group only | Delete yesterday's text messages |
 | `/reset` | Anyone | Reset your own count to 0 |
 
@@ -80,6 +83,17 @@ At **midnight Moscow time** the bot automatically:
 
 ---
 
+## Daily montage
+
+- Every circle video's Telegram `file_id` is stored in `video_log` as it comes in.
+- At midnight, right after the daily report, the bot re-downloads every circle sent the previous day, trims each to the first 3 seconds, normalizes them to a common square resolution/frame rate, and concatenates them with `ffmpeg` into one clip.
+- Days with a lot of circles are evenly sampled down to at most 60 clips (~3 minutes) so the job stays fast and the file stays well under Telegram's upload limit.
+- The result is posted to the main group as a video message. Clips whose file failed to download (e.g. `file_id` no longer resolvable) are skipped rather than failing the whole montage; if every clip fails, or nobody sent a circle, the job logs and skips silently — no message is sent.
+- `/montage` triggers the same pipeline on demand, for today's circles so far, without waiting for midnight (useful for testing).
+- Requires the `ffmpeg` and `ffprobe` binaries on the host running the bot (already installed in the `Dockerfile`).
+
+---
+
 ## Database schema
 
 Stored in Postgres (self-hosted via the `postgres` service in `docker-compose.yml`), accessed exclusively through `database.py`.
@@ -107,6 +121,7 @@ chat_id    BIGINT   NOT NULL          — Group where the circle was sent
 sent_at    TEXT     NOT NULL          — ISO timestamp (Moscow tz)
 message_id BIGINT                    — Telegram message ID
                                         UNIQUE(chat_id, message_id) WHERE message_id IS NOT NULL
+file_id    TEXT                      — Telegram file_id of the video note, used by the daily montage
 ```
 
 The partial unique index on `(chat_id, message_id)` prevents double-counting when Telegram replays pending updates after a bot restart. Historical records restored from a chat export have `message_id = NULL` and are unaffected by the constraint (Postgres, like SQLite, treats each NULL as distinct for uniqueness purposes).
