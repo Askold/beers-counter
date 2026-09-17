@@ -1,0 +1,6167 @@
+{
+ "name": "1 миллион пив",
+ "type": "private_supergroup",
+ "id": 4326443712,
+ "messages": [
+  {
+   "id": 12506,
+   "type": "message",
+   "date": "2026-09-17T00:00:00",
+   "date_unixtime": "1789592400",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "text": [
+    "🎉 Поздравляю! Вчера было выпито ",
+    {
+     "type": "bold",
+     "text": "124"
+    },
+    " пива\nОсталось ",
+    {
+     "type": "bold",
+     "text": "997 172"
+    },
+    " до цели в 1,000,000 🍺\nПри текущем темпе потребуется ",
+    {
+     "type": "bold",
+     "text": "6 344"
+    },
+    " дн. для выполнения плана 📅\n\n",
+    {
+     "type": "bold",
+     "text": "Герои вчерашнего дня"
+    },
+    " 🌟\n🥇 none — 8 🍺\n🥈 Lisa🪼 — 8 🍺\n🥉 Kirill Mugityan — 7 🍺\n\n",
+    {
+     "type": "bold",
+     "text": "Кем гордится наша школа"
+    },
+    " 🏆\n🥇 none ⭐⭐⭐⭐⭐⭐⭐— 184 🍺\n🥈 bogdan m ⭐⭐⭐⭐⭐— 136 🍺\n🥉 Vladimir Varov ⭐— 130 🍺\n\n",
+    {
+     "type": "bold",
+     "text": "В огне"
+    },
+    " 🔥\n🔥 Pasha Komarov — 22 дн. подряд\n🔥 nick — 15 дн. подряд\n🔥 none — 13 дн. подряд\n🔥 SHANZ — 11 дн. подряд\n🔥 Ilya 'dentist' Andreev — 11 дн. подряд\n🔥 rob — 10 дн. подряд\n🔥 Luka — 9 дн. подряд\n🔥 Kirill Mugityan — 9 дн. подряд\n🔥 Vladimir Varov — 7 дн. подряд\n🔥 Matros — 7 дн. подряд\n🔥 bogdan m — 5 дн. подряд\n🔥 Egor Afonin — 5 дн. подряд\n🔥 Ben — 4 дн. подряд\n🔥 Lisa🪼 — 4 дн. подряд\n🔥 Dmitry Bondarenko — 3 дн. подряд"
+   ],
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "🎉 Поздравляю! Вчера было выпито "
+    },
+    {
+     "type": "bold",
+     "text": "124"
+    },
+    {
+     "type": "plain",
+     "text": " пива\nОсталось "
+    },
+    {
+     "type": "bold",
+     "text": "997 172"
+    },
+    {
+     "type": "plain",
+     "text": " до цели в 1,000,000 🍺\nПри текущем темпе потребуется "
+    },
+    {
+     "type": "bold",
+     "text": "6 344"
+    },
+    {
+     "type": "plain",
+     "text": " дн. для выполнения плана 📅\n\n"
+    },
+    {
+     "type": "bold",
+     "text": "Герои вчерашнего дня"
+    },
+    {
+     "type": "plain",
+     "text": " 🌟\n🥇 none — 8 🍺\n🥈 Lisa🪼 — 8 🍺\n🥉 Kirill Mugityan — 7 🍺\n\n"
+    },
+    {
+     "type": "bold",
+     "text": "Кем гордится наша школа"
+    },
+    {
+     "type": "plain",
+     "text": " 🏆\n🥇 none ⭐⭐⭐⭐⭐⭐⭐— 184 🍺\n🥈 bogdan m ⭐⭐⭐⭐⭐— 136 🍺\n🥉 Vladimir Varov ⭐— 130 🍺\n\n"
+    },
+    {
+     "type": "bold",
+     "text": "В огне"
+    },
+    {
+     "type": "plain",
+     "text": " 🔥\n🔥 Pasha Komarov — 22 дн. подряд\n🔥 nick — 15 дн. подряд\n🔥 none — 13 дн. подряд\n🔥 SHANZ — 11 дн. подряд\n🔥 Ilya 'dentist' Andreev — 11 дн. подряд\n🔥 rob — 10 дн. подряд\n🔥 Luka — 9 дн. подряд\n🔥 Kirill Mugityan — 9 дн. подряд\n🔥 Vladimir Varov — 7 дн. подряд\n🔥 Matros — 7 дн. подряд\n🔥 bogdan m — 5 дн. подряд\n🔥 Egor Afonin — 5 дн. подряд\n🔥 Ben — 4 дн. подряд\n🔥 Lisa🪼 — 4 дн. подряд\n🔥 Dmitry Bondarenko — 3 дн. подряд"
+    }
+   ]
+  },
+  {
+   "id": 12507,
+   "type": "service",
+   "date": "2026-09-17T00:00:00",
+   "date_unixtime": "1789592400",
+   "actor": "beer-counter",
+   "actor_id": "user8630702826",
+   "action": "pin_message",
+   "message_id": 12506,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 12508,
+   "type": "message",
+   "date": "2026-09-17T00:00:12",
+   "date_unixtime": "1789592412",
+   "edited": "2026-09-17T00:00:52",
+   "edited_unixtime": "1789592452",
+   "from": "Marina Alissa Axeldottir",
+   "from_id": "user92134604",
+   "text": "Целые полторы недели баночки чувствовали себя забытыми и оставленными...",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Целые полторы недели баночки чувствовали себя забытыми и оставленными..."
+    }
+   ],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 2,
+      "emoji": "😭",
+      "recent": [
+       {
+        "from": "Вова Варов",
+        "from_id": "user68492383",
+        "date": "2026-09-17T00:02:10"
+       },
+       {
+        "from": "bogdan m",
+        "from_id": "user212155517",
+        "date": "2026-09-17T00:00:52"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12509,
+   "type": "message",
+   "date": "2026-09-17T00:02:11",
+   "date_unixtime": "1789592531",
+   "from": "bogdan m",
+   "from_id": "user212155517",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 1896677,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 9284,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 14,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 12510,
+   "type": "message",
+   "date": "2026-09-17T00:02:12",
+   "date_unixtime": "1789592532",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12509,
+   "text": "bogdan m выпил пиво, осталось 997 171 🍺 🔥 6",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "bogdan m выпил пиво, осталось 997 171 🍺 🔥 6"
+    }
+   ]
+  },
+  {
+   "id": 12511,
+   "type": "message",
+   "date": "2026-09-17T00:02:19",
+   "date_unixtime": "1789592539",
+   "from": "bogdan m",
+   "from_id": "user212155517",
+   "text": "По такому поводу фокус показываю",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "По такому поводу фокус показываю"
+    }
+   ]
+  },
+  {
+   "id": 12512,
+   "type": "message",
+   "date": "2026-09-17T00:02:55",
+   "date_unixtime": "1789592575",
+   "from": "Marina Alissa Axeldottir",
+   "from_id": "user92134604",
+   "text": "Оооо, не ожидала увидеть снюс",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Оооо, не ожидала увидеть снюс"
+    }
+   ]
+  },
+  {
+   "id": 12513,
+   "type": "message",
+   "date": "2026-09-17T00:03:49",
+   "date_unixtime": "1789592629",
+   "edited": "2026-09-17T00:05:22",
+   "edited_unixtime": "1789592722",
+   "from": "Luka",
+   "from_id": "user7541849808",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_size": 945575,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 17149,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 8,
+   "width": 384,
+   "height": 384,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 1,
+      "emoji": "🔥",
+      "recent": [
+       {
+        "from": "bogdan m",
+        "from_id": "user212155517",
+        "date": "2026-09-17T00:05:22"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12514,
+   "type": "message",
+   "date": "2026-09-17T00:03:49",
+   "date_unixtime": "1789592629",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12513,
+   "text": "Luka выпил пиво, осталось 997 170 🍺 🔥 10",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Luka выпил пиво, осталось 997 170 🍺 🔥 10"
+    }
+   ]
+  },
+  {
+   "id": 12515,
+   "type": "message",
+   "date": "2026-09-17T00:10:38",
+   "date_unixtime": "1789593038",
+   "from": "Zhenya aka Eugen(e)",
+   "from_id": "user250247626",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 711104,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 12952,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 5,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 12516,
+   "type": "message",
+   "date": "2026-09-17T00:10:39",
+   "date_unixtime": "1789593039",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12515,
+   "text": "Zhenya aka Eugen(e) выпил пиво, осталось 997 169 🍺 🔥 3",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Zhenya aka Eugen(e) выпил пиво, осталось 997 169 🍺 🔥 3"
+    }
+   ]
+  },
+  {
+   "id": 12517,
+   "type": "message",
+   "date": "2026-09-17T00:26:49",
+   "date_unixtime": "1789594009",
+   "edited": "2026-09-17T00:27:39",
+   "edited_unixtime": "1789594059",
+   "from": "bogdan m",
+   "from_id": "user212155517",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 2210444,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 10353,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 16,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 2,
+      "emoji": "❤‍🔥",
+      "recent": [
+       {
+        "from": "Zhenya aka Eugen(e)",
+        "from_id": "user250247626",
+        "date": "2026-09-17T01:42:49"
+       },
+       {
+        "from": "Мила Земцова",
+        "from_id": "user283405742",
+        "date": "2026-09-17T00:27:39"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12518,
+   "type": "message",
+   "date": "2026-09-17T00:26:50",
+   "date_unixtime": "1789594010",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12517,
+   "text": "bogdan m выпил пиво, осталось 997 168 🍺 🔥 6",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "bogdan m выпил пиво, осталось 997 168 🍺 🔥 6"
+    }
+   ]
+  },
+  {
+   "id": 12519,
+   "type": "message",
+   "date": "2026-09-17T00:27:48",
+   "date_unixtime": "1789594068",
+   "from": "Мила Земцова",
+   "from_id": "user283405742",
+   "reply_to_message_id": 12517,
+   "text": "красивый",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "красивый"
+    }
+   ]
+  },
+  {
+   "id": 12520,
+   "type": "message",
+   "date": "2026-09-17T00:27:50",
+   "date_unixtime": "1789594070",
+   "from": "Мила Земцова",
+   "from_id": "user283405742",
+   "text": "вид",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "вид"
+    }
+   ]
+  },
+  {
+   "id": 12521,
+   "type": "message",
+   "date": "2026-09-17T00:27:53",
+   "date_unixtime": "1789594073",
+   "edited": "2026-09-17T00:31:11",
+   "edited_unixtime": "1789594271",
+   "from": "Мила Земцова",
+   "from_id": "user283405742",
+   "text": "ты тоже",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "ты тоже"
+    }
+   ],
+   "reactions": [
+     {
+      "type": "custom_emoji",
+      "count": 1,
+      "document_id": "",
+      "recent": [
+       {
+        "from": "bogdan m",
+        "from_id": "user212155517",
+        "date": "2026-09-17T00:31:11"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12522,
+   "type": "message",
+   "date": "2026-09-17T00:31:00",
+   "date_unixtime": "1789594260",
+   "edited": "2026-09-17T00:31:08",
+   "edited_unixtime": "1789594268",
+   "from": "Uladzislau",
+   "from_id": "user334151629",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 2114945,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 13170,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 15,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 1,
+      "emoji": "🔥",
+      "recent": [
+       {
+        "from": "SHANZ",
+        "from_id": "user886869626",
+        "date": "2026-09-17T00:41:34"
+       }
+      ]
+     },
+     {
+      "type": "emoji",
+      "count": 1,
+      "emoji": "🐳",
+      "recent": [
+       {
+        "from": "Грігорій Змагаренок",
+        "from_id": "user989926753",
+        "date": "2026-09-17T00:31:08"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12523,
+   "type": "message",
+   "date": "2026-09-17T00:31:00",
+   "date_unixtime": "1789594260",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12522,
+   "text": "Uladzislau выпил пиво, осталось 997 167 🍺",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Uladzislau выпил пиво, осталось 997 167 🍺"
+    }
+   ]
+  },
+  {
+   "id": 12524,
+   "type": "message",
+   "date": "2026-09-17T00:31:17",
+   "date_unixtime": "1789594277",
+   "edited": "2026-09-17T00:31:32",
+   "edited_unixtime": "1789594292",
+   "from": "Uladzislau",
+   "from_id": "user334151629",
+   "text": "Ребзя, за вас бакальчык чешскага",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Ребзя, за вас бакальчык чешскага"
+    }
+   ],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 4,
+      "emoji": "🤝",
+      "recent": [
+       {
+        "from": "Грігорій Змагаренок",
+        "from_id": "user989926753",
+        "date": "2026-09-17T00:41:28"
+       },
+       {
+        "from": "SHANZ",
+        "from_id": "user886869626",
+        "date": "2026-09-17T00:41:28"
+       },
+       {
+        "from": "Мила Земцова",
+        "from_id": "user283405742",
+        "date": "2026-09-17T00:31:54"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12525,
+   "type": "message",
+   "date": "2026-09-17T00:41:49",
+   "date_unixtime": "1789594909",
+   "from": "SHANZ",
+   "from_id": "user886869626",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_size": 905821,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 17637,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 6,
+   "width": 384,
+   "height": 384,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 12526,
+   "type": "message",
+   "date": "2026-09-17T00:41:49",
+   "date_unixtime": "1789594909",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12525,
+   "text": "SHANZ выпил пиво, осталось 997 166 🍺 🔥 12",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "SHANZ выпил пиво, осталось 997 166 🍺 🔥 12"
+    }
+   ]
+  },
+  {
+   "id": 12527,
+   "type": "message",
+   "date": "2026-09-17T00:43:35",
+   "date_unixtime": "1789595015",
+   "from": "Грігорій Змагаренок",
+   "from_id": "user989926753",
+   "reply_to_message_id": 12525,
+   "text": "Какой же ты довольный)))",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Какой же ты довольный)))"
+    }
+   ]
+  },
+  {
+   "id": 12528,
+   "type": "message",
+   "date": "2026-09-17T00:49:56",
+   "date_unixtime": "1789595396",
+   "from": "Alexej Glonj",
+   "from_id": "user347083046",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_size": 523402,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 16533,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 4,
+   "width": 384,
+   "height": 384,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 12529,
+   "type": "message",
+   "date": "2026-09-17T00:49:57",
+   "date_unixtime": "1789595397",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12528,
+   "text": "Alexej Glonj выпил пиво, осталось 997 165 🍺 🔥 2",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Alexej Glonj выпил пиво, осталось 997 165 🍺 🔥 2"
+    }
+   ]
+  },
+  {
+   "id": 12530,
+   "type": "message",
+   "date": "2026-09-17T00:49:57",
+   "date_unixtime": "1789595397",
+   "edited": "2026-09-17T00:50:09",
+   "edited_unixtime": "1789595409",
+   "from": "SHANZ",
+   "from_id": "user886869626",
+   "text": "будвайзер на акции \nконечно доволен",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "будвайзер на акции \nконечно доволен"
+    }
+   ],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 1,
+      "emoji": "❤",
+      "recent": [
+       {
+        "from": "Грігорій Змагаренок",
+        "from_id": "user989926753",
+        "date": "2026-09-17T00:50:09"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12531,
+   "type": "message",
+   "date": "2026-09-17T00:52:37",
+   "date_unixtime": "1789595557",
+   "from": "rob",
+   "from_id": "user241222620",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 391437,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 15055,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 2,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 12532,
+   "type": "message",
+   "date": "2026-09-17T00:52:37",
+   "date_unixtime": "1789595557",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12531,
+   "text": "rob выпил пиво, осталось 997 164 🍺 🔥 11",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "rob выпил пиво, осталось 997 164 🍺 🔥 11"
+    }
+   ]
+  },
+  {
+   "id": 12533,
+   "type": "message",
+   "date": "2026-09-17T00:58:08",
+   "date_unixtime": "1789595888",
+   "edited": "2026-09-17T00:58:33",
+   "edited_unixtime": "1789595913",
+   "from": "suspicious unicorn",
+   "from_id": "user370382739",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_size": 4329451,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 14552,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 31,
+   "width": 384,
+   "height": 384,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 2,
+      "emoji": "❤‍🔥",
+      "recent": [
+       {
+        "from": "Jackie",
+        "from_id": "user474403826",
+        "date": "2026-09-17T08:14:19"
+       }
+      ]
+     },
+     {
+      "type": "emoji",
+      "count": 1,
+      "emoji": "🔥",
+      "recent": [
+       {
+        "from": "SHANZ",
+        "from_id": "user886869626",
+        "date": "2026-09-17T01:03:04"
+       }
+      ]
+     },
+     {
+      "type": "emoji",
+      "count": 1,
+      "emoji": "😍",
+      "recent": [
+       {
+        "from": "Marina Alissa Axeldottir",
+        "from_id": "user92134604",
+        "date": "2026-09-17T00:59:01"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12534,
+   "type": "message",
+   "date": "2026-09-17T00:58:08",
+   "date_unixtime": "1789595888",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12533,
+   "text": "suspicious unicorn выпил пиво, осталось 997 163 🍺 🔥 2",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "suspicious unicorn выпил пиво, осталось 997 163 🍺 🔥 2"
+    }
+   ]
+  },
+  {
+   "id": 12535,
+   "type": "message",
+   "date": "2026-09-17T00:58:48",
+   "date_unixtime": "1789595928",
+   "from": "Грігорій Змагаренок",
+   "from_id": "user989926753",
+   "reply_to_message_id": 12533,
+   "text": "Нифель на подставочке )",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Нифель на подставочке )"
+    }
+   ]
+  },
+  {
+   "id": 12536,
+   "type": "message",
+   "date": "2026-09-17T00:58:53",
+   "date_unixtime": "1789595933",
+   "edited": "2026-09-17T01:03:01",
+   "edited_unixtime": "1789596181",
+   "from": "none",
+   "from_id": "user888019657",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_size": 596190,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 11745,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 4,
+   "width": 384,
+   "height": 384,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 2,
+      "emoji": "🔥",
+      "recent": [
+       {
+        "from": "Zhenya aka Eugen(e)",
+        "from_id": "user250247626",
+        "date": "2026-09-17T01:43:25"
+       },
+       {
+        "from": "SHANZ",
+        "from_id": "user886869626",
+        "date": "2026-09-17T01:03:01"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12537,
+   "type": "message",
+   "date": "2026-09-17T00:58:54",
+   "date_unixtime": "1789595934",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12536,
+   "text": "none выпил пиво, осталось 997 162 🍺 🔥 14",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "none выпил пиво, осталось 997 162 🍺 🔥 14"
+    }
+   ]
+  },
+  {
+   "id": 12538,
+   "type": "message",
+   "date": "2026-09-17T01:06:10",
+   "date_unixtime": "1789596370",
+   "edited": "2026-09-17T01:06:20",
+   "edited_unixtime": "1789596380",
+   "from": "suspicious unicorn",
+   "from_id": "user370382739",
+   "photo": "(File not included. Change data exporting settings to download.)",
+   "photo_file_size": 837655,
+   "width": 1928,
+   "height": 2560,
+   "text": "Грибы ширатаки в этот раз получились на вкус как орехи, как жаль что я забыл что я в них добавил)))))",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Грибы ширатаки в этот раз получились на вкус как орехи, как жаль что я забыл что я в них добавил)))))"
+    }
+   ],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 1,
+      "emoji": "🐳",
+      "recent": [
+       {
+        "from": "Грігорій Змагаренок",
+        "from_id": "user989926753",
+        "date": "2026-09-17T01:06:20"
+       }
+      ]
+     },
+     {
+      "type": "custom_emoji",
+      "count": 1,
+      "document_id": "",
+      "recent": [
+       {
+        "from": "Jackie",
+        "from_id": "user474403826",
+        "date": "2026-09-17T08:14:43"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12539,
+   "type": "message",
+   "date": "2026-09-17T01:06:40",
+   "date_unixtime": "1789596400",
+   "from": "Andrew",
+   "from_id": "user511424338",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 839479,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 16254,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 5,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 12540,
+   "type": "message",
+   "date": "2026-09-17T01:06:40",
+   "date_unixtime": "1789596400",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12539,
+   "text": "Andrew выпил пиво, осталось 997 161 🍺",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Andrew выпил пиво, осталось 997 161 🍺"
+    }
+   ]
+  },
+  {
+   "id": 12541,
+   "type": "message",
+   "date": "2026-09-17T01:07:50",
+   "date_unixtime": "1789596470",
+   "from": "Nik Moiseyev",
+   "from_id": "user1315236327",
+   "text": [
+    {
+     "type": "bot_command",
+     "text": "/leaderboard@beer_counter61bot"
+    }
+   ],
+   "text_entities": [
+    {
+     "type": "bot_command",
+     "text": "/leaderboard@beer_counter61bot"
+    }
+   ]
+  },
+  {
+   "id": 12542,
+   "type": "message",
+   "date": "2026-09-17T01:07:50",
+   "date_unixtime": "1789596470",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12541,
+   "text": [
+    {
+     "type": "bold",
+     "text": "🍺 Таблица лидеров 🍺"
+    },
+    "\n\n🥇 none ⭐⭐⭐⭐⭐ 7 — ",
+    {
+     "type": "bold",
+     "text": "185"
+    },
+    " 🍺\n🥈 bogdan m ⭐⭐⭐⭐⭐ — ",
+    {
+     "type": "bold",
+     "text": "138"
+    },
+    " 🍺\n🥉 Vladimir Varov ⭐ — ",
+    {
+     "type": "bold",
+     "text": "130"
+    },
+    " 🍺\n4. Matros ⭐ — ",
+    {
+     "type": "bold",
+     "text": "112"
+    },
+    " 🍺\n5. Aliaksandr Babaren ⭐ — ",
+    {
+     "type": "bold",
+     "text": "101"
+    },
+    " 🍺\n6. nick ⭐ — ",
+    {
+     "type": "bold",
+     "text": "96"
+    },
+    " 🍺\n7. Luka ⭐ — ",
+    {
+     "type": "bold",
+     "text": "88"
+    },
+    " 🍺\n8. platon — ",
+    {
+     "type": "bold",
+     "text": "83"
+    },
+    " 🍺\n9. Валентин Новиков ⭐⭐ — ",
+    {
+     "type": "bold",
+     "text": "72"
+    },
+    " 🍺\n10. Александр ⭐ — ",
+    {
+     "type": "bold",
+     "text": "67"
+    },
+    " 🍺\n11. SHANZ ⭐ — ",
+    {
+     "type": "bold",
+     "text": "63"
+    },
+    " 🍺\n12. rob — ",
+    {
+     "type": "bold",
+     "text": "63"
+    },
+    " 🍺\n13. Кристина — ",
+    {
+     "type": "bold",
+     "text": "60"
+    },
+    " 🍺\n14. Kirill Mugityan — ",
+    {
+     "type": "bold",
+     "text": "60"
+    },
+    " 🍺\n15. Zhenya aka Eugen(e) — ",
+    {
+     "type": "bold",
+     "text": "60"
+    },
+    " 🍺\n16. Kirill Silonov ⭐ — ",
+    {
+     "type": "bold",
+     "text": "56"
+    },
+    " 🍺\n17. анастасия ⭐ — ",
+    {
+     "type": "bold",
+     "text": "52"
+    },
+    " 🍺\n18. Nik Moiseyev ⭐⭐ — ",
+    {
+     "type": "bold",
+     "text": "51"
+    },
+    " 🍺\n19. Сеня ⭐ — ",
+    {
+     "type": "bold",
+     "text": "49"
+    },
+    " 🍺\n20. Денис — ",
+    {
+     "type": "bold",
+     "text": "44"
+    },
+    " 🍺\n21. Dmitry Bondarenko — ",
+    {
+     "type": "bold",
+     "text": "42"
+    },
+    " 🍺\n22. Egor Afonin — ",
+    {
+     "type": "bold",
+     "text": "41"
+    },
+    " 🍺\n23. suspicious unicorn ⭐ — ",
+    {
+     "type": "bold",
+     "text": "41"
+    },
+    " 🍺\n24. Denis Rozenkin — ",
+    {
+     "type": "bold",
+     "text": "40"
+    },
+    " 🍺\n25. Andrew — ",
+    {
+     "type": "bold",
+     "text": "40"
+    },
+    " 🍺\n26. Александр — ",
+    {
+     "type": "bold",
+     "text": "39"
+    },
+    " 🍺\n27. Ben — ",
+    {
+     "type": "bold",
+     "text": "37"
+    },
+    " 🍺\n28. Оаоаааа — ",
+    {
+     "type": "bold",
+     "text": "34"
+    },
+    " 🍺\n29. Ilya 'dentist' Andreev — ",
+    {
+     "type": "bold",
+     "text": "33"
+    },
+    " 🍺\n30. Pasha Komarov — ",
+    {
+     "type": "bold",
+     "text": "32"
+    },
+    " 🍺\n31. Грігорій Змагаренок — ",
+    {
+     "type": "bold",
+     "text": "32"
+    },
+    " 🍺\n32. Yevgeny Pletnev — ",
+    {
+     "type": "bold",
+     "text": "31"
+    },
+    " 🍺\n33. Anton Ilin — ",
+    {
+     "type": "bold",
+     "text": "30"
+    },
+    " 🍺\n34. Никита Курюмов [+4 от мск] — ",
+    {
+     "type": "bold",
+     "text": "28"
+    },
+    " 🍺\n35. Sergio Shevchenko — ",
+    {
+     "type": "bold",
+     "text": "28"
+    },
+    " 🍺\n36. T__ A_ ⭐ — ",
+    {
+     "type": "bold",
+     "text": "28"
+    },
+    " 🍺\n37. Artemy $ — ",
+    {
+     "type": "bold",
+     "text": "27"
+    },
+    " 🍺\n38. Sergey Kamenskiy ⭐ — ",
+    {
+     "type": "bold",
+     "text": "26"
+    },
+    " 🍺\n39. Marina Alissa Axeldottir — ",
+    {
+     "type": "bold",
+     "text": "26"
+    },
+    " 🍺\n40. Basir К — ",
+    {
+     "type": "bold",
+     "text": "24"
+    },
+    " 🍺\n41. Nur Mukhitov — ",
+    {
+     "type": "bold",
+     "text": "24"
+    },
+    " 🍺\n42. буханкин — ",
+    {
+     "type": "bold",
+     "text": "24"
+    },
+    " 🍺\n43. ananastassi — ",
+    {
+     "type": "bold",
+     "text": "21"
+    },
+    " 🍺\n44. Raman Arkadziewicz — ",
+    {
+     "type": "bold",
+     "text": "18"
+    },
+    " 🍺\n45. Nastya Peshkova — ",
+    {
+     "type": "bold",
+     "text": "16"
+    },
+    " 🍺\n46. roman — ",
+    {
+     "type": "bold",
+     "text": "16"
+    },
+    " 🍺\n47. Anastasia — ",
+    {
+     "type": "bold",
+     "text": "15"
+    },
+    " 🍺\n48. K — ",
+    {
+     "type": "bold",
+     "text": "14"
+    },
+    " 🍺\n49. Lisa🪼 — ",
+    {
+     "type": "bold",
+     "text": "13"
+    },
+    " 🍺\n50. Ann Kolesnikova — ",
+    {
+     "type": "bold",
+     "text": "12"
+    },
+    " 🍺\n51. Diana Shtapova — ",
+    {
+     "type": "bold",
+     "text": "11"
+    },
+    " 🍺\n52. Vladimir Pligin — ",
+    {
+     "type": "bold",
+     "text": "11"
+    },
+    " 🍺\n53. Jackie — ",
+    {
+     "type": "bold",
+     "text": "11"
+    },
+    " 🍺\n54. Anya Baga — ",
+    {
+     "type": "bold",
+     "text": "11"
+    },
+    " 🍺\n55. Uladzislau — ",
+    {
+     "type": "bold",
+     "text": "11"
+    },
+    " 🍺\n56. Dmitrii Smirnov — ",
+    {
+     "type": "bold",
+     "text": "10"
+    },
+    " 🍺\n57. gleb — ",
+    {
+     "type": "bold",
+     "text": "10"
+    },
+    " 🍺\n58. Sanda Albrecht — ",
+    {
+     "type": "bold",
+     "text": "9"
+    },
+    " 🍺\n59. Arina Nesvit — ",
+    {
+     "type": "bold",
+     "text": "9"
+    },
+    " 🍺\n60. Alex — ",
+    {
+     "type": "bold",
+     "text": "9"
+    },
+    " 🍺\n61. Даня Рыжий — ",
+    {
+     "type": "bold",
+     "text": "9"
+    },
+    " 🍺\n62. Мила Земцова — ",
+    {
+     "type": "bold",
+     "text": "9"
+    },
+    " 🍺\n63. Alexander Bolotin — ",
+    {
+     "type": "bold",
+     "text": "8"
+    },
+    " 🍺\n64. r0m@n — ",
+    {
+     "type": "bold",
+     "text": "8"
+    },
+    " 🍺\n65. Ti — ",
+    {
+     "type": "bold",
+     "text": "8"
+    },
+    " 🍺\n66. Darya Sledopyt — ",
+    {
+     "type": "bold",
+     "text": "7"
+    },
+    " 🍺\n67. Andrei Kozlov — ",
+    {
+     "type": "bold",
+     "text": "7"
+    },
+    " 🍺\n68. Ekaterina Shilova — ",
+    {
+     "type": "bold",
+     "text": "7"
+    },
+    " 🍺\n69. Ilya — ",
+    {
+     "type": "bold",
+     "text": "7"
+    },
+    " 🍺\n70. ya ed — ",
+    {
+     "type": "bold",
+     "text": "7"
+    },
+    " 🍺\n71. Децл — ",
+    {
+     "type": "bold",
+     "text": "7"
+    },
+    " 🍺\n72. Alexej Glonj — ",
+    {
+     "type": "bold",
+     "text": "7"
+    },
+    " 🍺\n73. Vasja — ",
+    {
+     "type": "bold",
+     "text": "6"
+    },
+    " 🍺\n74. iria — ",
+    {
+     "type": "bold",
+     "text": "6"
+    },
+    " 🍺\n75. Владимир — ",
+    {
+     "type": "bold",
+     "text": "6"
+    },
+    " 🍺\n76. Kirill Levi — ",
+    {
+     "type": "bold",
+     "text": "6"
+    },
+    " 🍺\n77. Radovan — ",
+    {
+     "type": "bold",
+     "text": "6"
+    },
+    " 🍺\n78. Махно Нестор — ",
+    {
+     "type": "bold",
+     "text": "6"
+    },
+    " 🍺\n79. [医]鼻涕虫 — ",
+    {
+     "type": "bold",
+     "text": "6"
+    },
+    " 🍺\n80. Aleksander Enot — ",
+    {
+     "type": "bold",
+     "text": "6"
+    },
+    " 🍺\n81. Eugene — ",
+    {
+     "type": "bold",
+     "text": "5"
+    },
+    " 🍺\n82. Sergey — ",
+    {
+     "type": "bold",
+     "text": "5"
+    },
+    " 🍺\n83. Anton — ",
+    {
+     "type": "bold",
+     "text": "5"
+    },
+    " 🍺\n84. Sergey Katargin — ",
+    {
+     "type": "bold",
+     "text": "5"
+    },
+    " 🍺\n85. Dmitry Frolov — ",
+    {
+     "type": "bold",
+     "text": "5"
+    },
+    " 🍺\n86. Securitsa Manet — ",
+    {
+     "type": "bold",
+     "text": "5"
+    },
+    " 🍺\n87. Дмитрий — ",
+    {
+     "type": "bold",
+     "text": "4"
+    },
+    " 🍺\n88. dumbass — ",
+    {
+     "type": "bold",
+     "text": "4"
+    },
+    " 🍺\n89. Julian Ortiz — ",
+    {
+     "type": "bold",
+     "text": "4"
+    },
+    " 🍺\n90. Катя Морозова — ",
+    {
+     "type": "bold",
+     "text": "4"
+    },
+    " 🍺\n91. Yarik Roslov — ",
+    {
+     "type": "bold",
+     "text": "4"
+    },
+    " 🍺\n92. Gleb Komliuk — ",
+    {
+     "type": "bold",
+     "text": "4"
+    },
+    " 🍺\n93. Tim — ",
+    {
+     "type": "bold",
+     "text": "4"
+    },
+    " 🍺\n94. Александр Агафонов — ",
+    {
+     "type": "bold",
+     "text": "4"
+    },
+    " 🍺\n95. Anton — ",
+    {
+     "type": "bold",
+     "text": "4"
+    },
+    " 🍺\n96. Alex Mo — ",
+    {
+     "type": "bold",
+     "text": "4"
+    },
+    " 🍺\n97. Evgeny K — ",
+    {
+     "type": "bold",
+     "text": "4"
+    },
+    " 🍺\n98. Kristi — ",
+    {
+     "type": "bold",
+     "text": "4"
+    },
+    " 🍺\n99. Артур Литвинцев — ",
+    {
+     "type": "bold",
+     "text": "3"
+    },
+    " 🍺\n100. cricri — 3 🍺\n\nДо цели осталось: 997 161"
+   ],
+   "text_entities": [
+    {
+     "type": "bold",
+     "text": "🍺 Таблица лидеров 🍺"
+    },
+    {
+     "type": "plain",
+     "text": "\n\n🥇 none ⭐⭐⭐⭐⭐ 7 — "
+    },
+    {
+     "type": "bold",
+     "text": "185"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n🥈 bogdan m ⭐⭐⭐⭐⭐ — "
+    },
+    {
+     "type": "bold",
+     "text": "138"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n🥉 Vladimir Varov ⭐ — "
+    },
+    {
+     "type": "bold",
+     "text": "130"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n4. Matros ⭐ — "
+    },
+    {
+     "type": "bold",
+     "text": "112"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n5. Aliaksandr Babaren ⭐ — "
+    },
+    {
+     "type": "bold",
+     "text": "101"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n6. nick ⭐ — "
+    },
+    {
+     "type": "bold",
+     "text": "96"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n7. Luka ⭐ — "
+    },
+    {
+     "type": "bold",
+     "text": "88"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n8. platon — "
+    },
+    {
+     "type": "bold",
+     "text": "83"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n9. Валентин Новиков ⭐⭐ — "
+    },
+    {
+     "type": "bold",
+     "text": "72"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n10. Александр ⭐ — "
+    },
+    {
+     "type": "bold",
+     "text": "67"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n11. SHANZ ⭐ — "
+    },
+    {
+     "type": "bold",
+     "text": "63"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n12. rob — "
+    },
+    {
+     "type": "bold",
+     "text": "63"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n13. Кристина — "
+    },
+    {
+     "type": "bold",
+     "text": "60"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n14. Kirill Mugityan — "
+    },
+    {
+     "type": "bold",
+     "text": "60"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n15. Zhenya aka Eugen(e) — "
+    },
+    {
+     "type": "bold",
+     "text": "60"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n16. Kirill Silonov ⭐ — "
+    },
+    {
+     "type": "bold",
+     "text": "56"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n17. анастасия ⭐ — "
+    },
+    {
+     "type": "bold",
+     "text": "52"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n18. Nik Moiseyev ⭐⭐ — "
+    },
+    {
+     "type": "bold",
+     "text": "51"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n19. Сеня ⭐ — "
+    },
+    {
+     "type": "bold",
+     "text": "49"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n20. Денис — "
+    },
+    {
+     "type": "bold",
+     "text": "44"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n21. Dmitry Bondarenko — "
+    },
+    {
+     "type": "bold",
+     "text": "42"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n22. Egor Afonin — "
+    },
+    {
+     "type": "bold",
+     "text": "41"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n23. suspicious unicorn ⭐ — "
+    },
+    {
+     "type": "bold",
+     "text": "41"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n24. Denis Rozenkin — "
+    },
+    {
+     "type": "bold",
+     "text": "40"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n25. Andrew — "
+    },
+    {
+     "type": "bold",
+     "text": "40"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n26. Александр — "
+    },
+    {
+     "type": "bold",
+     "text": "39"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n27. Ben — "
+    },
+    {
+     "type": "bold",
+     "text": "37"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n28. Оаоаааа — "
+    },
+    {
+     "type": "bold",
+     "text": "34"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n29. Ilya 'dentist' Andreev — "
+    },
+    {
+     "type": "bold",
+     "text": "33"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n30. Pasha Komarov — "
+    },
+    {
+     "type": "bold",
+     "text": "32"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n31. Грігорій Змагаренок — "
+    },
+    {
+     "type": "bold",
+     "text": "32"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n32. Yevgeny Pletnev — "
+    },
+    {
+     "type": "bold",
+     "text": "31"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n33. Anton Ilin — "
+    },
+    {
+     "type": "bold",
+     "text": "30"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n34. Никита Курюмов [+4 от мск] — "
+    },
+    {
+     "type": "bold",
+     "text": "28"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n35. Sergio Shevchenko — "
+    },
+    {
+     "type": "bold",
+     "text": "28"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n36. T__ A_ ⭐ — "
+    },
+    {
+     "type": "bold",
+     "text": "28"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n37. Artemy $ — "
+    },
+    {
+     "type": "bold",
+     "text": "27"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n38. Sergey Kamenskiy ⭐ — "
+    },
+    {
+     "type": "bold",
+     "text": "26"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n39. Marina Alissa Axeldottir — "
+    },
+    {
+     "type": "bold",
+     "text": "26"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n40. Basir К — "
+    },
+    {
+     "type": "bold",
+     "text": "24"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n41. Nur Mukhitov — "
+    },
+    {
+     "type": "bold",
+     "text": "24"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n42. буханкин — "
+    },
+    {
+     "type": "bold",
+     "text": "24"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n43. ananastassi — "
+    },
+    {
+     "type": "bold",
+     "text": "21"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n44. Raman Arkadziewicz — "
+    },
+    {
+     "type": "bold",
+     "text": "18"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n45. Nastya Peshkova — "
+    },
+    {
+     "type": "bold",
+     "text": "16"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n46. roman — "
+    },
+    {
+     "type": "bold",
+     "text": "16"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n47. Anastasia — "
+    },
+    {
+     "type": "bold",
+     "text": "15"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n48. K — "
+    },
+    {
+     "type": "bold",
+     "text": "14"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n49. Lisa🪼 — "
+    },
+    {
+     "type": "bold",
+     "text": "13"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n50. Ann Kolesnikova — "
+    },
+    {
+     "type": "bold",
+     "text": "12"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n51. Diana Shtapova — "
+    },
+    {
+     "type": "bold",
+     "text": "11"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n52. Vladimir Pligin — "
+    },
+    {
+     "type": "bold",
+     "text": "11"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n53. Jackie — "
+    },
+    {
+     "type": "bold",
+     "text": "11"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n54. Anya Baga — "
+    },
+    {
+     "type": "bold",
+     "text": "11"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n55. Uladzislau — "
+    },
+    {
+     "type": "bold",
+     "text": "11"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n56. Dmitrii Smirnov — "
+    },
+    {
+     "type": "bold",
+     "text": "10"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n57. gleb — "
+    },
+    {
+     "type": "bold",
+     "text": "10"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n58. Sanda Albrecht — "
+    },
+    {
+     "type": "bold",
+     "text": "9"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n59. Arina Nesvit — "
+    },
+    {
+     "type": "bold",
+     "text": "9"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n60. Alex — "
+    },
+    {
+     "type": "bold",
+     "text": "9"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n61. Даня Рыжий — "
+    },
+    {
+     "type": "bold",
+     "text": "9"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n62. Мила Земцова — "
+    },
+    {
+     "type": "bold",
+     "text": "9"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n63. Alexander Bolotin — "
+    },
+    {
+     "type": "bold",
+     "text": "8"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n64. r0m@n — "
+    },
+    {
+     "type": "bold",
+     "text": "8"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n65. Ti — "
+    },
+    {
+     "type": "bold",
+     "text": "8"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n66. Darya Sledopyt — "
+    },
+    {
+     "type": "bold",
+     "text": "7"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n67. Andrei Kozlov — "
+    },
+    {
+     "type": "bold",
+     "text": "7"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n68. Ekaterina Shilova — "
+    },
+    {
+     "type": "bold",
+     "text": "7"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n69. Ilya — "
+    },
+    {
+     "type": "bold",
+     "text": "7"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n70. ya ed — "
+    },
+    {
+     "type": "bold",
+     "text": "7"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n71. Децл — "
+    },
+    {
+     "type": "bold",
+     "text": "7"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n72. Alexej Glonj — "
+    },
+    {
+     "type": "bold",
+     "text": "7"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n73. Vasja — "
+    },
+    {
+     "type": "bold",
+     "text": "6"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n74. iria — "
+    },
+    {
+     "type": "bold",
+     "text": "6"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n75. Владимир — "
+    },
+    {
+     "type": "bold",
+     "text": "6"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n76. Kirill Levi — "
+    },
+    {
+     "type": "bold",
+     "text": "6"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n77. Radovan — "
+    },
+    {
+     "type": "bold",
+     "text": "6"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n78. Махно Нестор — "
+    },
+    {
+     "type": "bold",
+     "text": "6"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n79. [医]鼻涕虫 — "
+    },
+    {
+     "type": "bold",
+     "text": "6"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n80. Aleksander Enot — "
+    },
+    {
+     "type": "bold",
+     "text": "6"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n81. Eugene — "
+    },
+    {
+     "type": "bold",
+     "text": "5"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n82. Sergey — "
+    },
+    {
+     "type": "bold",
+     "text": "5"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n83. Anton — "
+    },
+    {
+     "type": "bold",
+     "text": "5"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n84. Sergey Katargin — "
+    },
+    {
+     "type": "bold",
+     "text": "5"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n85. Dmitry Frolov — "
+    },
+    {
+     "type": "bold",
+     "text": "5"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n86. Securitsa Manet — "
+    },
+    {
+     "type": "bold",
+     "text": "5"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n87. Дмитрий — "
+    },
+    {
+     "type": "bold",
+     "text": "4"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n88. dumbass — "
+    },
+    {
+     "type": "bold",
+     "text": "4"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n89. Julian Ortiz — "
+    },
+    {
+     "type": "bold",
+     "text": "4"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n90. Катя Морозова — "
+    },
+    {
+     "type": "bold",
+     "text": "4"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n91. Yarik Roslov — "
+    },
+    {
+     "type": "bold",
+     "text": "4"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n92. Gleb Komliuk — "
+    },
+    {
+     "type": "bold",
+     "text": "4"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n93. Tim — "
+    },
+    {
+     "type": "bold",
+     "text": "4"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n94. Александр Агафонов — "
+    },
+    {
+     "type": "bold",
+     "text": "4"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n95. Anton — "
+    },
+    {
+     "type": "bold",
+     "text": "4"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n96. Alex Mo — "
+    },
+    {
+     "type": "bold",
+     "text": "4"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n97. Evgeny K — "
+    },
+    {
+     "type": "bold",
+     "text": "4"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n98. Kristi — "
+    },
+    {
+     "type": "bold",
+     "text": "4"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n99. Артур Литвинцев — "
+    },
+    {
+     "type": "bold",
+     "text": "3"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n100. cricri — 3 🍺\n\nДо цели осталось: 997 161"
+    }
+   ]
+  },
+  {
+   "id": 12543,
+   "type": "message",
+   "date": "2026-09-17T01:12:53",
+   "date_unixtime": "1789596773",
+   "edited": "2026-09-17T01:16:43",
+   "edited_unixtime": "1789597003",
+   "from": "Aliaksandr Babaren",
+   "from_id": "user5187447236",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 906294,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 12591,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 6,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 2,
+      "emoji": "🐳",
+      "recent": [
+       {
+        "from": "Вова Варов",
+        "from_id": "user68492383",
+        "date": "2026-09-17T11:28:59"
+       },
+       {
+        "from": "Грігорій Змагаренок",
+        "from_id": "user989926753",
+        "date": "2026-09-17T01:16:43"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12544,
+   "type": "message",
+   "date": "2026-09-17T01:12:53",
+   "date_unixtime": "1789596773",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12543,
+   "text": "Aliaksandr Babaren выпил пиво, осталось 997 160 🍺 🔥 3",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Aliaksandr Babaren выпил пиво, осталось 997 160 🍺 🔥 3"
+    }
+   ]
+  },
+  {
+   "id": 12545,
+   "type": "message",
+   "date": "2026-09-17T01:16:35",
+   "date_unixtime": "1789596995",
+   "edited": "2026-09-17T01:17:15",
+   "edited_unixtime": "1789597035",
+   "from": "bogdan m",
+   "from_id": "user212155517",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 426897,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 9035,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 4,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "custom_emoji",
+      "count": 3,
+      "document_id": "",
+      "recent": [
+       {
+        "from": "Sergey Katargin",
+        "from_id": "user119564361",
+        "date": "2026-09-17T14:37:32"
+       },
+       {
+        "from": "Вова Варов",
+        "from_id": "user68492383",
+        "date": "2026-09-17T11:28:58"
+       },
+       {
+        "from": "Artemy $",
+        "from_id": "user228000674",
+        "date": "2026-09-17T01:17:15"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12546,
+   "type": "message",
+   "date": "2026-09-17T01:16:36",
+   "date_unixtime": "1789596996",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12545,
+   "text": "bogdan m выпил пиво, осталось 997 159 🍺 🔥 6",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "bogdan m выпил пиво, осталось 997 159 🍺 🔥 6"
+    }
+   ]
+  },
+  {
+   "id": 12547,
+   "type": "message",
+   "date": "2026-09-17T01:16:55",
+   "date_unixtime": "1789597015",
+   "from": "Грігорій Змагаренок",
+   "from_id": "user989926753",
+   "reply_to_message_id": 12543,
+   "text": "А даник с вами ?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "А даник с вами ?"
+    }
+   ]
+  },
+  {
+   "id": 12548,
+   "type": "message",
+   "date": "2026-09-17T01:17:07",
+   "date_unixtime": "1789597027",
+   "from": "Aliaksandr Babaren",
+   "from_id": "user5187447236",
+   "text": "домой пошел",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "домой пошел"
+    }
+   ]
+  },
+  {
+   "id": 12549,
+   "type": "message",
+   "date": "2026-09-17T01:17:12",
+   "date_unixtime": "1789597032",
+   "edited": "2026-09-17T01:17:15",
+   "edited_unixtime": "1789597035",
+   "from": "Грігорій Змагаренок",
+   "from_id": "user989926753",
+   "text": "Гэг",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Гэг"
+    }
+   ]
+  },
+  {
+   "id": 12550,
+   "type": "message",
+   "date": "2026-09-17T01:18:01",
+   "date_unixtime": "1789597081",
+   "from": "Andrew",
+   "from_id": "user511424338",
+   "reply_to_message_id": 12545,
+   "text": "mf",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "mf"
+    }
+   ]
+  },
+  {
+   "id": 12551,
+   "type": "message",
+   "date": "2026-09-17T01:28:29",
+   "date_unixtime": "1789597709",
+   "edited": "2026-09-17T01:28:37",
+   "edited_unixtime": "1789597717",
+   "from": "SHANZ",
+   "from_id": "user886869626",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_size": 266752,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 18323,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 2,
+   "width": 384,
+   "height": 384,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 1,
+      "emoji": "❤‍🔥",
+      "recent": [
+       {
+        "from": "Грігорій Змагаренок",
+        "from_id": "user989926753",
+        "date": "2026-09-17T01:28:37"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12552,
+   "type": "message",
+   "date": "2026-09-17T01:28:29",
+   "date_unixtime": "1789597709",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12551,
+   "text": "SHANZ выпил пиво, осталось 997 158 🍺 🔥 12",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "SHANZ выпил пиво, осталось 997 158 🍺 🔥 12"
+    }
+   ]
+  },
+  {
+   "id": 12553,
+   "type": "message",
+   "date": "2026-09-17T01:32:05",
+   "date_unixtime": "1789597925",
+   "from": "Sergey Kamenskiy",
+   "from_id": "user295360310",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 632015,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 11988,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 4,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 12554,
+   "type": "message",
+   "date": "2026-09-17T01:32:06",
+   "date_unixtime": "1789597926",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12553,
+   "text": "Sergey Kamenskiy выпил пиво, осталось 997 157 🍺 🔥 2",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Sergey Kamenskiy выпил пиво, осталось 997 157 🍺 🔥 2"
+    }
+   ]
+  },
+  {
+   "id": 12555,
+   "type": "message",
+   "date": "2026-09-17T01:35:00",
+   "date_unixtime": "1789598100",
+   "from": "Грігорій Змагаренок",
+   "from_id": "user989926753",
+   "reply_to_message_id": 12553,
+   "text": "Бля мужик",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Бля мужик"
+    }
+   ]
+  },
+  {
+   "id": 12556,
+   "type": "message",
+   "date": "2026-09-17T01:35:16",
+   "date_unixtime": "1789598116",
+   "edited": "2026-09-17T02:01:38",
+   "edited_unixtime": "1789599698",
+   "from": "Грігорій Змагаренок",
+   "from_id": "user989926753",
+   "via_bot": "@pic",
+   "photo": "(File not included. Change data exporting settings to download.)",
+   "photo_file_size": 37192,
+   "width": 900,
+   "height": 566,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "custom_emoji",
+      "count": 3,
+      "document_id": "",
+      "recent": [
+       {
+        "from": "Вова Варов",
+        "from_id": "user68492383",
+        "date": "2026-09-17T11:28:55"
+       },
+       {
+        "from": "SHANZ",
+        "from_id": "user886869626",
+        "date": "2026-09-17T02:07:10"
+       },
+       {
+        "from": "Sergey Kamenskiy",
+        "from_id": "user295360310",
+        "date": "2026-09-17T02:01:38"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12557,
+   "type": "message",
+   "date": "2026-09-17T02:04:56",
+   "date_unixtime": "1789599896",
+   "edited": "2026-09-17T11:28:51",
+   "edited_unixtime": "1789633731",
+   "from": "none",
+   "from_id": "user888019657",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_size": 708145,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 14152,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 5,
+   "width": 384,
+   "height": 384,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 1,
+      "emoji": "❤",
+      "recent": [
+       {
+        "from": "Вова Варов",
+        "from_id": "user68492383",
+        "date": "2026-09-17T11:28:51"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12558,
+   "type": "message",
+   "date": "2026-09-17T02:04:56",
+   "date_unixtime": "1789599896",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12557,
+   "text": "none выпил пиво, осталось 997 156 🍺 🔥 14",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "none выпил пиво, осталось 997 156 🍺 🔥 14"
+    }
+   ]
+  },
+  {
+   "id": 12559,
+   "type": "message",
+   "date": "2026-09-17T02:11:05",
+   "date_unixtime": "1789600265",
+   "from": "bogdan m",
+   "from_id": "user212155517",
+   "reply_to_message_id": 12557,
+   "text": "Вот он герой",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Вот он герой"
+    }
+   ]
+  },
+  {
+   "id": 12560,
+   "type": "message",
+   "date": "2026-09-17T02:12:25",
+   "date_unixtime": "1789600345",
+   "from": "Грігорій Змагаренок",
+   "from_id": "user989926753",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 857880,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 14602,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 6,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 12561,
+   "type": "message",
+   "date": "2026-09-17T02:12:26",
+   "date_unixtime": "1789600346",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12560,
+   "text": "Грігорій Змагаренок выпил пиво, осталось 997 155 🍺 🔥 2",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Грігорій Змагаренок выпил пиво, осталось 997 155 🍺 🔥 2"
+    }
+   ]
+  },
+  {
+   "id": 12562,
+   "type": "message",
+   "date": "2026-09-17T02:13:06",
+   "date_unixtime": "1789600386",
+   "edited": "2026-09-17T02:16:11",
+   "edited_unixtime": "1789600571",
+   "from": "SHANZ",
+   "from_id": "user886869626",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_size": 649596,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 5344,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 4,
+   "width": 384,
+   "height": 384,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 1,
+      "emoji": "🐳",
+      "recent": [
+       {
+        "from": "Грігорій Змагаренок",
+        "from_id": "user989926753",
+        "date": "2026-09-17T02:16:11"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12563,
+   "type": "message",
+   "date": "2026-09-17T02:13:07",
+   "date_unixtime": "1789600387",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12562,
+   "text": "SHANZ выпил пиво, осталось 997 154 🍺 🔥 12",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "SHANZ выпил пиво, осталось 997 154 🍺 🔥 12"
+    }
+   ]
+  },
+  {
+   "id": 12564,
+   "type": "message",
+   "date": "2026-09-17T02:14:59",
+   "date_unixtime": "1789600499",
+   "edited": "2026-09-17T11:28:46",
+   "edited_unixtime": "1789633726",
+   "from": "Sergey Kamenskiy",
+   "from_id": "user295360310",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 712222,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 14402,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 5,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 1,
+      "emoji": "❤",
+      "recent": [
+       {
+        "from": "Вова Варов",
+        "from_id": "user68492383",
+        "date": "2026-09-17T11:28:46"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12565,
+   "type": "message",
+   "date": "2026-09-17T02:14:59",
+   "date_unixtime": "1789600499",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12564,
+   "text": "Sergey Kamenskiy выпил пиво, осталось 997 153 🍺 🔥 2",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Sergey Kamenskiy выпил пиво, осталось 997 153 🍺 🔥 2"
+    }
+   ]
+  },
+  {
+   "id": 12566,
+   "type": "message",
+   "date": "2026-09-17T02:52:43",
+   "date_unixtime": "1789602763",
+   "edited": "2026-09-17T11:28:44",
+   "edited_unixtime": "1789633724",
+   "from": "Ilya 'dentist' Andreev",
+   "from_id": "user235330537",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 717107,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 16990,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 5,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 1,
+      "emoji": "❤",
+      "recent": [
+       {
+        "from": "Вова Варов",
+        "from_id": "user68492383",
+        "date": "2026-09-17T11:28:44"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12567,
+   "type": "message",
+   "date": "2026-09-17T02:52:44",
+   "date_unixtime": "1789602764",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12566,
+   "text": "Ilya 'dentist' Andreev выпил пиво, осталось 997 152 🍺 🔥 12",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Ilya 'dentist' Andreev выпил пиво, осталось 997 152 🍺 🔥 12"
+    }
+   ]
+  },
+  {
+   "id": 12568,
+   "type": "message",
+   "date": "2026-09-17T02:59:12",
+   "date_unixtime": "1789603152",
+   "from": "none",
+   "from_id": "user888019657",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_size": 653178,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 14768,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 4,
+   "width": 384,
+   "height": 384,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 12569,
+   "type": "message",
+   "date": "2026-09-17T02:59:12",
+   "date_unixtime": "1789603152",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12568,
+   "text": "none выпил пиво, осталось 997 151 🍺 🔥 14",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "none выпил пиво, осталось 997 151 🍺 🔥 14"
+    }
+   ]
+  },
+  {
+   "id": 12570,
+   "type": "message",
+   "date": "2026-09-17T03:03:43",
+   "date_unixtime": "1789603423",
+   "edited": "2026-09-17T03:37:08",
+   "edited_unixtime": "1789605428",
+   "from": "SHANZ",
+   "from_id": "user886869626",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_size": 544138,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 2372,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 4,
+   "width": 384,
+   "height": 384,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 2,
+      "emoji": "❤‍🔥",
+      "recent": [
+       {
+        "from": "Вова Варов",
+        "from_id": "user68492383",
+        "date": "2026-09-17T11:28:37"
+       },
+       {
+        "from": "Грігорій Змагаренок",
+        "from_id": "user989926753",
+        "date": "2026-09-17T03:37:08"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12571,
+   "type": "message",
+   "date": "2026-09-17T03:03:44",
+   "date_unixtime": "1789603424",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12570,
+   "text": "SHANZ выпил пиво, осталось 997 150 🍺 🔥 12",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "SHANZ выпил пиво, осталось 997 150 🍺 🔥 12"
+    }
+   ]
+  },
+  {
+   "id": 12572,
+   "type": "message",
+   "date": "2026-09-17T03:41:41",
+   "date_unixtime": "1789605701",
+   "edited": "2026-09-17T03:42:31",
+   "edited_unixtime": "1789605751",
+   "from": "none",
+   "from_id": "user888019657",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_size": 675294,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 14114,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 5,
+   "width": 384,
+   "height": 384,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 3,
+      "emoji": "🔥",
+      "recent": [
+       {
+        "from": "Матрос",
+        "from_id": "user142558484",
+        "date": "2026-09-17T14:37:46"
+       },
+       {
+        "from": "Вова Варов",
+        "from_id": "user68492383",
+        "date": "2026-09-17T11:28:35"
+       },
+       {
+        "from": "SHANZ",
+        "from_id": "user886869626",
+        "date": "2026-09-17T03:42:31"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12573,
+   "type": "message",
+   "date": "2026-09-17T03:41:41",
+   "date_unixtime": "1789605701",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12572,
+   "text": "none выпил пиво, осталось 997 149 🍺 🔥 14",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "none выпил пиво, осталось 997 149 🍺 🔥 14"
+    }
+   ]
+  },
+  {
+   "id": 12574,
+   "type": "message",
+   "date": "2026-09-17T12:20:18",
+   "date_unixtime": "1789636818",
+   "edited": "2026-09-17T12:23:32",
+   "edited_unixtime": "1789637012",
+   "from": "Egor Afonin",
+   "from_id": "user435244696",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 1784776,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 26170,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 12,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "custom_emoji",
+      "count": 3,
+      "document_id": "",
+      "recent": [
+       {
+        "from": "bogdan m",
+        "from_id": "user212155517",
+        "date": "2026-09-17T12:53:46"
+       },
+       {
+        "from": "Никита Курюмов [+4 от мск]",
+        "from_id": "user879132213",
+        "date": "2026-09-17T12:47:16"
+       },
+       {
+        "from": "Kirill Silonov",
+        "from_id": "user247771756",
+        "date": "2026-09-17T12:23:32"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12575,
+   "type": "message",
+   "date": "2026-09-17T12:20:19",
+   "date_unixtime": "1789636819",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12574,
+   "text": "Egor Afonin выпил пиво, осталось 997 148 🍺 🔥 6",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Egor Afonin выпил пиво, осталось 997 148 🍺 🔥 6"
+    }
+   ]
+  },
+  {
+   "id": 12576,
+   "type": "message",
+   "date": "2026-09-17T12:20:53",
+   "date_unixtime": "1789636853",
+   "from": "Вова Варов",
+   "from_id": "user68492383",
+   "reply_to_message_id": 12574,
+   "text": "oh my god это же AIRPORT BEER",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "oh my god это же AIRPORT BEER"
+    }
+   ]
+  },
+  {
+   "id": 12577,
+   "type": "message",
+   "date": "2026-09-17T12:21:00",
+   "date_unixtime": "1789636860",
+   "edited": "2026-09-17T12:21:27",
+   "edited_unixtime": "1789636887",
+   "from": "Вова Варов",
+   "from_id": "user68492383",
+   "text": "хорошего полёта коллега!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "хорошего полёта коллега!"
+    }
+   ],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 2,
+      "emoji": "❤",
+      "recent": [
+       {
+        "from": "bogdan m",
+        "from_id": "user212155517",
+        "date": "2026-09-17T12:53:49"
+       },
+       {
+        "from": "Egor Afonin",
+        "from_id": "user435244696",
+        "date": "2026-09-17T12:21:27"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12578,
+   "type": "message",
+   "date": "2026-09-17T12:21:31",
+   "date_unixtime": "1789636891",
+   "from": "Egor Afonin",
+   "from_id": "user435244696",
+   "reply_to_message_id": 12576,
+   "text": "Yessssir!!",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Yessssir!!"
+    }
+   ]
+  },
+  {
+   "id": 12579,
+   "type": "message",
+   "date": "2026-09-17T12:44:47",
+   "date_unixtime": "1789638287",
+   "edited": "2026-09-17T12:46:42",
+   "edited_unixtime": "1789638402",
+   "from": "Securitsa Manet",
+   "from_id": "user544304076",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 1278141,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 17927,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 9,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 3,
+      "emoji": "❤",
+      "recent": [
+       {
+        "from": "bogdan m",
+        "from_id": "user212155517",
+        "date": "2026-09-17T12:54:01"
+       },
+       {
+        "from": "Aliaksandr Babaren",
+        "from_id": "user5187447236",
+        "date": "2026-09-17T12:48:26"
+       },
+       {
+        "from": "Никита Курюмов [+4 от мск]",
+        "from_id": "user879132213",
+        "date": "2026-09-17T12:46:42"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12580,
+   "type": "message",
+   "date": "2026-09-17T12:44:48",
+   "date_unixtime": "1789638288",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12579,
+   "text": "Securitsa Manet выпил пиво, осталось 997 147 🍺 🔥 3",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Securitsa Manet выпил пиво, осталось 997 147 🍺 🔥 3"
+    }
+   ]
+  },
+  {
+   "id": 12581,
+   "type": "message",
+   "date": "2026-09-17T12:48:16",
+   "date_unixtime": "1789638496",
+   "from": "Никита Курюмов [+4 от мск]",
+   "from_id": "user879132213",
+   "text": [
+    {
+     "type": "bot_command",
+     "text": "/none@beer_counter61bot"
+    }
+   ],
+   "text_entities": [
+    {
+     "type": "bot_command",
+     "text": "/none@beer_counter61bot"
+    }
+   ]
+  },
+  {
+   "id": 12582,
+   "type": "message",
+   "date": "2026-09-17T12:48:17",
+   "date_unixtime": "1789638497",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12581,
+   "text": [
+    "🥇 none — ",
+    {
+     "type": "bold",
+     "text": "188"
+    },
+    " 🍺\n\nСтолько же выпил хвост таблицы из ",
+    {
+     "type": "bold",
+     "text": "62"
+    },
+    " человек (",
+    {
+     "type": "bold",
+     "text": "192"
+    },
+    " 🍺)."
+   ],
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "🥇 none — "
+    },
+    {
+     "type": "bold",
+     "text": "188"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺\n\nСтолько же выпил хвост таблицы из "
+    },
+    {
+     "type": "bold",
+     "text": "62"
+    },
+    {
+     "type": "plain",
+     "text": " человек ("
+    },
+    {
+     "type": "bold",
+     "text": "192"
+    },
+    {
+     "type": "plain",
+     "text": " 🍺)."
+    }
+   ]
+  },
+  {
+   "id": 12583,
+   "type": "message",
+   "date": "2026-09-17T12:53:57",
+   "date_unixtime": "1789638837",
+   "edited": "2026-09-17T12:56:02",
+   "edited_unixtime": "1789638962",
+   "from": "bogdan m",
+   "from_id": "user212155517",
+   "reply_to_message_id": 12576,
+   "text": "одно из самых крутых пив",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "одно из самых крутых пив"
+    }
+   ],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 2,
+      "emoji": "❤",
+      "recent": [
+       {
+        "from": "Вова Варов",
+        "from_id": "user68492383",
+        "date": "2026-09-17T13:01:10"
+       },
+       {
+        "from": "Egor Afonin",
+        "from_id": "user435244696",
+        "date": "2026-09-17T12:56:02"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12584,
+   "type": "message",
+   "date": "2026-09-17T12:55:07",
+   "date_unixtime": "1789638907",
+   "edited": "2026-09-17T12:55:10",
+   "edited_unixtime": "1789638910",
+   "from": "Александр",
+   "from_id": "user180349206",
+   "text": "portainer beer",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "portainer beer"
+    }
+   ]
+  },
+  {
+   "id": 12585,
+   "type": "message",
+   "date": "2026-09-17T12:56:19",
+   "date_unixtime": "1789638979",
+   "from": "bogdan m",
+   "from_id": "user212155517",
+   "text": "вот бы еще kunteynir beer",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "вот бы еще kunteynir beer"
+    }
+   ]
+  },
+  {
+   "id": 12586,
+   "type": "message",
+   "date": "2026-09-17T13:07:39",
+   "date_unixtime": "1789639659",
+   "from": "Raman Arkadziewicz",
+   "from_id": "user334061787",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_size": 556217,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 13231,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 5,
+   "width": 360,
+   "height": 360,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 12587,
+   "type": "message",
+   "date": "2026-09-17T13:07:39",
+   "date_unixtime": "1789639659",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12586,
+   "text": "Raman Arkadziewicz выпил пиво, осталось 997 146 🍺 🔥 3",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Raman Arkadziewicz выпил пиво, осталось 997 146 🍺 🔥 3"
+    }
+   ]
+  },
+  {
+   "id": 12588,
+   "type": "message",
+   "date": "2026-09-17T13:12:23",
+   "date_unixtime": "1789639943",
+   "from": "Никита Курюмов [+4 от мск]",
+   "from_id": "user879132213",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 1737372,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 19235,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 12,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 12589,
+   "type": "message",
+   "date": "2026-09-17T13:12:24",
+   "date_unixtime": "1789639944",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12588,
+   "text": "Никита Курюмов [+4 от мск] выпил пиво, осталось 997 145 🍺",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Никита Курюмов [+4 от мск] выпил пиво, осталось 997 145 🍺"
+    }
+   ]
+  },
+  {
+   "id": 12590,
+   "type": "message",
+   "date": "2026-09-17T13:13:16",
+   "date_unixtime": "1789639996",
+   "from": "Никита Курюмов [+4 от мск]",
+   "from_id": "user879132213",
+   "text": [
+    {
+     "type": "bot_command",
+     "text": "/stats@beer_counter61bot"
+    }
+   ],
+   "text_entities": [
+    {
+     "type": "bot_command",
+     "text": "/stats@beer_counter61bot"
+    }
+   ]
+  },
+  {
+   "id": 12591,
+   "type": "message",
+   "date": "2026-09-17T13:13:16",
+   "date_unixtime": "1789639996",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12590,
+   "text": [
+    "Выпито пив 🍺 : ",
+    {
+     "type": "bold",
+     "text": "29"
+    },
+    "\nMVP ⭐ : 0\nСтрик 🔥 : ",
+    {
+     "type": "bold",
+     "text": "1"
+    },
+    " дн. (рекорд: ",
+    {
+     "type": "bold",
+     "text": "3"
+    },
+    ")\nМесто в таблице: ",
+    {
+     "type": "bold",
+     "text": "#34"
+    },
+    "\n\nДружище, надо поднажать! 😅\n\nДо общей цели осталось: ",
+    {
+     "type": "bold",
+     "text": "997 145"
+    },
+    ""
+   ],
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Выпито пив 🍺 : "
+    },
+    {
+     "type": "bold",
+     "text": "29"
+    },
+    {
+     "type": "plain",
+     "text": "\nMVP ⭐ : 0\nСтрик 🔥 : "
+    },
+    {
+     "type": "bold",
+     "text": "1"
+    },
+    {
+     "type": "plain",
+     "text": " дн. (рекорд: "
+    },
+    {
+     "type": "bold",
+     "text": "3"
+    },
+    {
+     "type": "plain",
+     "text": ")\nМесто в таблице: "
+    },
+    {
+     "type": "bold",
+     "text": "#34"
+    },
+    {
+     "type": "plain",
+     "text": "\n\nДружище, надо поднажать! 😅\n\nДо общей цели осталось: "
+    },
+    {
+     "type": "bold",
+     "text": "997 145"
+    },
+    {
+     "type": "plain",
+     "text": ""
+    }
+   ]
+  },
+  {
+   "id": 12592,
+   "type": "message",
+   "date": "2026-09-17T14:32:55",
+   "date_unixtime": "1789644775",
+   "edited": "2026-09-17T14:34:02",
+   "edited_unixtime": "1789644842",
+   "from": "Denis Rozenkin",
+   "from_id": "user118419092",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_size": 1048600,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 20174,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 7,
+   "width": 384,
+   "height": 384,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 4,
+      "emoji": "👏",
+      "recent": [
+       {
+        "from": "bogdan m",
+        "from_id": "user212155517",
+        "date": "2026-09-17T14:48:57"
+       },
+       {
+        "from": "Sergey Katargin",
+        "from_id": "user119564361",
+        "date": "2026-09-17T14:48:12"
+       },
+       {
+        "from": "Вова Варов",
+        "from_id": "user68492383",
+        "date": "2026-09-17T14:36:25"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12593,
+   "type": "message",
+   "date": "2026-09-17T14:32:56",
+   "date_unixtime": "1789644776",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12592,
+   "text": "Denis Rozenkin выпил пиво, осталось 997 144 🍺",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Denis Rozenkin выпил пиво, осталось 997 144 🍺"
+    }
+   ]
+  },
+  {
+   "id": 12594,
+   "type": "message",
+   "date": "2026-09-17T14:33:49",
+   "date_unixtime": "1789644829",
+   "edited": "2026-09-17T14:50:35",
+   "edited_unixtime": "1789645835",
+   "from": "Грігорій Змагаренок",
+   "from_id": "user989926753",
+   "reply_to_message_id": 12586,
+   "text": "Картошечку жаришь ?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Картошечку жаришь ?"
+    }
+   ],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 1,
+      "emoji": "🤗",
+      "recent": [
+       {
+        "from": "Raman Arkadziewicz",
+        "from_id": "user334061787",
+        "date": "2026-09-17T14:50:35"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12595,
+   "type": "message",
+   "date": "2026-09-17T14:34:06",
+   "date_unixtime": "1789644846",
+   "from": "Матрос",
+   "from_id": "user142558484",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 846081,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 14726,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 6,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 12596,
+   "type": "message",
+   "date": "2026-09-17T14:34:07",
+   "date_unixtime": "1789644847",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12595,
+   "text": "Matros выпил пиво, осталось 997 143 🍺 🔥 8",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Matros выпил пиво, осталось 997 143 🍺 🔥 8"
+    }
+   ]
+  },
+  {
+   "id": 12597,
+   "type": "message",
+   "date": "2026-09-17T14:36:10",
+   "date_unixtime": "1789644970",
+   "from": "Вова Варов",
+   "from_id": "user68492383",
+   "reply_to_message_id": 12592,
+   "text": "надеюсь ты выздоровел",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "надеюсь ты выздоровел"
+    }
+   ]
+  },
+  {
+   "id": 12598,
+   "type": "message",
+   "date": "2026-09-17T14:36:21",
+   "date_unixtime": "1789644981",
+   "from": "Вова Варов",
+   "from_id": "user68492383",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "AnimatedSticker.tgs",
+   "file_size": 9511,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 7626,
+   "media_type": "sticker",
+   "sticker_emoji": "🙏",
+   "mime_type": "application/x-tgsticker",
+   "width": 512,
+   "height": 512,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 12599,
+   "type": "message",
+   "date": "2026-09-17T14:38:38",
+   "date_unixtime": "1789645118",
+   "from": "nick",
+   "from_id": "user197294349",
+   "reply_to_message_id": 12592,
+   "text": "обана \nвозвращение легенды",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "обана \nвозвращение легенды"
+    }
+   ]
+  },
+  {
+   "id": 12600,
+   "type": "message",
+   "date": "2026-09-17T14:50:27",
+   "date_unixtime": "1789645827",
+   "from": "Raman Arkadziewicz",
+   "from_id": "user334061787",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_size": 366364,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 16585,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 2,
+   "width": 360,
+   "height": 360,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 12601,
+   "type": "message",
+   "date": "2026-09-17T14:50:28",
+   "date_unixtime": "1789645828",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12600,
+   "text": "Raman Arkadziewicz выпил пиво, осталось 997 142 🍺 🔥 3",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Raman Arkadziewicz выпил пиво, осталось 997 142 🍺 🔥 3"
+    }
+   ]
+  },
+  {
+   "id": 12602,
+   "type": "service",
+   "date": "2026-09-17T14:54:43",
+   "date_unixtime": "1789646083",
+   "actor": "Karina Fadeeva",
+   "actor_id": "user395265014",
+   "action": "join_group_by_link",
+   "inviter": "Group",
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 12603,
+   "type": "message",
+   "date": "2026-09-17T14:58:56",
+   "date_unixtime": "1789646336",
+   "edited": "2026-09-17T15:10:34",
+   "edited_unixtime": "1789647034",
+   "from": "Karina Fadeeva",
+   "from_id": "user395265014",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 534450,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 19296,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 3,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 1,
+      "emoji": "🔥",
+      "recent": [
+       {
+        "from": "bogdan m",
+        "from_id": "user212155517",
+        "date": "2026-09-17T15:10:34"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12604,
+   "type": "message",
+   "date": "2026-09-17T14:58:56",
+   "date_unixtime": "1789646336",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12603,
+   "text": "Karina Fadeeva выпил пиво, осталось 997 141 🍺",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Karina Fadeeva выпил пиво, осталось 997 141 🍺"
+    }
+   ]
+  },
+  {
+   "id": 12605,
+   "type": "message",
+   "date": "2026-09-17T15:04:52",
+   "date_unixtime": "1789646692",
+   "edited": "2026-09-17T15:05:14",
+   "edited_unixtime": "1789646714",
+   "from": "Kirill Mugityan",
+   "from_id": "user242082181",
+   "reply_to_message_id": 12588,
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 1437532,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 17245,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 10,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 4,
+      "emoji": "❤",
+      "recent": [
+       {
+        "from": "bogdan m",
+        "from_id": "user212155517",
+        "date": "2026-09-17T15:10:21"
+       },
+       {
+        "from": "Грігорій Змагаренок",
+        "from_id": "user989926753",
+        "date": "2026-09-17T15:07:03"
+       },
+       {
+        "from": "Karina Fadeeva",
+        "from_id": "user395265014",
+        "date": "2026-09-17T15:05:27"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12606,
+   "type": "message",
+   "date": "2026-09-17T15:04:54",
+   "date_unixtime": "1789646694",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12605,
+   "text": "Kirill Mugityan выпил пиво, осталось 997 140 🍺 🔥 10",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Kirill Mugityan выпил пиво, осталось 997 140 🍺 🔥 10"
+    }
+   ]
+  },
+  {
+   "id": 12607,
+   "type": "message",
+   "date": "2026-09-17T15:05:17",
+   "date_unixtime": "1789646717",
+   "from": "Никита Курюмов [+4 от мск]",
+   "from_id": "user879132213",
+   "reply_to_message_id": 12605,
+   "text": "работяга",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "работяга"
+    }
+   ]
+  },
+  {
+   "id": 12608,
+   "type": "message",
+   "date": "2026-09-17T15:10:30",
+   "date_unixtime": "1789647030",
+   "from": "bogdan m",
+   "from_id": "user212155517",
+   "reply_to_message_id": 12605,
+   "text": "Руки то трясутся на 10 уже",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Руки то трясутся на 10 уже"
+    }
+   ]
+  },
+  {
+   "id": 12609,
+   "type": "message",
+   "date": "2026-09-17T15:10:53",
+   "date_unixtime": "1789647053",
+   "from": "bogdan m",
+   "from_id": "user212155517",
+   "text": "это уважаемо",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "это уважаемо"
+    }
+   ]
+  },
+  {
+   "id": 12610,
+   "type": "message",
+   "date": "2026-09-17T15:10:54",
+   "date_unixtime": "1789647054",
+   "edited": "2026-09-17T15:11:02",
+   "edited_unixtime": "1789647062",
+   "from": "Kirill Mugityan",
+   "from_id": "user242082181",
+   "reply_to_message_id": 12608,
+   "text": "К сожалению они и без этого трясутся(",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "К сожалению они и без этого трясутся("
+    }
+   ],
+   "reactions": [
+     {
+      "type": "custom_emoji",
+      "count": 1,
+      "document_id": "",
+      "recent": [
+       {
+        "from": "bogdan m",
+        "from_id": "user212155517",
+        "date": "2026-09-17T15:11:02"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12611,
+   "type": "message",
+   "date": "2026-09-17T15:11:01",
+   "date_unixtime": "1789647061",
+   "from": "Kirill Mugityan",
+   "from_id": "user242082181",
+   "text": "Но и это тоже",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Но и это тоже"
+    }
+   ]
+  },
+  {
+   "id": 12612,
+   "type": "message",
+   "date": "2026-09-17T15:12:00",
+   "date_unixtime": "1789647120",
+   "edited": "2026-09-17T15:12:20",
+   "edited_unixtime": "1789647140",
+   "from": "Kirill Mugityan",
+   "from_id": "user242082181",
+   "photo": "(File not included. Change data exporting settings to download.)",
+   "photo_file_size": 32578,
+   "width": 918,
+   "height": 308,
+   "text": "Вообще вот так работает)",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Вообще вот так работает)"
+    }
+   ],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 4,
+      "emoji": "🫡",
+      "recent": [
+       {
+        "from": "Никита Курюмов [+4 от мск]",
+        "from_id": "user879132213",
+        "date": "2026-09-17T15:36:33"
+       },
+       {
+        "from": "Вова Варов",
+        "from_id": "user68492383",
+        "date": "2026-09-17T15:30:19"
+       },
+       {
+        "from": "r0m@n",
+        "from_id": "user327686641",
+        "date": "2026-09-17T15:12:30"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12613,
+   "type": "message",
+   "date": "2026-09-17T15:12:11",
+   "date_unixtime": "1789647131",
+   "edited": "2026-09-17T15:12:23",
+   "edited_unixtime": "1789647143",
+   "from": "Kirill Mugityan",
+   "from_id": "user242082181",
+   "text": "Вторая лучше залетит",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Вторая лучше залетит"
+    }
+   ],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 3,
+      "emoji": "🤝",
+      "recent": [
+       {
+        "from": "Никита Курюмов [+4 от мск]",
+        "from_id": "user879132213",
+        "date": "2026-09-17T15:36:33"
+       },
+       {
+        "from": "Вова Варов",
+        "from_id": "user68492383",
+        "date": "2026-09-17T15:30:20"
+       },
+       {
+        "from": "bogdan m",
+        "from_id": "user212155517",
+        "date": "2026-09-17T15:12:23"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12614,
+   "type": "message",
+   "date": "2026-09-17T15:17:46",
+   "date_unixtime": "1789647466",
+   "edited": "2026-09-17T15:36:41",
+   "edited_unixtime": "1789648601",
+   "from": "Marina Alissa Axeldottir",
+   "from_id": "user92134604",
+   "reply_to_message_id": 12613,
+   "text": "Меня бросивший пить батя учил, что поздно выпитая вторая - зря выпитая первая...",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Меня бросивший пить батя учил, что поздно выпитая вторая - зря выпитая первая..."
+    }
+   ],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 1,
+      "emoji": "🙏",
+      "recent": [
+       {
+        "from": "Никита Курюмов [+4 от мск]",
+        "from_id": "user879132213",
+        "date": "2026-09-17T15:36:41"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12615,
+   "type": "message",
+   "date": "2026-09-17T15:18:36",
+   "date_unixtime": "1789647516",
+   "from": "Kirill Mugityan",
+   "from_id": "user242082181",
+   "reply_to_message_id": 12614,
+   "text": "Будет",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Будет"
+    }
+   ]
+  },
+  {
+   "id": 12616,
+   "type": "message",
+   "date": "2026-09-17T15:22:18",
+   "date_unixtime": "1789647738",
+   "edited": "2026-09-17T15:23:19",
+   "edited_unixtime": "1789647799",
+   "from": "Kirill Mugityan",
+   "from_id": "user242082181",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 2922426,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 17170,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 21,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 2,
+      "emoji": "🔥",
+      "recent": [
+       {
+        "from": "Karina Fadeeva",
+        "from_id": "user395265014",
+        "date": "2026-09-17T16:18:47"
+       },
+       {
+        "from": "bogdan m",
+        "from_id": "user212155517",
+        "date": "2026-09-17T15:23:19"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12617,
+   "type": "message",
+   "date": "2026-09-17T15:22:18",
+   "date_unixtime": "1789647738",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12616,
+   "text": "Kirill Mugityan выпил пиво, осталось 997 139 🍺 🔥 10",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Kirill Mugityan выпил пиво, осталось 997 139 🍺 🔥 10"
+    }
+   ]
+  },
+  {
+   "id": 12618,
+   "type": "message",
+   "date": "2026-09-17T15:22:38",
+   "date_unixtime": "1789647758",
+   "edited": "2026-09-17T15:23:12",
+   "edited_unixtime": "1789647792",
+   "from": "bogdan m",
+   "from_id": "user212155517",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 2076645,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 12709,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 15,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 5,
+      "emoji": "🔥",
+      "recent": [
+       {
+        "from": "Denis Rozenkin",
+        "from_id": "user118419092",
+        "date": "2026-09-17T16:19:22"
+       },
+       {
+        "from": "Karina Fadeeva",
+        "from_id": "user395265014",
+        "date": "2026-09-17T16:18:50"
+       },
+       {
+        "from": "none",
+        "from_id": "user888019657",
+        "date": "2026-09-17T15:24:14"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12619,
+   "type": "message",
+   "date": "2026-09-17T15:22:38",
+   "date_unixtime": "1789647758",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12618,
+   "text": "bogdan m выпил пиво, осталось 997 138 🍺 🔥 6",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "bogdan m выпил пиво, осталось 997 138 🍺 🔥 6"
+    }
+   ]
+  },
+  {
+   "id": 12620,
+   "type": "message",
+   "date": "2026-09-17T15:22:42",
+   "date_unixtime": "1789647762",
+   "edited": "2026-09-17T15:23:11",
+   "edited_unixtime": "1789647791",
+   "from": "bogdan m",
+   "from_id": "user212155517",
+   "text": "Завтрак коллеги",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Завтрак коллеги"
+    }
+   ],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 2,
+      "emoji": "🤝",
+      "recent": [
+       {
+        "from": "Никита Курюмов [+4 от мск]",
+        "from_id": "user879132213",
+        "date": "2026-09-17T15:36:47"
+       },
+       {
+        "from": "Kirill Mugityan",
+        "from_id": "user242082181",
+        "date": "2026-09-17T15:23:12"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12621,
+   "type": "message",
+   "date": "2026-09-17T15:24:31",
+   "date_unixtime": "1789647871",
+   "edited": "2026-09-17T15:40:49",
+   "edited_unixtime": "1789648849",
+   "from": "none",
+   "from_id": "user888019657",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_size": 842848,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 15867,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 6,
+   "width": 384,
+   "height": 384,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 2,
+      "emoji": "🔥",
+      "recent": [
+       {
+        "from": "Karina Fadeeva",
+        "from_id": "user395265014",
+        "date": "2026-09-17T16:19:07"
+       },
+       {
+        "from": "Dmitry Bondarenko",
+        "from_id": "user138912668",
+        "date": "2026-09-17T15:40:49"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12622,
+   "type": "message",
+   "date": "2026-09-17T15:24:32",
+   "date_unixtime": "1789647872",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12621,
+   "text": "none выпил пиво, осталось 997 137 🍺 🔥 14",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "none выпил пиво, осталось 997 137 🍺 🔥 14"
+    }
+   ]
+  },
+  {
+   "id": 12623,
+   "type": "message",
+   "date": "2026-09-17T15:24:50",
+   "date_unixtime": "1789647890",
+   "from": "bogdan m",
+   "from_id": "user212155517",
+   "reply_to_message_id": 12621,
+   "text": "Вызвали легу",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Вызвали легу"
+    }
+   ]
+  },
+  {
+   "id": 12624,
+   "type": "message",
+   "date": "2026-09-17T15:27:22",
+   "date_unixtime": "1789648042",
+   "from": "Kirill Mugityan",
+   "from_id": "user242082181",
+   "reply_to_message_id": 12623,
+   "text": "Там еще на фоне геогесс жесткий",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Там еще на фоне геогесс жесткий"
+    }
+   ]
+  },
+  {
+   "id": 12625,
+   "type": "message",
+   "date": "2026-09-17T15:28:11",
+   "date_unixtime": "1789648091",
+   "from": "bogdan m",
+   "from_id": "user212155517",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "sticker.webm",
+   "file_size": 168550,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 7350,
+   "media_type": "sticker",
+   "sticker_emoji": "🧠",
+   "mime_type": "video/webm",
+   "duration_seconds": 3,
+   "width": 512,
+   "height": 352,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 12626,
+   "type": "message",
+   "date": "2026-09-17T15:37:06",
+   "date_unixtime": "1789648626",
+   "edited": "2026-09-17T15:39:07",
+   "edited_unixtime": "1789648747",
+   "from": "Никита Курюмов [+4 от мск]",
+   "from_id": "user879132213",
+   "reply_to_message_id": 12621,
+   "text": "легкая эротика на фоне",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "легкая эротика на фоне"
+    }
+   ],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 4,
+      "emoji": "🍌",
+      "recent": [
+       {
+        "from": "Вова Варов",
+        "from_id": "user68492383",
+        "date": "2026-09-17T15:46:28"
+       },
+       {
+        "from": "Александр",
+        "from_id": "user180349206",
+        "date": "2026-09-17T15:46:25"
+       },
+       {
+        "from": "Dmitry Bondarenko",
+        "from_id": "user138912668",
+        "date": "2026-09-17T15:40:45"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12627,
+   "type": "message",
+   "date": "2026-09-17T15:41:18",
+   "date_unixtime": "1789648878",
+   "from": "Дарья Б",
+   "from_id": "user523801473",
+   "reply_to_message_id": 12610,
+   "text": "У меня тоже эссенциальный тремор!! последние 5 лет, но алкоголь я практически не пью… мне кажется, от пива это не зависит никак",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "У меня тоже эссенциальный тремор!! последние 5 лет, но алкоголь я практически не пью… мне кажется, от пива это не зависит никак"
+    }
+   ]
+  },
+  {
+   "id": 12628,
+   "type": "message",
+   "date": "2026-09-17T15:41:59",
+   "date_unixtime": "1789648919",
+   "edited": "2026-09-17T15:47:27",
+   "edited_unixtime": "1789649247",
+   "from": "Kirill Mugityan",
+   "from_id": "user242082181",
+   "reply_to_message_id": 12627,
+   "text": "Ну пиво это и не алкоголь вовсе)",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Ну пиво это и не алкоголь вовсе)"
+    }
+   ],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 1,
+      "emoji": "✍",
+      "recent": [
+       {
+        "from": "Дарья Б",
+        "from_id": "user523801473",
+        "date": "2026-09-17T15:47:27"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12629,
+   "type": "message",
+   "date": "2026-09-17T15:42:03",
+   "date_unixtime": "1789648923",
+   "edited": "2026-09-17T15:43:08",
+   "edited_unixtime": "1789648988",
+   "from": "Kirill Mugityan",
+   "from_id": "user242082181",
+   "text": "Жидкое золото",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Жидкое золото"
+    }
+   ],
+   "reactions": [
+     {
+      "type": "custom_emoji",
+      "count": 2,
+      "document_id": "",
+      "recent": [
+       {
+        "from": "Marina Alissa Axeldottir",
+        "from_id": "user92134604",
+        "date": "2026-09-17T15:44:55"
+       },
+       {
+        "from": "bogdan m",
+        "from_id": "user212155517",
+        "date": "2026-09-17T15:43:09"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12630,
+   "type": "message",
+   "date": "2026-09-17T15:46:03",
+   "date_unixtime": "1789649163",
+   "from": "Матрос",
+   "from_id": "user142558484",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 795110,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 17221,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 5,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 12631,
+   "type": "message",
+   "date": "2026-09-17T15:46:04",
+   "date_unixtime": "1789649164",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12630,
+   "text": "Matros выпил пиво, осталось 997 136 🍺 🔥 8",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Matros выпил пиво, осталось 997 136 🍺 🔥 8"
+    }
+   ]
+  },
+  {
+   "id": 12632,
+   "type": "message",
+   "date": "2026-09-17T15:53:05",
+   "date_unixtime": "1789649585",
+   "edited": "2026-09-17T15:53:56",
+   "edited_unixtime": "1789649636",
+   "from": "K",
+   "from_id": "user5006252572",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_size": 1655676,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 29095,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 10,
+   "width": 384,
+   "height": 384,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 2,
+      "emoji": "😍",
+      "recent": [
+       {
+        "from": "bogdan m",
+        "from_id": "user212155517",
+        "date": "2026-09-17T15:57:19"
+       },
+       {
+        "from": "Кристина",
+        "from_id": "user913327267",
+        "date": "2026-09-17T15:55:30"
+       }
+      ]
+     },
+     {
+      "type": "emoji",
+      "count": 1,
+      "emoji": "👍",
+      "recent": [
+       {
+        "from": "Вова Варов",
+        "from_id": "user68492383",
+        "date": "2026-09-17T15:53:56"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12633,
+   "type": "message",
+   "date": "2026-09-17T15:53:06",
+   "date_unixtime": "1789649586",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12632,
+   "text": "K выпил пиво, осталось 997 135 🍺",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "K выпил пиво, осталось 997 135 🍺"
+    }
+   ]
+  },
+  {
+   "id": 12634,
+   "type": "message",
+   "date": "2026-09-17T15:54:39",
+   "date_unixtime": "1789649679",
+   "from": "Вова Варов",
+   "from_id": "user68492383",
+   "reply_to_message_id": 12632,
+   "text": "Это что страна Басков?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Это что страна Басков?"
+    }
+   ]
+  },
+  {
+   "id": 12636,
+   "type": "message",
+   "date": "2026-09-17T15:57:30",
+   "date_unixtime": "1789649850",
+   "edited": "2026-09-17T15:57:48",
+   "edited_unixtime": "1789649868",
+   "from": "bogdan m",
+   "from_id": "user212155517",
+   "text": "Страна Киркоров будет?",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Страна Киркоров будет?"
+    }
+   ],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 5,
+      "emoji": "❤",
+      "recent": [
+       {
+        "from": "Матрос",
+        "from_id": "user142558484",
+        "date": "2026-09-17T16:14:47"
+       },
+       {
+        "from": "Александр",
+        "from_id": "user180349206",
+        "date": "2026-09-17T16:00:02"
+       },
+       {
+        "from": "Иван",
+        "from_id": "user92511128",
+        "date": "2026-09-17T15:59:53"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12637,
+   "type": "message",
+   "date": "2026-09-17T15:57:36",
+   "date_unixtime": "1789649856",
+   "from": "bogdan m",
+   "from_id": "user212155517",
+   "text": "простите",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "простите"
+    }
+   ]
+  },
+  {
+   "id": 12638,
+   "type": "message",
+   "date": "2026-09-17T15:57:38",
+   "date_unixtime": "1789649858",
+   "from": "bogdan m",
+   "from_id": "user212155517",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "sticker.webp",
+   "file_size": 21914,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 11084,
+   "media_type": "sticker",
+   "sticker_emoji": "😭",
+   "mime_type": "image/webp",
+   "width": 512,
+   "height": 512,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 12639,
+   "type": "message",
+   "date": "2026-09-17T15:58:54",
+   "date_unixtime": "1789649934",
+   "from": "Вова Варов",
+   "from_id": "user68492383",
+   "reply_to_message_id": 12636,
+   "text": "Бан",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Бан"
+    }
+   ]
+  },
+  {
+   "id": 12640,
+   "type": "message",
+   "date": "2026-09-17T16:00:49",
+   "date_unixtime": "1789650049",
+   "edited": "2026-09-17T16:01:44",
+   "edited_unixtime": "1789650104",
+   "from": "Матрос",
+   "from_id": "user142558484",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 893706,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 17260,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 6,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 1,
+      "emoji": "🔥",
+      "recent": [
+       {
+        "from": "bogdan m",
+        "from_id": "user212155517",
+        "date": "2026-09-17T16:01:44"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12641,
+   "type": "message",
+   "date": "2026-09-17T16:00:50",
+   "date_unixtime": "1789650050",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12640,
+   "text": "Matros выпил пиво, осталось 997 134 🍺 🔥 8",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Matros выпил пиво, осталось 997 134 🍺 🔥 8"
+    }
+   ]
+  },
+  {
+   "id": 12642,
+   "type": "message",
+   "date": "2026-09-17T16:01:53",
+   "date_unixtime": "1789650113",
+   "from": "Настена ❤️🐷",
+   "from_id": "user249417258",
+   "reply_to_message_id": 12627,
+   "text": "кстати эссенциальный тремор как раз от алкоголя нивелируется",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "кстати эссенциальный тремор как раз от алкоголя нивелируется"
+    }
+   ]
+  },
+  {
+   "id": 12643,
+   "type": "message",
+   "date": "2026-09-17T16:01:56",
+   "date_unixtime": "1789650116",
+   "from": "Настена ❤️🐷",
+   "from_id": "user249417258",
+   "text": "так люди и спиваются",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "так люди и спиваются"
+    }
+   ]
+  },
+  {
+   "id": 12644,
+   "type": "message",
+   "date": "2026-09-17T16:02:18",
+   "date_unixtime": "1789650138",
+   "from": "bogdan m",
+   "from_id": "user212155517",
+   "text": "отлично, я буду это использовать как оправдание своему хобби",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "отлично, я буду это использовать как оправдание своему хобби"
+    }
+   ]
+  },
+  {
+   "id": 12645,
+   "type": "message",
+   "date": "2026-09-17T16:08:36",
+   "date_unixtime": "1789650516",
+   "edited": "2026-09-17T16:09:57",
+   "edited_unixtime": "1789650597",
+   "from": "Denis Rozenkin",
+   "from_id": "user118419092",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "round_2026-09-17_15-08-36.mp4",
+   "file_size": 446402,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 15773,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 3,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 3,
+      "emoji": "👍",
+      "recent": [
+       {
+        "from": "bogdan m",
+        "from_id": "user212155517",
+        "date": "2026-09-17T16:14:23"
+       },
+       {
+        "from": "Tanya Snapkova",
+        "from_id": "user620363259",
+        "date": "2026-09-17T16:10:09"
+       },
+       {
+        "from": "Вова Варов",
+        "from_id": "user68492383",
+        "date": "2026-09-17T16:09:57"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12646,
+   "type": "message",
+   "date": "2026-09-17T16:08:37",
+   "date_unixtime": "1789650517",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12645,
+   "text": "Denis Rozenkin выпил пиво, осталось 997 133 🍺",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Denis Rozenkin выпил пиво, осталось 997 133 🍺"
+    }
+   ]
+  },
+  {
+   "id": 12647,
+   "type": "message",
+   "date": "2026-09-17T16:09:59",
+   "date_unixtime": "1789650599",
+   "from": "пашка блять...",
+   "from_id": "user316204922",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 485921,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 10393,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 3,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 12648,
+   "type": "message",
+   "date": "2026-09-17T16:10:00",
+   "date_unixtime": "1789650600",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12647,
+   "text": "Pasha Komarov выпил пиво, осталось 997 132 🍺 🔥 23",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Pasha Komarov выпил пиво, осталось 997 132 🍺 🔥 23"
+    }
+   ]
+  },
+  {
+   "id": 12649,
+   "type": "message",
+   "date": "2026-09-17T16:11:07",
+   "date_unixtime": "1789650667",
+   "from": "Дарья Б",
+   "from_id": "user523801473",
+   "reply_to_message_id": 12642,
+   "text": "Хз мне вот невролог года 2 назад от тремора выписал прегабалин 300…",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Хз мне вот невролог года 2 назад от тремора выписал прегабалин 300…"
+    }
+   ]
+  },
+  {
+   "id": 12650,
+   "type": "message",
+   "date": "2026-09-17T16:11:42",
+   "date_unixtime": "1789650702",
+   "from": "Матрос",
+   "from_id": "user142558484",
+   "reply_to_message_id": 12647,
+   "text": "Из берлоги вылез",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Из берлоги вылез"
+    }
+   ]
+  },
+  {
+   "id": 12651,
+   "type": "message",
+   "date": "2026-09-17T16:11:52",
+   "date_unixtime": "1789650712",
+   "from": "пашка блять...",
+   "from_id": "user316204922",
+   "reply_to_message_id": 12650,
+   "text": "С качалки",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "С качалки"
+    }
+   ]
+  },
+  {
+   "id": 12652,
+   "type": "message",
+   "date": "2026-09-17T16:12:27",
+   "date_unixtime": "1789650747",
+   "edited": "2026-09-17T16:13:15",
+   "edited_unixtime": "1789650795",
+   "from": "Настена ❤️🐷",
+   "from_id": "user249417258",
+   "text": "ну врач алкоголь выписать не может а лирику может",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "ну врач алкоголь выписать не может а лирику может"
+    }
+   ],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 1,
+      "emoji": "❤",
+      "recent": [
+       {
+        "from": "Матрос",
+        "from_id": "user142558484",
+        "date": "2026-09-17T16:13:15"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12653,
+   "type": "message",
+   "date": "2026-09-17T16:12:48",
+   "date_unixtime": "1789650768",
+   "edited": "2026-09-17T16:13:23",
+   "edited_unixtime": "1789650803",
+   "from": "пашка блять...",
+   "from_id": "user316204922",
+   "text": "Насть, выпиши всем тут пива",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Насть, выпиши всем тут пива"
+    }
+   ],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 2,
+      "emoji": "❤",
+      "recent": [
+       {
+        "from": "bogdan m",
+        "from_id": "user212155517",
+        "date": "2026-09-17T16:14:54"
+       },
+       {
+        "from": "Матрос",
+        "from_id": "user142558484",
+        "date": "2026-09-17T16:13:23"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12654,
+   "type": "message",
+   "date": "2026-09-17T16:13:04",
+   "date_unixtime": "1789650784",
+   "edited": "2026-09-17T16:13:25",
+   "edited_unixtime": "1789650805",
+   "from": "Настена ❤️🐷",
+   "from_id": "user249417258",
+   "text": "выписываю",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "выписываю"
+    }
+   ],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 2,
+      "emoji": "❤",
+      "recent": [
+       {
+        "from": "bogdan m",
+        "from_id": "user212155517",
+        "date": "2026-09-17T16:14:53"
+       },
+       {
+        "from": "Матрос",
+        "from_id": "user142558484",
+        "date": "2026-09-17T16:13:25"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12655,
+   "type": "message",
+   "date": "2026-09-17T16:13:35",
+   "date_unixtime": "1789650815",
+   "from": "пашка блять...",
+   "from_id": "user316204922",
+   "text": "Не, прям на бумажке врачебной",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Не, прям на бумажке врачебной"
+    }
+   ]
+  },
+  {
+   "id": 12656,
+   "type": "message",
+   "date": "2026-09-17T16:14:16",
+   "date_unixtime": "1789650856",
+   "from": "Настена ❤️🐷",
+   "from_id": "user249417258",
+   "text": "завтра я уже пью но не пиво так что без стрика",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "завтра я уже пью но не пиво так что без стрика"
+    }
+   ]
+  },
+  {
+   "id": 12657,
+   "type": "message",
+   "date": "2026-09-17T16:14:41",
+   "date_unixtime": "1789650881",
+   "from": "bogdan m",
+   "from_id": "user212155517",
+   "reply_to_message_id": 12648,
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "sticker.webm",
+   "file_size": 131617,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 8880,
+   "media_type": "sticker",
+   "sticker_emoji": "🚬",
+   "mime_type": "video/webm",
+   "width": 512,
+   "height": 512,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 12658,
+   "type": "message",
+   "date": "2026-09-17T16:15:25",
+   "date_unixtime": "1789650925",
+   "edited": "2026-09-17T16:15:50",
+   "edited_unixtime": "1789650950",
+   "from": "Настена ❤️🐷",
+   "from_id": "user249417258",
+   "photo": "(File not included. Change data exporting settings to download.)",
+   "photo_file_size": 114959,
+   "width": 960,
+   "height": 1280,
+   "text": "испанцы пью каву",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "испанцы пью каву"
+    }
+   ],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 2,
+      "emoji": "🔥",
+      "recent": [
+       {
+        "from": "Karina Fadeeva",
+        "from_id": "user395265014",
+        "date": "2026-09-17T16:22:14"
+       },
+       {
+        "from": "bogdan m",
+        "from_id": "user212155517",
+        "date": "2026-09-17T16:15:50"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12659,
+   "type": "message",
+   "date": "2026-09-17T16:15:47",
+   "date_unixtime": "1789650947",
+   "from": "bogdan m",
+   "from_id": "user212155517",
+   "text": [
+    {
+     "type": "custom_emoji",
+     "text": "‼️",
+     "document_id": ""
+    },
+    ""
+   ],
+   "text_entities": [
+    {
+     "type": "custom_emoji",
+     "text": "‼️",
+     "document_id": ""
+    },
+    {
+     "type": "plain",
+     "text": ""
+    }
+   ]
+  },
+  {
+   "id": 12660,
+   "type": "message",
+   "date": "2026-09-17T16:17:08",
+   "date_unixtime": "1789651028",
+   "from": "Матрос",
+   "from_id": "user142558484",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 1047353,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 15378,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 7,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 12661,
+   "type": "message",
+   "date": "2026-09-17T16:17:08",
+   "date_unixtime": "1789651028",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12660,
+   "text": "Matros выпил пиво, осталось 997 131 🍺 🔥 8",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Matros выпил пиво, осталось 997 131 🍺 🔥 8"
+    }
+   ]
+  },
+  {
+   "id": 12662,
+   "type": "message",
+   "date": "2026-09-17T16:20:39",
+   "date_unixtime": "1789651239",
+   "edited": "2026-09-17T16:22:23",
+   "edited_unixtime": "1789651343",
+   "from": "none",
+   "from_id": "user888019657",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_size": 676138,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 16119,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 4,
+   "width": 384,
+   "height": 384,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "custom_emoji",
+      "count": 1,
+      "document_id": "",
+      "recent": [
+       {
+        "from": "bogdan m",
+        "from_id": "user212155517",
+        "date": "2026-09-17T16:22:23"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12663,
+   "type": "message",
+   "date": "2026-09-17T16:20:40",
+   "date_unixtime": "1789651240",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12662,
+   "text": "none выпил пиво, осталось 997 130 🍺 🔥 14",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "none выпил пиво, осталось 997 130 🍺 🔥 14"
+    }
+   ]
+  },
+  {
+   "id": 12664,
+   "type": "message",
+   "date": "2026-09-17T16:30:15",
+   "date_unixtime": "1789651815",
+   "from": "Грігорій Змагаренок",
+   "from_id": "user989926753",
+   "text": [
+    {
+     "type": "bot_command",
+     "text": "/stats@beer_counter61bot"
+    }
+   ],
+   "text_entities": [
+    {
+     "type": "bot_command",
+     "text": "/stats@beer_counter61bot"
+    }
+   ]
+  },
+  {
+   "id": 12665,
+   "type": "message",
+   "date": "2026-09-17T16:30:16",
+   "date_unixtime": "1789651816",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12664,
+   "text": [
+    "Выпито пив 🍺 : ",
+    {
+     "type": "bold",
+     "text": "33"
+    },
+    "\nMVP ⭐ : 0\nСтрик 🔥 : ",
+    {
+     "type": "bold",
+     "text": "2"
+    },
+    " дн. (рекорд: ",
+    {
+     "type": "bold",
+     "text": "7"
+    },
+    ")\nМесто в таблице: ",
+    {
+     "type": "bold",
+     "text": "#30"
+    },
+    "\n\nВыше среднего! Так держать! 💪\n\nДо общей цели осталось: ",
+    {
+     "type": "bold",
+     "text": "997 130"
+    },
+    ""
+   ],
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Выпито пив 🍺 : "
+    },
+    {
+     "type": "bold",
+     "text": "33"
+    },
+    {
+     "type": "plain",
+     "text": "\nMVP ⭐ : 0\nСтрик 🔥 : "
+    },
+    {
+     "type": "bold",
+     "text": "2"
+    },
+    {
+     "type": "plain",
+     "text": " дн. (рекорд: "
+    },
+    {
+     "type": "bold",
+     "text": "7"
+    },
+    {
+     "type": "plain",
+     "text": ")\nМесто в таблице: "
+    },
+    {
+     "type": "bold",
+     "text": "#30"
+    },
+    {
+     "type": "plain",
+     "text": "\n\nВыше среднего! Так держать! 💪\n\nДо общей цели осталось: "
+    },
+    {
+     "type": "bold",
+     "text": "997 130"
+    },
+    {
+     "type": "plain",
+     "text": ""
+    }
+   ]
+  },
+  {
+   "id": 12666,
+   "type": "service",
+   "date": "2026-09-17T16:42:46",
+   "date_unixtime": "1789652566",
+   "actor": "Дмитрий",
+   "actor_id": "user672513715",
+   "action": "join_group_by_link",
+   "inviter": "Group",
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 12667,
+   "type": "message",
+   "date": "2026-09-17T16:46:38",
+   "date_unixtime": "1789652798",
+   "from": "rob",
+   "from_id": "user241222620",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 700112,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 9895,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 4,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 12668,
+   "type": "message",
+   "date": "2026-09-17T16:46:39",
+   "date_unixtime": "1789652799",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12667,
+   "text": "rob выпил пиво, осталось 997 129 🍺 🔥 11",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "rob выпил пиво, осталось 997 129 🍺 🔥 11"
+    }
+   ]
+  },
+  {
+   "id": 12669,
+   "type": "message",
+   "date": "2026-09-17T16:48:57",
+   "date_unixtime": "1789652937",
+   "edited": "2026-09-17T16:53:12",
+   "edited_unixtime": "1789653192",
+   "from": "Raman Arkadziewicz",
+   "from_id": "user334061787",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_size": 730309,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 19757,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 6,
+   "width": 384,
+   "height": 384,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 7,
+      "emoji": "🔥",
+      "recent": [
+       {
+        "from": "Karina Fadeeva",
+        "from_id": "user395265014",
+        "date": "2026-09-17T17:46:24"
+       },
+       {
+        "from": "Kirill Mugityan",
+        "from_id": "user242082181",
+        "date": "2026-09-17T17:35:27"
+       },
+       {
+        "from": "Jackie",
+        "from_id": "user474403826",
+        "date": "2026-09-17T17:16:52"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12670,
+   "type": "message",
+   "date": "2026-09-17T16:48:58",
+   "date_unixtime": "1789652938",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12669,
+   "text": "Raman Arkadziewicz выпил пиво, осталось 997 128 🍺 🔥 3",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Raman Arkadziewicz выпил пиво, осталось 997 128 🍺 🔥 3"
+    }
+   ]
+  },
+  {
+   "id": 12671,
+   "type": "message",
+   "date": "2026-09-17T16:52:32",
+   "date_unixtime": "1789653152",
+   "from": "Marina Alissa Axeldottir",
+   "from_id": "user92134604",
+   "text": "Нихерамба прием",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Нихерамба прием"
+    }
+   ]
+  },
+  {
+   "id": 12672,
+   "type": "message",
+   "date": "2026-09-17T16:55:34",
+   "date_unixtime": "1789653334",
+   "edited": "2026-09-17T16:55:54",
+   "edited_unixtime": "1789653354",
+   "from": "SHANZ",
+   "from_id": "user886869626",
+   "reply_to_message_id": 12669,
+   "text": "маэстро - не иначе",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "маэстро - не иначе"
+    }
+   ],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 2,
+      "emoji": "❤",
+      "recent": [
+       {
+        "from": "Raman Arkadziewicz",
+        "from_id": "user334061787",
+        "date": "2026-09-17T17:25:56"
+       },
+       {
+        "from": "Грігорій Змагаренок",
+        "from_id": "user989926753",
+        "date": "2026-09-17T16:55:54"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12673,
+   "type": "message",
+   "date": "2026-09-17T16:55:41",
+   "date_unixtime": "1789653341",
+   "edited": "2026-09-17T17:46:24",
+   "edited_unixtime": "1789656384",
+   "from": "Denis Rozenkin",
+   "from_id": "user118419092",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "round_2026-09-17_15-55-40.mp4",
+   "file_size": 1010547,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 16756,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 8,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 1,
+      "emoji": "❤",
+      "recent": [
+       {
+        "from": "Ben",
+        "from_id": "user268238893",
+        "date": "2026-09-17T17:55:24"
+       }
+      ]
+     },
+     {
+      "type": "custom_emoji",
+      "count": 1,
+      "document_id": "",
+      "recent": [
+       {
+        "from": "Karina Fadeeva",
+        "from_id": "user395265014",
+        "date": "2026-09-17T17:46:24"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12674,
+   "type": "message",
+   "date": "2026-09-17T16:55:41",
+   "date_unixtime": "1789653341",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12673,
+   "text": "Denis Rozenkin выпил пиво, осталось 997 127 🍺",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Denis Rozenkin выпил пиво, осталось 997 127 🍺"
+    }
+   ]
+  },
+  {
+   "id": 12675,
+   "type": "message",
+   "date": "2026-09-17T17:02:20",
+   "date_unixtime": "1789653740",
+   "edited": "2026-09-17T17:46:25",
+   "edited_unixtime": "1789656385",
+   "from": "Настена ❤️🐷",
+   "from_id": "user249417258",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 374571,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 16889,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 2,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "custom_emoji",
+      "count": 1,
+      "document_id": "",
+      "recent": [
+       {
+        "from": "Karina Fadeeva",
+        "from_id": "user395265014",
+        "date": "2026-09-17T17:46:25"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12676,
+   "type": "message",
+   "date": "2026-09-17T17:02:21",
+   "date_unixtime": "1789653741",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12675,
+   "text": "анастасия выпил пиво, осталось 997 126 🍺",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "анастасия выпил пиво, осталось 997 126 🍺"
+    }
+   ]
+  },
+  {
+   "id": 12677,
+   "type": "message",
+   "date": "2026-09-17T17:04:42",
+   "date_unixtime": "1789653882",
+   "from": "Матрос",
+   "from_id": "user142558484",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 635978,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 17283,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 4,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 12678,
+   "type": "message",
+   "date": "2026-09-17T17:04:42",
+   "date_unixtime": "1789653882",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12677,
+   "text": "Matros выпил пиво, осталось 997 125 🍺 🔥 8",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Matros выпил пиво, осталось 997 125 🍺 🔥 8"
+    }
+   ]
+  },
+  {
+   "id": 12679,
+   "type": "message",
+   "date": "2026-09-17T17:10:59",
+   "date_unixtime": "1789654259",
+   "from": "Karina Fadeeva",
+   "from_id": "user395265014",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 671373,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 18841,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 5,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 12680,
+   "type": "message",
+   "date": "2026-09-17T17:10:59",
+   "date_unixtime": "1789654259",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12679,
+   "text": "Karina Fadeeva выпил пиво, осталось 997 124 🍺",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Karina Fadeeva выпил пиво, осталось 997 124 🍺"
+    }
+   ]
+  },
+  {
+   "id": 12681,
+   "type": "message",
+   "date": "2026-09-17T17:13:36",
+   "date_unixtime": "1789654416",
+   "edited": "2026-09-17T17:15:20",
+   "edited_unixtime": "1789654520",
+   "from": "Securitsa Manet",
+   "from_id": "user544304076",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 1362414,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 34776,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 9,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 2,
+      "emoji": "🥰",
+      "recent": [
+       {
+        "from": "gleb",
+        "from_id": "user566361517",
+        "date": "2026-09-17T17:23:56"
+       },
+       {
+        "from": "Aliaksandr Babaren",
+        "from_id": "user5187447236",
+        "date": "2026-09-17T17:15:20"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12682,
+   "type": "message",
+   "date": "2026-09-17T17:13:37",
+   "date_unixtime": "1789654417",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12681,
+   "text": "Securitsa Manet выпил пиво, осталось 997 123 🍺 🔥 3",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Securitsa Manet выпил пиво, осталось 997 123 🍺 🔥 3"
+    }
+   ]
+  },
+  {
+   "id": 12683,
+   "type": "message",
+   "date": "2026-09-17T17:26:14",
+   "date_unixtime": "1789655174",
+   "edited": "2026-09-17T17:30:49",
+   "edited_unixtime": "1789655449",
+   "from": "Raman Arkadziewicz",
+   "from_id": "user334061787",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_size": 1087775,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 17221,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 10,
+   "width": 384,
+   "height": 384,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "custom_emoji",
+      "count": 4,
+      "document_id": "",
+      "recent": [
+       {
+        "from": "буханкин",
+        "from_id": "user652444683",
+        "date": "2026-09-17T17:46:53"
+       },
+       {
+        "from": "Alex",
+        "from_id": "user567027007",
+        "date": "2026-09-17T17:43:51"
+       }
+      ]
+     },
+     {
+      "type": "custom_emoji",
+      "count": 2,
+      "document_id": "",
+      "recent": [
+       {
+        "from": "Marina Alissa Axeldottir",
+        "from_id": "user92134604",
+        "date": "2026-09-17T17:59:56"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12684,
+   "type": "message",
+   "date": "2026-09-17T17:26:15",
+   "date_unixtime": "1789655175",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12683,
+   "text": "Raman Arkadziewicz выпил пиво, осталось 997 122 🍺 🔥 3",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Raman Arkadziewicz выпил пиво, осталось 997 122 🍺 🔥 3"
+    }
+   ]
+  },
+  {
+   "id": 12685,
+   "type": "message",
+   "date": "2026-09-17T17:32:33",
+   "date_unixtime": "1789655553",
+   "from": "Aliaksandr Babaren",
+   "from_id": "user5187447236",
+   "reply_to_message_id": 12683,
+   "text": "он был рок-звездой",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "он был рок-звездой"
+    }
+   ]
+  },
+  {
+   "id": 12686,
+   "type": "message",
+   "date": "2026-09-17T17:33:05",
+   "date_unixtime": "1789655585",
+   "from": "Jackie",
+   "from_id": "user474403826",
+   "reply_to_message_id": 12683,
+   "text": "Спиздите для меня китайского ребёнка. У меня зарядка сломалась",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Спиздите для меня китайского ребёнка. У меня зарядка сломалась"
+    }
+   ]
+  },
+  {
+   "id": 12687,
+   "type": "message",
+   "date": "2026-09-17T17:33:07",
+   "date_unixtime": "1789655587",
+   "edited": "2026-09-17T17:34:36",
+   "edited_unixtime": "1789655676",
+   "from": "Aliaksandr Babaren",
+   "from_id": "user5187447236",
+   "text": "или скорее 摇滚明星",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "или скорее 摇滚明星"
+    }
+   ],
+   "reactions": [
+     {
+      "type": "custom_emoji",
+      "count": 2,
+      "document_id": "",
+      "recent": [
+       {
+        "from": "bogdan m",
+        "from_id": "user212155517",
+        "date": "2026-09-17T17:36:03"
+       },
+       {
+        "from": "Jackie",
+        "from_id": "user474403826",
+        "date": "2026-09-17T17:34:36"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12688,
+   "type": "message",
+   "date": "2026-09-17T17:39:17",
+   "date_unixtime": "1789655957",
+   "edited": "2026-09-17T17:46:52",
+   "edited_unixtime": "1789656412",
+   "from": "Dmitry Bondarenko",
+   "from_id": "user138912668",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 899245,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 21205,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 6,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 1,
+      "emoji": "❤",
+      "recent": [
+       {
+        "from": "Anastasia",
+        "from_id": "user847554413",
+        "date": "2026-09-17T17:46:52"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12689,
+   "type": "message",
+   "date": "2026-09-17T17:39:18",
+   "date_unixtime": "1789655958",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12688,
+   "text": "Dmitry Bondarenko выпил пиво, осталось 997 121 🍺 🔥 4",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Dmitry Bondarenko выпил пиво, осталось 997 121 🍺 🔥 4"
+    }
+   ]
+  },
+  {
+   "id": 12690,
+   "type": "message",
+   "date": "2026-09-17T17:39:30",
+   "date_unixtime": "1789655970",
+   "from": "Anastasia",
+   "from_id": "user847554413",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 2436766,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 24481,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 17,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 12691,
+   "type": "message",
+   "date": "2026-09-17T17:39:31",
+   "date_unixtime": "1789655971",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12690,
+   "text": "Anastasia выпил пиво, осталось 997 120 🍺",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Anastasia выпил пиво, осталось 997 120 🍺"
+    }
+   ]
+  },
+  {
+   "id": 12692,
+   "type": "message",
+   "date": "2026-09-17T17:42:35",
+   "date_unixtime": "1789656155",
+   "edited": "2026-09-17T17:49:23",
+   "edited_unixtime": "1789656563",
+   "from": "Zhenya aka Eugen(e)",
+   "from_id": "user250247626",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 531952,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 21719,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 3,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 1,
+      "emoji": "❤",
+      "recent": [
+       {
+        "from": "Andrew",
+        "from_id": "user511424338",
+        "date": "2026-09-17T17:49:23"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12693,
+   "type": "message",
+   "date": "2026-09-17T17:42:36",
+   "date_unixtime": "1789656156",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12692,
+   "text": "Zhenya aka Eugen(e) выпил пиво, осталось 997 119 🍺 🔥 3",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Zhenya aka Eugen(e) выпил пиво, осталось 997 119 🍺 🔥 3"
+    }
+   ]
+  },
+  {
+   "id": 12694,
+   "type": "message",
+   "date": "2026-09-17T17:47:48",
+   "date_unixtime": "1789656468",
+   "edited": "2026-09-17T17:49:11",
+   "edited_unixtime": "1789656551",
+   "from": "Securitsa Manet",
+   "from_id": "user544304076",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 1230637,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 28558,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 8,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": [],
+   "reactions": [
+     {
+      "type": "emoji",
+      "count": 2,
+      "emoji": "❤",
+      "recent": [
+       {
+        "from": "gleb",
+        "from_id": "user566361517",
+        "date": "2026-09-17T17:50:03"
+       },
+       {
+        "from": "Dmitry Bondarenko",
+        "from_id": "user138912668",
+        "date": "2026-09-17T17:49:11"
+       }
+      ]
+     }
+    ]
+  },
+  {
+   "id": 12695,
+   "type": "message",
+   "date": "2026-09-17T17:47:48",
+   "date_unixtime": "1789656468",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12694,
+   "text": "Securitsa Manet выпил пиво, осталось 997 118 🍺 🔥 3",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Securitsa Manet выпил пиво, осталось 997 118 🍺 🔥 3"
+    }
+   ]
+  },
+  {
+   "id": 12696,
+   "type": "message",
+   "date": "2026-09-17T17:49:56",
+   "date_unixtime": "1789656596",
+   "from": "gleb",
+   "from_id": "user566361517",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 317456,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 14488,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 2,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 12697,
+   "type": "message",
+   "date": "2026-09-17T17:49:56",
+   "date_unixtime": "1789656596",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12696,
+   "text": "gleb выпил пиво, осталось 997 117 🍺",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "gleb выпил пиво, осталось 997 117 🍺"
+    }
+   ]
+  },
+  {
+   "id": 12698,
+   "type": "message",
+   "date": "2026-09-17T17:55:58",
+   "date_unixtime": "1789656958",
+   "from": "Denis Rozenkin",
+   "from_id": "user118419092",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "round_2026-09-17_16-55-57.mp4",
+   "file_size": 591161,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 15512,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 4,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 12699,
+   "type": "message",
+   "date": "2026-09-17T17:55:59",
+   "date_unixtime": "1789656959",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12698,
+   "text": "Denis Rozenkin выпил пиво, осталось 997 116 🍺",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "Denis Rozenkin выпил пиво, осталось 997 116 🍺"
+    }
+   ]
+  },
+  {
+   "id": 12700,
+   "type": "message",
+   "date": "2026-09-17T17:58:09",
+   "date_unixtime": "1789657089",
+   "from": "Настена ❤️🐷",
+   "from_id": "user249417258",
+   "file": "(File not included. Change data exporting settings to download.)",
+   "file_name": "video.mp4",
+   "file_size": 261734,
+   "thumbnail": "(File not included. Change data exporting settings to download.)",
+   "thumbnail_file_size": 19183,
+   "media_type": "video_message",
+   "mime_type": "video/mp4",
+   "duration_seconds": 1,
+   "width": 400,
+   "height": 400,
+   "text": "",
+   "text_entities": []
+  },
+  {
+   "id": 12701,
+   "type": "message",
+   "date": "2026-09-17T17:58:10",
+   "date_unixtime": "1789657090",
+   "from": "beer-counter",
+   "from_id": "user8630702826",
+   "reply_to_message_id": 12700,
+   "text": "анастасия выпил пиво, осталось 997 115 🍺",
+   "text_entities": [
+    {
+     "type": "plain",
+     "text": "анастасия выпил пиво, осталось 997 115 🍺"
+    }
+   ]
+  }
+ ]
+}
