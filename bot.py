@@ -30,7 +30,7 @@ from commands import (
     week,
 )
 from common import MOSCOW
-from montage import daily_montage_job, montage_command
+from montage import montage_command
 from report import daily_report, report_command
 from video import handle_video, track_member_handler, track_message
 
@@ -125,12 +125,14 @@ def main() -> None:
 
     # Daily report at 00:00 Moscow time (scheduled=True → counts yesterday).
     # Streaks are expired first so anyone who missed yesterday shows 0, not a
-    # stale value left over from their last video. The montage runs last since
-    # downloading/encoding yesterday's circles takes much longer than the report.
+    # stale value left over from their last video.
     async def _midnight_job(ctx):
         await asyncio.to_thread(database.expire_stale_streaks)
         await daily_report(ctx, send_to=None, scheduled=True)
-        await daily_montage_job(ctx)
+        # Montage is still being tested via /montage (see montage.py) and is
+        # deliberately NOT wired into the nightly job yet. Once testing is
+        # done: import daily_montage_job from montage and add back
+        # `await daily_montage_job(ctx)` here.
 
     app.job_queue.run_daily(
         _midnight_job,

@@ -5,6 +5,7 @@ import logging
 import os
 import subprocess
 import tempfile
+from pathlib import Path
 
 from telegram import Update
 from telegram.ext import ContextTypes
@@ -15,20 +16,20 @@ from common import MOSCOW
 logger = logging.getLogger(__name__)
 
 CLIP_SECONDS = 3        # how much of each circle makes it into the montage
-MAX_CLIPS = 60          # caps ffmpeg command size and the final file size
 TILE_SIZE = 360         # output is a square, like the circles themselves
 FPS = 30
 FFMPEG_TIMEOUT = 600    # seconds
 
+_FONT_DIR = Path(__file__).parent / "assets" / "fonts"
+_COUNTER_FONT = str(_FONT_DIR / "Bitter.ttf")
+_COUNTER_FONT_SIZE = 42
 
-def _sample(items: list[str], max_n: int) -> list[str]:
-    """Evenly spaced sample of at most max_n items, preserving order — so a
-    day with hundreds of circles still gets a montage spanning the whole day
-    instead of just its first minute."""
-    if len(items) <= max_n:
-        return items
-    step = len(items) / max_n
-    return [items[int(i * step)] for i in range(max_n)]
+
+def _escape_ffmpeg_path(path: str) -> str:
+    """Escape a filesystem path for use inside an ffmpeg filtergraph option
+    (colons separate filter options, so a path containing one — e.g. a
+    Windows drive letter — must be escaped)."""
+    return path.replace("\\", "\\\\").replace(":", "\\:")
 
 
 def _has_audio_stream(path: str) -> bool:
@@ -42,8 +43,10 @@ def _has_audio_stream(path: str) -> bool:
 
 def _build_montage(paths: list[str], output_path: str) -> None:
     """Trim each clip to CLIP_SECONDS, normalize to a common square resolution/
-    frame rate (source phones vary), and concatenate. Runs synchronously —
-    call via asyncio.to_thread. Raises RuntimeError on ffmpeg failure."""
+    frame rate (source phones vary), burn in a running counter, and
+    concatenate. Runs synchronously — call via asyncio.to_thread. Raises
+    RuntimeError on ffmpeg failure."""
+    font = _escape_ffmpeg_path(_COUNTER_FONT)
     inputs = []
     filter_parts = []
     concat_inputs = []
@@ -52,7 +55,9 @@ def _build_montage(paths: list[str], output_path: str) -> None:
         filter_parts.append(
             f"[{i}:v]trim=0:{CLIP_SECONDS},setpts=PTS-STARTPTS,"
             f"scale={TILE_SIZE}:{TILE_SIZE}:force_original_aspect_ratio=increase,"
-            f"crop={TILE_SIZE}:{TILE_SIZE},setsar=1,fps={FPS}[v{i}]"
+            f"crop={TILE_SIZE}:{TILE_SIZE},setsar=1,fps={FPS},"
+            f"drawtext=fontfile={font}:text='#{i + 1}':fontsize={_COUNTER_FONT_SIZE}:"
+            f"fontcolor=white:box=1:boxcolor=black@0.5:boxborderw=10:x=14:y=14[v{i}]"
         )
         if _has_audio_stream(path):
             filter_parts.append(
@@ -91,19 +96,19 @@ def _build_montage(paths: list[str], output_path: str) -> None:
 
 
 async def _run_montage(context: ContextTypes.DEFAULT_TYPE, chat_id: int, report_date: str) -> bool:
-    """Returns True if a montage was built and sent, False if there was nothing to send."""
+    """Builds a montage from every circle sent in chat_id on report_date and
+    sends it to that same chat_id. Returns True if a montage was sent, False
+    if there was nothing to send."""
     file_ids = await asyncio.to_thread(
         database.get_video_file_ids_for_date, chat_id, report_date
     )
     if not file_ids:
-        logger.info("daily_montage_job: no circle videos for %s, skipping", report_date)
+        logger.info("montage: no circle videos for %s in chat %s, skipping", report_date, chat_id)
         return False
-
-    selected = _sample(file_ids, MAX_CLIPS)
 
     with tempfile.TemporaryDirectory(prefix="montage_") as tmpdir:
         paths = []
-        for i, file_id in enumerate(selected):
+        for i, file_id in enumerate(file_ids):
             try:
                 tg_file = await context.bot.get_file(file_id)
                 path = os.path.join(tmpdir, f"clip_{i:03d}.mp4")
@@ -111,11 +116,11 @@ async def _run_montage(context: ContextTypes.DEFAULT_TYPE, chat_id: int, report_
                 paths.append(path)
             except Exception:
                 logger.warning(
-                    "daily_montage_job: failed to download file_id=%s", file_id, exc_info=True
+                    "montage: failed to download file_id=%s", file_id, exc_info=True
                 )
 
         if not paths:
-            logger.warning("daily_montage_job: all downloads failed for %s", report_date)
+            logger.warning("montage: all downloads failed for %s in chat %s", report_date, chat_id)
             return False
 
         output_path = os.path.join(tmpdir, "montage.mp4")
@@ -128,38 +133,41 @@ async def _run_montage(context: ContextTypes.DEFAULT_TYPE, chat_id: int, report_
                 caption=f"🎬 Нарезка кружочков за {report_date} — {len(paths)} видео",
                 supports_streaming=True,
             )
-    logger.info("daily_montage_job: sent montage for %s (%d clips)", report_date, len(paths))
+    logger.info("montage: sent montage for %s in chat %s (%d clips)", report_date, chat_id, len(paths))
     return True
 
 
 async def montage_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Manual trigger — builds a montage of today's circles so far and sends it
-    to the main group. Lets admins test the feature without waiting for the
-    midnight job. Admin-only in groups; anyone can call it from a private chat."""
+    """Manual trigger — builds a montage of today's circles so far and sends
+    it to the chat the command was called from (a group's own circles, not
+    necessarily the main group — handy for testing in a separate group).
+    Admin-only in groups. From a private chat there's no group of circles to
+    pull from, so it falls back to the stored main group instead."""
     chat = update.effective_chat
     user = update.effective_user
 
-    if chat.type != "private":
+    if chat.type == "private":
+        chat_id = database.get_chat_id()
+        if not chat_id:
+            await update.message.reply_text("Бот ещё не добавлен ни в одну группу\\.", parse_mode="MarkdownV2")
+            return
+    else:
         member = await chat.get_member(user.id)
         if member.status not in ("administrator", "creator"):
             await update.message.reply_text(
                 "⛔ Только администраторы могут вызвать нарезку\\.", parse_mode="MarkdownV2"
             )
             return
-
-    main_chat_id = database.get_chat_id()
-    if not main_chat_id:
-        await update.message.reply_text("Бот ещё не добавлен ни в одну группу\\.", parse_mode="MarkdownV2")
-        return
+        chat_id = chat.id
 
     report_date = datetime.datetime.now(MOSCOW).date().isoformat()
     await update.message.reply_text("🎬 Собираю нарезку…")
     try:
-        sent = await _run_montage(context, main_chat_id, report_date)
+        sent = await _run_montage(context, chat_id, report_date)
         if not sent:
             await update.message.reply_text("Сегодня ещё нет ни одного кружочка\\.", parse_mode="MarkdownV2")
     except Exception:
-        logger.error("montage_command: failed for %s", report_date, exc_info=True)
+        logger.error("montage_command: failed for %s in chat %s", report_date, chat_id, exc_info=True)
         await update.message.reply_text("⚠️ Не получилось собрать нарезку\\.", parse_mode="MarkdownV2")
 
 

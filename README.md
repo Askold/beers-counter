@@ -18,7 +18,7 @@ At **midnight Moscow time** the bot automatically:
 - Sends a daily report to the main group with stats for the previous day.
 - Records the day's **MVP** (the person who sent the most circles that day).
 - Deletes all tracked text messages from the previous day (auto-clean).
-- Builds and sends a **montage** — a highlight clip stitched from cuts of every circle video sent that day (see [Daily montage](#daily-montage)).
+- ~~Builds and sends a **montage**~~ — a highlight clip stitched from cuts of every circle video sent that day. **Currently disabled** while the feature is being tested via `/montage` (see [Daily montage](#daily-montage)).
 
 ---
 
@@ -85,12 +85,14 @@ At **midnight Moscow time** the bot automatically:
 
 ## Daily montage
 
+> **Status: being tested.** The nightly job (`daily_montage_job` in `montage.py`) is implemented but deliberately **not** wired into the midnight job in `bot.py` yet — it only runs when `/montage` is called by hand. Once testing looks good, uncomment the call marked in `bot.py`'s `_midnight_job`.
+
 - Every circle video's Telegram `file_id` is stored in `video_log` as it comes in.
-- At midnight, right after the daily report, the bot re-downloads every circle sent the previous day, trims each to the first 3 seconds, normalizes them to a common square resolution/frame rate, and concatenates them with `ffmpeg` into one clip.
-- Days with a lot of circles are evenly sampled down to at most 60 clips (~3 minutes) so the job stays fast and the file stays well under Telegram's upload limit.
-- The result is posted to the main group as a video message. Clips whose file failed to download (e.g. `file_id` no longer resolvable) are skipped rather than failing the whole montage; if every clip fails, or nobody sent a circle, the job logs and skips silently — no message is sent.
-- `/montage` triggers the same pipeline on demand, for today's circles so far, without waiting for midnight (useful for testing).
-- Requires the `ffmpeg` and `ffprobe` binaries on the host running the bot (already installed in the `Dockerfile`).
+- The bot re-downloads **every** circle sent that day in the target chat, trims each to its first 3 seconds, normalizes them to a common square resolution/frame rate, burns a running counter (`#1`, `#2`, …) into the corner of each clip, and concatenates them with `ffmpeg` into one clip.
+- `/montage` builds today's montage so far, from the chat the command was called in, and sends the result back to that same chat — including a separate test group, not just the main one. From a private chat (no group circles of its own) it falls back to the stored main group. Admin-only in groups.
+- Once re-enabled, the midnight job builds the previous day's montage for the main group only, right after the daily report, and posts it there.
+- Clips whose file failed to download (e.g. `file_id` no longer resolvable) are skipped rather than failing the whole montage; if every clip fails, or nobody sent a circle, it logs and skips silently — no message is sent.
+- Requires the `ffmpeg` and `ffprobe` binaries on the host running the bot (already installed in the `Dockerfile`), plus the existing `assets/fonts/Bitter.ttf` used for the counter overlay.
 
 ---
 
