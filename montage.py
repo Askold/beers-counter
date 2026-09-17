@@ -7,6 +7,7 @@ import subprocess
 import tempfile
 from pathlib import Path
 
+from PIL import Image, ImageDraw
 from telegram import Update
 from telegram.ext import ContextTypes
 
@@ -39,6 +40,29 @@ _FONT_DIR = Path(__file__).parent / "assets" / "fonts"
 _COUNTER_FONT = str(_FONT_DIR / "Bitter.ttf")
 _COUNTER_FONT_SIZE = 42
 
+_BACKGROUND_IMAGE = str(Path(__file__).parent / "assets" / "images" / "beer_bg.png")
+
+
+def _prepare_composite_assets(tmpdir: str) -> tuple[str, str]:
+    """Pre-scale the background to TILE_SIZE and generate a circular mask,
+    once per montage run — every per-clip ffmpeg call then reads small, cheap
+    images instead of re-decoding the full-size background each time."""
+    bg = Image.open(_BACKGROUND_IMAGE).convert("RGB")
+    scale = max(TILE_SIZE / bg.width, TILE_SIZE / bg.height)
+    bg = bg.resize((round(bg.width * scale), round(bg.height * scale)), Image.LANCZOS)
+    left = (bg.width - TILE_SIZE) // 2
+    top = (bg.height - TILE_SIZE) // 2
+    bg = bg.crop((left, top, left + TILE_SIZE, top + TILE_SIZE))
+    bg_path = os.path.join(tmpdir, "bg.png")
+    bg.save(bg_path)
+
+    mask = Image.new("L", (TILE_SIZE, TILE_SIZE), 0)
+    ImageDraw.Draw(mask).ellipse((0, 0, TILE_SIZE - 1, TILE_SIZE - 1), fill=255)
+    mask_path = os.path.join(tmpdir, "mask.png")
+    mask.save(mask_path)
+
+    return bg_path, mask_path
+
 
 def _escape_ffmpeg_path(path: str) -> str:
     """Escape a filesystem path for use inside an ffmpeg filtergraph option
@@ -67,36 +91,50 @@ def _run_ffmpeg(cmd: list[str]) -> None:
         raise RuntimeError(f"ffmpeg failed (exit {result.returncode}): {result.stderr[-2000:]}")
 
 
-def _normalize_clip(path: str, index: int, output_path: str, clip_seconds: float) -> None:
-    """Trim one clip to clip_seconds, normalize it to a common square
-    resolution/frame rate (source phones vary), and burn in its counter.
+def _normalize_clip(
+    path: str,
+    index: int,
+    output_path: str,
+    clip_seconds: float,
+    bg_path: str,
+    mask_path: str,
+) -> None:
+    """Trim one clip to clip_seconds, mask it into a circle (like the
+    original video note) over the beer background, and burn in its counter.
     One ffmpeg process per clip — keeps peak memory low regardless of how
     many circles are in the day, unlike a single filter graph with every
     clip open as an input at once (which OOMed on the host)."""
     font = _escape_ffmpeg_path(_COUNTER_FONT)
-    video_filter = (
-        f"trim=0:{clip_seconds},setpts=PTS-STARTPTS,"
+    filter_complex = (
+        f"[0:v]trim=0:{clip_seconds},setpts=PTS-STARTPTS,"
         f"scale={TILE_SIZE}:{TILE_SIZE}:force_original_aspect_ratio=increase,"
-        f"crop={TILE_SIZE}:{TILE_SIZE},setsar=1,fps={FPS},"
-        f"drawtext=fontfile={font}:text='#{index + 1}':fontsize={_COUNTER_FONT_SIZE}:"
-        f"fontcolor=white:box=1:boxcolor=black@0.5:boxborderw=10:x=14:y=14"
+        f"crop={TILE_SIZE}:{TILE_SIZE},setsar=1,fps={FPS},format=yuva420p[clipv];"
+        f"[2:v]format=gray[maskv];"
+        f"[clipv][maskv]alphamerge[circle];"
+        f"[1:v][circle]overlay=0:0[withcircle];"
+        f"[withcircle]drawtext=fontfile={font}:text='#{index + 1}':fontsize={_COUNTER_FONT_SIZE}:"
+        f"fontcolor=white:box=1:boxcolor=black@0.5:boxborderw=10:x=14:y=14[vout]"
     )
+    base_inputs = ["-i", path, "-loop", "1", "-i", bg_path, "-loop", "1", "-i", mask_path]
     if _has_audio_stream(path):
         cmd = [
-            "ffmpeg", "-y", "-threads", "1", "-i", path,
-            "-vf", video_filter,
+            "ffmpeg", "-y", "-threads", "1", *base_inputs,
+            "-filter_complex", filter_complex,
+            "-map", "[vout]", "-map", "0:a",
             "-af", f"atrim=0:{clip_seconds},asetpts=PTS-STARTPTS,aresample=44100,aformat=channel_layouts=stereo",
+            "-t", str(clip_seconds),
             "-c:v", "libx264", "-preset", "veryfast", "-crf", "23",
             "-c:a", "aac", "-b:a", "128k",
             output_path,
         ]
     else:
-        # Silent circle (rare) — pad with silence, trimmed to match the
-        # video via -shortest so the two streams end together.
+        # Silent circle (rare) — pad with silence for the clip's duration.
         cmd = [
-            "ffmpeg", "-y", "-threads", "1", "-i", path,
+            "ffmpeg", "-y", "-threads", "1", *base_inputs,
             "-f", "lavfi", "-i", "anullsrc=channel_layout=stereo:sample_rate=44100",
-            "-vf", video_filter, "-shortest",
+            "-filter_complex", filter_complex,
+            "-map", "[vout]", "-map", "3:a",
+            "-t", str(clip_seconds),
             "-c:v", "libx264", "-preset", "veryfast", "-crf", "23",
             "-c:a", "aac", "-b:a", "128k",
             output_path,
@@ -119,11 +157,13 @@ def _build_montage(paths: list[str], tmpdir: str, output_path: str, clip_seconds
     concatenates the survivors. Runs synchronously — call via
     asyncio.to_thread. Returns how many clips made it into the montage;
     raises RuntimeError if none did."""
+    bg_path, mask_path = _prepare_composite_assets(tmpdir)
+
     normalized = []
     for i, path in enumerate(paths):
         norm_path = os.path.join(tmpdir, f"norm_{i:03d}.mp4")
         try:
-            _normalize_clip(path, i, norm_path, clip_seconds)
+            _normalize_clip(path, i, norm_path, clip_seconds, bg_path, mask_path)
             normalized.append(norm_path)
         except Exception:
             logger.warning("montage: failed to normalize clip %d (%s)", i, path, exc_info=True)

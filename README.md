@@ -88,12 +88,12 @@ At **midnight Moscow time** the bot automatically:
 > **Status: being tested.** The nightly job (`daily_montage_job` in `montage.py`) is implemented but deliberately **not** wired into the midnight job in `bot.py` yet — it only runs when `/montage` is called by hand. Once testing looks good, uncomment the call marked in `bot.py`'s `_midnight_job`.
 
 - Every circle video's Telegram `file_id` is stored in `video_log` as it comes in.
-- The circles that go into the montage always come from the **main group** (`settings.chat_id`) — the bot re-downloads **every** circle sent there that day (nothing is dropped, even on a very busy day), normalizes each to a common square resolution/frame rate, and burns a running counter (`#1`, `#2`, …) into its corner — each as its own `ffmpeg` process, one clip at a time, so peak memory stays flat no matter how many circles the day had. The normalized clips are then stitched together with the cheap concat demuxer (a stream copy, not a re-encode).
+- The circles that go into the montage always come from the **main group** (`settings.chat_id`) — the bot re-downloads **every** circle sent there that day (nothing is dropped, even on a very busy day), masks each into a circle over the background at `assets/images/beer_bg.png` (matching the original video-note look, instead of a plain square crop), and burns a running counter (`#1`, `#2`, …) in the corner — each as its own `ffmpeg` process, one clip at a time, so peak memory stays flat no matter how many circles the day had. The normalized clips are then stitched together with the cheap concat demuxer (a stream copy, not a re-encode).
 - The total montage is capped at **30 seconds** (45s once the day has more than 100 circles) — every circle still gets a slice, but each clip's share shrinks to fit (e.g. 10 circles → 3s each, 100 circles → 0.3s each). There's a one-frame floor per clip, so an extreme day (in the thousands) could in theory push the total slightly past the cap rather than trim to nothing.
 - Where the result is *sent* is the only thing that varies: `/montage` builds today's montage so far and sends it to whichever chat the command was called from — a separate test group, a private DM, whatever — without touching the main group. Admin-only in groups.
 - Once re-enabled, the midnight job does the same for the previous day, sending the result to the main group itself.
 - Clips whose file failed to download or failed to normalize are skipped rather than failing the whole montage; if every clip fails, or nobody sent a circle, it logs and skips silently — no message is sent.
-- Requires the `ffmpeg` and `ffprobe` binaries on the host running the bot (already installed in the `Dockerfile`), plus the existing `assets/fonts/Bitter.ttf` used for the counter overlay.
+- Requires the `ffmpeg` and `ffprobe` binaries on the host running the bot (already installed in the `Dockerfile`), plus `assets/fonts/Bitter.ttf` (counter overlay) and `assets/images/beer_bg.png` (circle background, generated/scaled with Pillow — already a dependency).
 
 ---
 
@@ -202,7 +202,7 @@ docker exec -it beers-counter python restore_video_log.py result.json
 
 ### `backfill_video_file_ids.py`
 
-Backfills `video_log.file_id` for rows recorded before the montage feature existed, so those old circles can be included in a montage too. Bots can't fetch `file_id` for a message after the fact, so this matches each missing row (by sender + date, in time order) to the corresponding video in a **media-included** Telegram chat export, re-uploads that file to a chat you choose (to mint a fresh `file_id`), and stores it. Supports `--dry-run` to preview the match plan first.
+Backfills `video_log.file_id` for rows recorded before the montage feature existed, so those old circles can be included in a montage too. Bots can't fetch `file_id` for a message after the fact, so this matches each missing row to the corresponding video in a **media-included** Telegram chat export — exactly, by `message_id`, wherever the row has one (a chat export's message `id` is the same `message_id` the bot stores); only rows with no `message_id` (legacy data restored from an export before that was tracked) fall back to matching by sender + date, in time order. It then re-uploads each matched file to a chat you choose (to mint a fresh `file_id`) and stores it. Supports `--dry-run` to preview the match plan first.
 
 ```bash
 docker cp result.json                     beers-counter:/app/result.json
