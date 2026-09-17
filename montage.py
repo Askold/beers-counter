@@ -15,10 +15,25 @@ from common import MOSCOW
 
 logger = logging.getLogger(__name__)
 
-CLIP_SECONDS = 3        # how much of each circle makes it into the montage
 TILE_SIZE = 360         # output is a square, like the circles themselves
 FPS = 30
 FFMPEG_TIMEOUT = 120    # seconds, per clip
+
+# Total montage length is capped — every circle still makes it in, but each
+# clip's share shrinks on a busy day so the whole thing still fits.
+SHORT_BUDGET_SECONDS = 30
+LONG_BUDGET_SECONDS = 45
+LONG_BUDGET_THRESHOLD = 100  # more than this many circles -> use the longer budget
+MIN_CLIP_SECONDS = 1 / FPS   # floor of one frame — a trim can't go shorter than that
+
+
+def _budget_for(count: int) -> int:
+    return LONG_BUDGET_SECONDS if count > LONG_BUDGET_THRESHOLD else SHORT_BUDGET_SECONDS
+
+
+def _clip_seconds_for(count: int) -> float:
+    return max(MIN_CLIP_SECONDS, _budget_for(count) / count)
+
 
 _FONT_DIR = Path(__file__).parent / "assets" / "fonts"
 _COUNTER_FONT = str(_FONT_DIR / "Bitter.ttf")
@@ -52,15 +67,15 @@ def _run_ffmpeg(cmd: list[str]) -> None:
         raise RuntimeError(f"ffmpeg failed (exit {result.returncode}): {result.stderr[-2000:]}")
 
 
-def _normalize_clip(path: str, index: int, output_path: str) -> None:
-    """Trim one clip to CLIP_SECONDS, normalize it to a common square
+def _normalize_clip(path: str, index: int, output_path: str, clip_seconds: float) -> None:
+    """Trim one clip to clip_seconds, normalize it to a common square
     resolution/frame rate (source phones vary), and burn in its counter.
     One ffmpeg process per clip — keeps peak memory low regardless of how
     many circles are in the day, unlike a single filter graph with every
     clip open as an input at once (which OOMed on the host)."""
     font = _escape_ffmpeg_path(_COUNTER_FONT)
     video_filter = (
-        f"trim=0:{CLIP_SECONDS},setpts=PTS-STARTPTS,"
+        f"trim=0:{clip_seconds},setpts=PTS-STARTPTS,"
         f"scale={TILE_SIZE}:{TILE_SIZE}:force_original_aspect_ratio=increase,"
         f"crop={TILE_SIZE}:{TILE_SIZE},setsar=1,fps={FPS},"
         f"drawtext=fontfile={font}:text='#{index + 1}':fontsize={_COUNTER_FONT_SIZE}:"
@@ -70,7 +85,7 @@ def _normalize_clip(path: str, index: int, output_path: str) -> None:
         cmd = [
             "ffmpeg", "-y", "-threads", "1", "-i", path,
             "-vf", video_filter,
-            "-af", f"atrim=0:{CLIP_SECONDS},asetpts=PTS-STARTPTS,aresample=44100,aformat=channel_layouts=stereo",
+            "-af", f"atrim=0:{clip_seconds},asetpts=PTS-STARTPTS,aresample=44100,aformat=channel_layouts=stereo",
             "-c:v", "libx264", "-preset", "veryfast", "-crf", "23",
             "-c:a", "aac", "-b:a", "128k",
             output_path,
@@ -99,15 +114,16 @@ def _concat_clips(normalized_paths: list[str], list_file: str, output_path: str)
     _run_ffmpeg(["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", list_file, "-c", "copy", output_path])
 
 
-def _build_montage(paths: list[str], tmpdir: str, output_path: str) -> int:
-    """Normalizes each clip one at a time, then concatenates the survivors.
-    Runs synchronously — call via asyncio.to_thread. Returns how many clips
-    made it into the montage; raises RuntimeError if none did."""
+def _build_montage(paths: list[str], tmpdir: str, output_path: str, clip_seconds: float) -> int:
+    """Normalizes each clip (trimmed to clip_seconds) one at a time, then
+    concatenates the survivors. Runs synchronously — call via
+    asyncio.to_thread. Returns how many clips made it into the montage;
+    raises RuntimeError if none did."""
     normalized = []
     for i, path in enumerate(paths):
         norm_path = os.path.join(tmpdir, f"norm_{i:03d}.mp4")
         try:
-            _normalize_clip(path, i, norm_path)
+            _normalize_clip(path, i, norm_path, clip_seconds)
             normalized.append(norm_path)
         except Exception:
             logger.warning("montage: failed to normalize clip %d (%s)", i, path, exc_info=True)
@@ -140,6 +156,8 @@ async def _run_montage(
         )
         return False
 
+    clip_seconds = _clip_seconds_for(len(file_ids))
+
     with tempfile.TemporaryDirectory(prefix="montage_") as tmpdir:
         paths = []
         for i, file_id in enumerate(file_ids):
@@ -160,7 +178,7 @@ async def _run_montage(
             return False
 
         output_path = os.path.join(tmpdir, "montage.mp4")
-        clip_count = await asyncio.to_thread(_build_montage, paths, tmpdir, output_path)
+        clip_count = await asyncio.to_thread(_build_montage, paths, tmpdir, output_path, clip_seconds)
 
         with open(output_path, "rb") as f:
             await context.bot.send_video(
