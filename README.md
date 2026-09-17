@@ -88,10 +88,10 @@ At **midnight Moscow time** the bot automatically:
 > **Status: being tested.** The nightly job (`daily_montage_job` in `montage.py`) is implemented but deliberately **not** wired into the midnight job in `bot.py` yet — it only runs when `/montage` is called by hand. Once testing looks good, uncomment the call marked in `bot.py`'s `_midnight_job`.
 
 - Every circle video's Telegram `file_id` is stored in `video_log` as it comes in.
-- The circles that go into the montage always come from the **main group** (`settings.chat_id`) — the bot re-downloads **every** circle sent there that day, trims each to its first 3 seconds, normalizes them to a common square resolution/frame rate, burns a running counter (`#1`, `#2`, …) into the corner of each clip, and concatenates them with `ffmpeg` into one clip.
+- The circles that go into the montage always come from the **main group** (`settings.chat_id`) — the bot re-downloads **every** circle sent there that day, trims each to its first 3 seconds, normalizes it to a common square resolution/frame rate, and burns a running counter (`#1`, `#2`, …) into its corner — each as its own `ffmpeg` process, one clip at a time, so peak memory stays flat no matter how many circles the day had. The normalized clips are then stitched together with the cheap concat demuxer (a stream copy, not a re-encode).
 - Where the result is *sent* is the only thing that varies: `/montage` builds today's montage so far and sends it to whichever chat the command was called from — a separate test group, a private DM, whatever — without touching the main group. Admin-only in groups.
 - Once re-enabled, the midnight job does the same for the previous day, sending the result to the main group itself.
-- Clips whose file failed to download (e.g. `file_id` no longer resolvable) are skipped rather than failing the whole montage; if every clip fails, or nobody sent a circle, it logs and skips silently — no message is sent.
+- Clips whose file failed to download or failed to normalize are skipped rather than failing the whole montage; if every clip fails, or nobody sent a circle, it logs and skips silently — no message is sent.
 - Requires the `ffmpeg` and `ffprobe` binaries on the host running the bot (already installed in the `Dockerfile`), plus the existing `assets/fonts/Bitter.ttf` used for the counter overlay.
 
 ---

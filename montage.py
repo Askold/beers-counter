@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 CLIP_SECONDS = 3        # how much of each circle makes it into the montage
 TILE_SIZE = 360         # output is a square, like the circles themselves
 FPS = 30
-FFMPEG_TIMEOUT = 600    # seconds
+FFMPEG_TIMEOUT = 120    # seconds, per clip
 
 _FONT_DIR = Path(__file__).parent / "assets" / "fonts"
 _COUNTER_FONT = str(_FONT_DIR / "Bitter.ttf")
@@ -41,50 +41,7 @@ def _has_audio_stream(path: str) -> bool:
     return bool(result.stdout.strip())
 
 
-def _build_montage(paths: list[str], output_path: str) -> None:
-    """Trim each clip to CLIP_SECONDS, normalize to a common square resolution/
-    frame rate (source phones vary), burn in a running counter, and
-    concatenate. Runs synchronously — call via asyncio.to_thread. Raises
-    RuntimeError on ffmpeg failure."""
-    font = _escape_ffmpeg_path(_COUNTER_FONT)
-    inputs = []
-    filter_parts = []
-    concat_inputs = []
-    for i, path in enumerate(paths):
-        inputs += ["-i", path]
-        filter_parts.append(
-            f"[{i}:v]trim=0:{CLIP_SECONDS},setpts=PTS-STARTPTS,"
-            f"scale={TILE_SIZE}:{TILE_SIZE}:force_original_aspect_ratio=increase,"
-            f"crop={TILE_SIZE}:{TILE_SIZE},setsar=1,fps={FPS},"
-            f"drawtext=fontfile={font}:text='#{i + 1}':fontsize={_COUNTER_FONT_SIZE}:"
-            f"fontcolor=white:box=1:boxcolor=black@0.5:boxborderw=10:x=14:y=14[v{i}]"
-        )
-        if _has_audio_stream(path):
-            filter_parts.append(
-                f"[{i}:a]atrim=0:{CLIP_SECONDS},asetpts=PTS-STARTPTS,"
-                f"aresample=44100,aformat=channel_layouts=stereo[a{i}]"
-            )
-        else:
-            # Silent circle (rare) — feed the concat filter a matching-length
-            # silent track so the stream count stays consistent across segments.
-            filter_parts.append(
-                f"anullsrc=channel_layout=stereo:sample_rate=44100:"
-                f"duration={CLIP_SECONDS}[a{i}]"
-            )
-        concat_inputs += [f"[v{i}]", f"[a{i}]"]
-
-    filter_complex = ";".join(filter_parts) + ";" + \
-        "".join(concat_inputs) + f"concat=n={len(paths)}:v=1:a=1[outv][outa]"
-
-    cmd = [
-        "ffmpeg", "-y",
-        *inputs,
-        "-filter_complex", filter_complex,
-        "-map", "[outv]", "-map", "[outa]",
-        "-c:v", "libx264", "-preset", "veryfast", "-crf", "23",
-        "-c:a", "aac", "-b:a", "128k",
-        output_path,
-    ]
+def _run_ffmpeg(cmd: list[str]) -> None:
     try:
         result = subprocess.run(
             cmd, capture_output=True, text=True, timeout=FFMPEG_TIMEOUT
@@ -93,6 +50,74 @@ def _build_montage(paths: list[str], output_path: str) -> None:
         raise RuntimeError(f"ffmpeg timed out after {FFMPEG_TIMEOUT}s") from e
     if result.returncode != 0:
         raise RuntimeError(f"ffmpeg failed (exit {result.returncode}): {result.stderr[-2000:]}")
+
+
+def _normalize_clip(path: str, index: int, output_path: str) -> None:
+    """Trim one clip to CLIP_SECONDS, normalize it to a common square
+    resolution/frame rate (source phones vary), and burn in its counter.
+    One ffmpeg process per clip — keeps peak memory low regardless of how
+    many circles are in the day, unlike a single filter graph with every
+    clip open as an input at once (which OOMed on the host)."""
+    font = _escape_ffmpeg_path(_COUNTER_FONT)
+    video_filter = (
+        f"trim=0:{CLIP_SECONDS},setpts=PTS-STARTPTS,"
+        f"scale={TILE_SIZE}:{TILE_SIZE}:force_original_aspect_ratio=increase,"
+        f"crop={TILE_SIZE}:{TILE_SIZE},setsar=1,fps={FPS},"
+        f"drawtext=fontfile={font}:text='#{index + 1}':fontsize={_COUNTER_FONT_SIZE}:"
+        f"fontcolor=white:box=1:boxcolor=black@0.5:boxborderw=10:x=14:y=14"
+    )
+    if _has_audio_stream(path):
+        cmd = [
+            "ffmpeg", "-y", "-threads", "1", "-i", path,
+            "-vf", video_filter,
+            "-af", f"atrim=0:{CLIP_SECONDS},asetpts=PTS-STARTPTS,aresample=44100,aformat=channel_layouts=stereo",
+            "-c:v", "libx264", "-preset", "veryfast", "-crf", "23",
+            "-c:a", "aac", "-b:a", "128k",
+            output_path,
+        ]
+    else:
+        # Silent circle (rare) — pad with silence, trimmed to match the
+        # video via -shortest so the two streams end together.
+        cmd = [
+            "ffmpeg", "-y", "-threads", "1", "-i", path,
+            "-f", "lavfi", "-i", "anullsrc=channel_layout=stereo:sample_rate=44100",
+            "-vf", video_filter, "-shortest",
+            "-c:v", "libx264", "-preset", "veryfast", "-crf", "23",
+            "-c:a", "aac", "-b:a", "128k",
+            output_path,
+        ]
+    _run_ffmpeg(cmd)
+
+
+def _concat_clips(normalized_paths: list[str], list_file: str, output_path: str) -> None:
+    """Stitch already-normalized (identical codec/resolution/fps) clips with
+    the concat demuxer — a stream copy, not a re-encode, so it's cheap
+    regardless of how many clips there are."""
+    with open(list_file, "w") as f:
+        for p in normalized_paths:
+            f.write(f"file '{p}'\n")
+    _run_ffmpeg(["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", list_file, "-c", "copy", output_path])
+
+
+def _build_montage(paths: list[str], tmpdir: str, output_path: str) -> int:
+    """Normalizes each clip one at a time, then concatenates the survivors.
+    Runs synchronously — call via asyncio.to_thread. Returns how many clips
+    made it into the montage; raises RuntimeError if none did."""
+    normalized = []
+    for i, path in enumerate(paths):
+        norm_path = os.path.join(tmpdir, f"norm_{i:03d}.mp4")
+        try:
+            _normalize_clip(path, i, norm_path)
+            normalized.append(norm_path)
+        except Exception:
+            logger.warning("montage: failed to normalize clip %d (%s)", i, path, exc_info=True)
+
+    if not normalized:
+        raise RuntimeError("no clips survived normalization")
+
+    list_file = os.path.join(tmpdir, "concat_list.txt")
+    _concat_clips(normalized, list_file, output_path)
+    return len(normalized)
 
 
 async def _run_montage(
@@ -135,18 +160,18 @@ async def _run_montage(
             return False
 
         output_path = os.path.join(tmpdir, "montage.mp4")
-        await asyncio.to_thread(_build_montage, paths, output_path)
+        clip_count = await asyncio.to_thread(_build_montage, paths, tmpdir, output_path)
 
         with open(output_path, "rb") as f:
             await context.bot.send_video(
                 chat_id=dest_chat_id,
                 video=f,
-                caption=f"🎬 Нарезка кружочков за {report_date} — {len(paths)} видео",
+                caption=f"🎬 Нарезка кружочков за {report_date} — {clip_count} видео",
                 supports_streaming=True,
             )
     logger.info(
         "montage: sent montage for %s (source chat %s) to chat %s (%d clips)",
-        report_date, source_chat_id, dest_chat_id, len(paths),
+        report_date, source_chat_id, dest_chat_id, clip_count,
     )
     return True
 
